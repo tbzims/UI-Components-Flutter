@@ -1,4 +1,4 @@
-// library snto_im_ui;
+library snto_im_ui;
 
-export 'compontents/snto_record_list.dart';
+export 'src/compontents/snto_record_list.dart';
 export 'generated/intl/app_localizations.dart';
