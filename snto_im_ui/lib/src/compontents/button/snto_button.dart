@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../theme/snto_colors.dart';
-import '../theme/snto_theme.dart';
+import '../../theme/snto_colors.dart';
+import '../../theme/snto_theme.dart';
 import 'snto_button_style.dart';
 
 enum ButtonSize { large, medium, small, extraSmall }
@@ -9,7 +9,7 @@ enum ButtonType { fill, outline, text }
 
 enum ButtonShape { rectangle, round, square, circle, filled }
 
-enum SNTOButtonTheme { defaultTheme, primary, danger, light }
+enum SntoButtonTheme { defaultTheme, primary, danger, light }
 
 enum ButtonStatus { defaultState, active, disable }
 
@@ -17,8 +17,8 @@ enum ButtonIconPosition { left, right, top, bottom }
 
 typedef ButtonEvent = void Function();
 
-class SNTOButton extends StatefulWidget {
-  const SNTOButton({
+class SntoButton extends StatefulWidget {
+  const SntoButton({
     super.key,
     this.text,
     this.type = ButtonType.fill,
@@ -65,16 +65,16 @@ class SNTOButton extends StatefulWidget {
   final ButtonShape shape;
 
   /// 主题
-  final SNTOButtonTheme? theme;
+  final SntoButtonTheme? theme;
 
   /// 自定义样式，有则优先用它，没有则根据type和theme选取.如果设置了style,则activeStyle和disableStyle也应该设置
-  final SNTOButtonStyle? style;
+  final SntoButtonStyle? style;
 
   /// 自定义点击样式，有则优先用它，没有则根据type和theme选取
-  final SNTOButtonStyle? activeStyle;
+  final SntoButtonStyle? activeStyle;
 
   /// 自定义禁用样式，有则优先用它，没有则根据type和theme选取
-  final SNTOButtonStyle? disableStyle;
+  final SntoButtonStyle? disableStyle;
 
   /// 自定义可点击状态文本样式
   final TextStyle? textStyle;
@@ -107,20 +107,20 @@ class SNTOButton extends StatefulWidget {
   final EdgeInsets? margin;
 
   @override
-  State<SNTOButton> createState() => _SNTOButtonState();
+  State<SntoButton> createState() => _SntoButtonState();
 }
 
-class _SNTOButtonState extends State<SNTOButton> {
+class _SntoButtonState extends State<SntoButton> {
   ButtonStatus _buttonStatus = ButtonStatus.defaultState;
 
   /// 默认样式
-  SNTOButtonStyle? _innerDefaultStyle;
+  SntoButtonStyle? _innerDefaultStyle;
 
   /// 按下时候的样式
-  SNTOButtonStyle? _innerActiveStyle;
+  SntoButtonStyle? _innerActiveStyle;
 
   /// 被禁用的样式
-  SNTOButtonStyle? _innerDisableStyle;
+  SntoButtonStyle? _innerDisableStyle;
 
   /// 文字样式
   TextStyle? _textStyle;
@@ -130,9 +130,8 @@ class _SNTOButtonState extends State<SNTOButton> {
 
   /// 更新参数
   void _updateParams() async {
-    _buttonStatus = widget.disabled
-        ? ButtonStatus.disable
-        : ButtonStatus.defaultState;
+    _buttonStatus =
+        widget.disabled ? ButtonStatus.disable : ButtonStatus.defaultState;
     _innerDefaultStyle = widget.style;
     _innerActiveStyle = widget.activeStyle;
     _innerDisableStyle = widget.disableStyle;
@@ -142,7 +141,7 @@ class _SNTOButtonState extends State<SNTOButton> {
     }
   }
 
-  SNTOButtonStyle get style {
+  SntoButtonStyle get style {
     switch (_buttonStatus) {
       case ButtonStatus.defaultState:
         return _defaultStyle;
@@ -160,7 +159,7 @@ class _SNTOButtonState extends State<SNTOButton> {
   }
 
   @override
-  didUpdateWidget(covariant SNTOButton oldWidget) {
+  didUpdateWidget(covariant SntoButton oldWidget) {
     super.didUpdateWidget(oldWidget);
     _updateParams();
   }
@@ -195,7 +194,7 @@ class _SNTOButtonState extends State<SNTOButton> {
     );
   }
 
-  SNTOButtonStyle get _defaultStyle {
+  SntoButtonStyle get _defaultStyle {
     if (_innerDefaultStyle != null) {
       return _innerDefaultStyle!;
     }
@@ -203,7 +202,7 @@ class _SNTOButtonState extends State<SNTOButton> {
     return _innerDefaultStyle!;
   }
 
-  SNTOButtonStyle get _activeStyle {
+  SntoButtonStyle get _activeStyle {
     if (_innerActiveStyle != null) {
       return _innerActiveStyle!;
     }
@@ -211,7 +210,7 @@ class _SNTOButtonState extends State<SNTOButton> {
     return _innerActiveStyle!;
   }
 
-  SNTOButtonStyle get _disableStyle {
+  SntoButtonStyle get _disableStyle {
     if (_innerDisableStyle != null) {
       return _innerDisableStyle!;
     }
@@ -222,29 +221,29 @@ class _SNTOButtonState extends State<SNTOButton> {
   Border? _getBorder(BuildContext context) {
     if (style.frameWidth != null && style.frameWidth != 0) {
       return Border.all(
-        color: style.frameColor ?? SNTOTheme.of(context).grayColor3,
+        color: style.frameColor ?? SntoTheme.of(context).grayColor3,
         width: style.frameWidth!,
       );
     }
     return null;
   }
 
-  SNTOButtonStyle _generateInnerStyle() {
+  SntoButtonStyle _generateInnerStyle() {
     switch (widget.type) {
       case ButtonType.fill:
-        return SNTOButtonStyle.generateFillStyleByTheme(
+        return SntoButtonStyle.generateFillStyleByTheme(
           context,
           widget.theme,
           _buttonStatus,
         );
       case ButtonType.outline:
-        return SNTOButtonStyle.generateOutlineStyleByTheme(
+        return SntoButtonStyle.generateOutlineStyleByTheme(
           context,
           widget.theme,
           _buttonStatus,
         );
       case ButtonType.text:
-        return SNTOButtonStyle.generateTextStyleByTheme(
+        return SntoButtonStyle.generateTextStyleByTheme(
           context,
           widget.theme,
           _buttonStatus,
@@ -303,15 +302,15 @@ class _SNTOButtonState extends State<SNTOButton> {
     return widget.iconPosition == ButtonIconPosition.left ||
             widget.iconPosition == ButtonIconPosition.right
         ? Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: children,
-          )
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: children,
+        )
         : Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: children,
-          );
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: children,
+        );
   }
 
   Widget? getIcon() {

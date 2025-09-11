@@ -1,5 +1,5 @@
 /// TDesign默认主题
-class SNTODefaultTheme {
+class SntoDefaultTheme {
   static String defaultThemeConfig = '''
   {
     "default": {

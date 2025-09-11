@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
-typedef TDTDResourceBuilder = TDResourceDelegate? Function(BuildContext context);
+typedef TDTDResourceBuilder =
+    TDResourceDelegate? Function(BuildContext context);
 
 /// 资源管理器
 class TDResourceManager {
@@ -197,7 +198,6 @@ abstract class TDResourceDelegate {
 
   /// [TDBackTop] 顶部
   String get top;
-
 }
 
 /// 如果用户要重写,就应该全部重写,不开放只重新部分资源
@@ -266,10 +266,10 @@ class _DefaultResourceDelegate extends TDResourceDelegate {
   String get monthLabel => '月';
 
   @override
-  String get dateLabel=>'日';
+  String get dateLabel => '日';
 
   @override
-  String get weeksLabel=>'周';
+  String get weeksLabel => '周';
 
   @override
   String get sunday => '日';

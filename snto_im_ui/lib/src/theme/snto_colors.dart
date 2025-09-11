@@ -11,7 +11,7 @@ import 'snto_theme.dart';
 /// 如果业务需要扩展，可以按一下方式定义自己的ColorData，只要key在主题中能找到对应颜色即可
 /// TDesign主题包含的颜色，这是一个大而全的色值。业务可以选择自己自己需要的色值进行二次封装，方便使用。
 /// 不过有的色值是内部使用的，必传，否则可能显示异常。
-extension SNTOColors on SNTOThemeData {
+extension SntoColors on SntoThemeData {
   /// 功能色组----------------------------------------------------
 
   ///#F2F3FF
@@ -115,31 +115,40 @@ extension SNTOColors on SNTOThemeData {
   /// 警告色组----------------------------------------------------
 
   ///#FFF1E9
-  Color get warningColor1 => colorMap['warningColor1'] ?? const Color(0xFFFFF1E9);
+  Color get warningColor1 =>
+      colorMap['warningColor1'] ?? const Color(0xFFFFF1E9);
 
   ///#FFD9C2
-  Color get warningColor2 => colorMap['warningColor2'] ?? const Color(0xFFFFD9C2);
+  Color get warningColor2 =>
+      colorMap['warningColor2'] ?? const Color(0xFFFFD9C2);
 
   ///#FFB98C
-  Color get warningColor3 => colorMap['warningColor3'] ?? const Color(0xFFFFB98C);
+  Color get warningColor3 =>
+      colorMap['warningColor3'] ?? const Color(0xFFFFB98C);
 
   ///#FA9550
-  Color get warningColor4 => colorMap['warningColor4'] ?? const Color(0xFFFA9550);
+  Color get warningColor4 =>
+      colorMap['warningColor4'] ?? const Color(0xFFFA9550);
 
   ///#E37318
-  Color get warningColor5 => colorMap['warningColor5'] ?? const Color(0xFFE37318);
+  Color get warningColor5 =>
+      colorMap['warningColor5'] ?? const Color(0xFFE37318);
 
   ///#BE5A00
-  Color get warningColor6 => colorMap['warningColor6'] ?? const Color(0xFFBE5A00);
+  Color get warningColor6 =>
+      colorMap['warningColor6'] ?? const Color(0xFFBE5A00);
 
   ///#954500
-  Color get warningColor7 => colorMap['warningColor7'] ?? const Color(0xFF954500);
+  Color get warningColor7 =>
+      colorMap['warningColor7'] ?? const Color(0xFF954500);
 
   ///#713300
-  Color get warningColor8 => colorMap['warningColor8'] ?? const Color(0xFF713300);
+  Color get warningColor8 =>
+      colorMap['warningColor8'] ?? const Color(0xFF713300);
 
   ///#532300
-  Color get warningColor9 => colorMap['warningColor9'] ?? const Color(0xFF532300);
+  Color get warningColor9 =>
+      colorMap['warningColor9'] ?? const Color(0xFF532300);
 
   ///#3B1700
   Color get warningColor10 =>
@@ -159,7 +168,8 @@ extension SNTOColors on SNTOThemeData {
   Color get warningHoverColor => colorMap['warningHoverColor'] ?? warningColor4;
 
   ///#E37318
-  Color get warningNormalColor => colorMap['warningNormalColor'] ?? warningColor5;
+  Color get warningNormalColor =>
+      colorMap['warningNormalColor'] ?? warningColor5;
 
   ///#BE5A00
   Color get warningClickColor => colorMap['warningClickColor'] ?? warningColor6;
@@ -167,31 +177,40 @@ extension SNTOColors on SNTOThemeData {
   /// 成功色组----------------------------------------------------
 
   ///#E3F9E9
-  Color get successColor1 => colorMap['successColor1'] ?? const Color(0xFFE3F9E9);
+  Color get successColor1 =>
+      colorMap['successColor1'] ?? const Color(0xFFE3F9E9);
 
   ///#C6F3D7
-  Color get successColor2 => colorMap['successColor2'] ?? const Color(0xFFC6F3D7);
+  Color get successColor2 =>
+      colorMap['successColor2'] ?? const Color(0xFFC6F3D7);
 
   ///#92DAB2
-  Color get successColor3 => colorMap['successColor3'] ?? const Color(0xFF92DAB2);
+  Color get successColor3 =>
+      colorMap['successColor3'] ?? const Color(0xFF92DAB2);
 
   ///#56C08D
-  Color get successColor4 => colorMap['successColor4'] ?? const Color(0xFF56C08D);
+  Color get successColor4 =>
+      colorMap['successColor4'] ?? const Color(0xFF56C08D);
 
   ///#2BA471
-  Color get successColor5 => colorMap['successColor5'] ?? const Color(0xFF2BA471);
+  Color get successColor5 =>
+      colorMap['successColor5'] ?? const Color(0xFF2BA471);
 
   ///#008858
-  Color get successColor6 => colorMap['successColor6'] ?? const Color(0xFF008858);
+  Color get successColor6 =>
+      colorMap['successColor6'] ?? const Color(0xFF008858);
 
   ///#006C45
-  Color get successColor7 => colorMap['successColor7'] ?? const Color(0xFF006C45);
+  Color get successColor7 =>
+      colorMap['successColor7'] ?? const Color(0xFF006C45);
 
   ///#005334
-  Color get successColor8 => colorMap['successColor8'] ?? const Color(0xFF005334);
+  Color get successColor8 =>
+      colorMap['successColor8'] ?? const Color(0xFF005334);
 
   ///#003B23
-  Color get successColor9 => colorMap['successColor9'] ?? const Color(0xFF003B23);
+  Color get successColor9 =>
+      colorMap['successColor9'] ?? const Color(0xFF003B23);
 
   ///#002515
   Color get successColor10 =>
@@ -211,7 +230,8 @@ extension SNTOColors on SNTOThemeData {
   Color get successHoverColor => colorMap['successHoverColor'] ?? successColor4;
 
   ///#2BA471
-  Color get successNormalColor => colorMap['successNormalColor'] ?? successColor5;
+  Color get successNormalColor =>
+      colorMap['successNormalColor'] ?? successColor5;
 
   ///#008858
   Color get successClickColor => colorMap['successClickColor'] ?? successColor6;
