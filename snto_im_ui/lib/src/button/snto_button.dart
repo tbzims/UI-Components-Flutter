@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../theme/st_colors.dart';
-import '../theme/st_theme.dart';
-import 'st_button_style.dart';
+import '../theme/snto_colors.dart';
+import '../theme/snto_theme.dart';
+import 'snto_button_style.dart';
 
 enum ButtonSize { large, medium, small, extraSmall }
 
@@ -9,7 +9,7 @@ enum ButtonType { fill, outline, text }
 
 enum ButtonShape { rectangle, round, square, circle, filled }
 
-enum STButtonTheme { defaultTheme, primary, danger, light }
+enum SNTOButtonTheme { defaultTheme, primary, danger, light }
 
 enum ButtonStatus { defaultState, active, disable }
 
@@ -17,8 +17,8 @@ enum ButtonIconPosition { left, right, top, bottom }
 
 typedef ButtonEvent = void Function();
 
-class STButton extends StatefulWidget {
-  const STButton({
+class SNTOButton extends StatefulWidget {
+  const SNTOButton({
     super.key,
     this.text,
     this.type = ButtonType.fill,
@@ -65,16 +65,16 @@ class STButton extends StatefulWidget {
   final ButtonShape shape;
 
   /// 主题
-  final STButtonTheme? theme;
+  final SNTOButtonTheme? theme;
 
   /// 自定义样式，有则优先用它，没有则根据type和theme选取.如果设置了style,则activeStyle和disableStyle也应该设置
-  final STButtonStyle? style;
+  final SNTOButtonStyle? style;
 
   /// 自定义点击样式，有则优先用它，没有则根据type和theme选取
-  final STButtonStyle? activeStyle;
+  final SNTOButtonStyle? activeStyle;
 
   /// 自定义禁用样式，有则优先用它，没有则根据type和theme选取
-  final STButtonStyle? disableStyle;
+  final SNTOButtonStyle? disableStyle;
 
   /// 自定义可点击状态文本样式
   final TextStyle? textStyle;
@@ -107,20 +107,20 @@ class STButton extends StatefulWidget {
   final EdgeInsets? margin;
 
   @override
-  State<STButton> createState() => _STButtonState();
+  State<SNTOButton> createState() => _SNTOButtonState();
 }
 
-class _STButtonState extends State<STButton> {
+class _SNTOButtonState extends State<SNTOButton> {
   ButtonStatus _buttonStatus = ButtonStatus.defaultState;
 
   /// 默认样式
-  STButtonStyle? _innerDefaultStyle;
+  SNTOButtonStyle? _innerDefaultStyle;
 
   /// 按下时候的样式
-  STButtonStyle? _innerActiveStyle;
+  SNTOButtonStyle? _innerActiveStyle;
 
   /// 被禁用的样式
-  STButtonStyle? _innerDisableStyle;
+  SNTOButtonStyle? _innerDisableStyle;
 
   /// 文字样式
   TextStyle? _textStyle;
@@ -142,7 +142,7 @@ class _STButtonState extends State<STButton> {
     }
   }
 
-  STButtonStyle get style {
+  SNTOButtonStyle get style {
     switch (_buttonStatus) {
       case ButtonStatus.defaultState:
         return _defaultStyle;
@@ -160,7 +160,7 @@ class _STButtonState extends State<STButton> {
   }
 
   @override
-  didUpdateWidget(covariant STButton oldWidget) {
+  didUpdateWidget(covariant SNTOButton oldWidget) {
     super.didUpdateWidget(oldWidget);
     _updateParams();
   }
@@ -195,7 +195,7 @@ class _STButtonState extends State<STButton> {
     );
   }
 
-  STButtonStyle get _defaultStyle {
+  SNTOButtonStyle get _defaultStyle {
     if (_innerDefaultStyle != null) {
       return _innerDefaultStyle!;
     }
@@ -203,7 +203,7 @@ class _STButtonState extends State<STButton> {
     return _innerDefaultStyle!;
   }
 
-  STButtonStyle get _activeStyle {
+  SNTOButtonStyle get _activeStyle {
     if (_innerActiveStyle != null) {
       return _innerActiveStyle!;
     }
@@ -211,7 +211,7 @@ class _STButtonState extends State<STButton> {
     return _innerActiveStyle!;
   }
 
-  STButtonStyle get _disableStyle {
+  SNTOButtonStyle get _disableStyle {
     if (_innerDisableStyle != null) {
       return _innerDisableStyle!;
     }
@@ -222,29 +222,29 @@ class _STButtonState extends State<STButton> {
   Border? _getBorder(BuildContext context) {
     if (style.frameWidth != null && style.frameWidth != 0) {
       return Border.all(
-        color: style.frameColor ?? STTheme.of(context).grayColor3,
+        color: style.frameColor ?? SNTOTheme.of(context).grayColor3,
         width: style.frameWidth!,
       );
     }
     return null;
   }
 
-  STButtonStyle _generateInnerStyle() {
+  SNTOButtonStyle _generateInnerStyle() {
     switch (widget.type) {
       case ButtonType.fill:
-        return STButtonStyle.generateFillStyleByTheme(
+        return SNTOButtonStyle.generateFillStyleByTheme(
           context,
           widget.theme,
           _buttonStatus,
         );
       case ButtonType.outline:
-        return STButtonStyle.generateOutlineStyleByTheme(
+        return SNTOButtonStyle.generateOutlineStyleByTheme(
           context,
           widget.theme,
           _buttonStatus,
         );
       case ButtonType.text:
-        return STButtonStyle.generateTextStyleByTheme(
+        return SNTOButtonStyle.generateTextStyleByTheme(
           context,
           widget.theme,
           _buttonStatus,

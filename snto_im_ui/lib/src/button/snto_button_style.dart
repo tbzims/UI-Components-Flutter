@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart' hide ButtonTheme;
-import '../theme/st_colors.dart';
-import '../theme/st_theme.dart';
-import 'st_button.dart';
+import '../theme/snto_colors.dart';
+import '../theme/snto_theme.dart';
+import 'snto_button.dart';
 
-class STButtonStyle{
+class SNTOButtonStyle{
 
   /// 背景颜色
   Color? backgroundColor;
@@ -20,24 +20,24 @@ class STButtonStyle{
   /// 自定义圆角
   BorderRadiusGeometry? radius;
 
-  STButtonStyle({this.backgroundColor, this.frameColor, this.textColor, this.frameWidth, this.radius});
+  SNTOButtonStyle({this.backgroundColor, this.frameColor, this.textColor, this.frameWidth, this.radius});
 
   /// 生成不同主题的填充按钮样式
-  STButtonStyle.generateFillStyleByTheme(BuildContext context, STButtonTheme? theme, ButtonStatus status) {
+  SNTOButtonStyle.generateFillStyleByTheme(BuildContext context, SNTOButtonTheme? theme, ButtonStatus status) {
     switch (theme) {
-      case STButtonTheme.primary:
-        textColor = STTheme.of(context).fontWhColor1;
+      case SNTOButtonTheme.primary:
+        textColor = SNTOTheme.of(context).fontWhColor1;
         backgroundColor = _getBrandColor(context, status);
         break;
-      case STButtonTheme.danger:
-        textColor = STTheme.of(context).fontWhColor1;
+      case SNTOButtonTheme.danger:
+        textColor = SNTOTheme.of(context).fontWhColor1;
         backgroundColor = _getErrorColor(context, status);
         break;
-      case STButtonTheme.light:
+      case SNTOButtonTheme.light:
         textColor = _getBrandColor(context, status);
         backgroundColor = _getLightColor(context, status);
         break;
-      case STButtonTheme.defaultTheme:
+      case SNTOButtonTheme.defaultTheme:
       default:
         textColor = _getDefaultTextColor(context, status);
         backgroundColor = _getDefaultBgColor(context, status);
@@ -46,53 +46,53 @@ class STButtonStyle{
   }
 
   /// 生成不同主题的描边按钮样式
-  STButtonStyle.generateOutlineStyleByTheme(BuildContext context, STButtonTheme? theme, ButtonStatus status) {
+  SNTOButtonStyle.generateOutlineStyleByTheme(BuildContext context, SNTOButtonTheme? theme, ButtonStatus status) {
     switch (theme) {
-      case STButtonTheme.primary:
+      case SNTOButtonTheme.primary:
         textColor = _getBrandColor(context, status);
         backgroundColor =
-        status == ButtonStatus.active ? STTheme.of(context).grayColor3 : STTheme.of(context).whiteColor1;
+        status == ButtonStatus.active ? SNTOTheme.of(context).grayColor3 : SNTOTheme.of(context).whiteColor1;
         frameColor = textColor;
         break;
-      case STButtonTheme.danger:
+      case SNTOButtonTheme.danger:
         textColor = _getErrorColor(context, status);
         backgroundColor =
-        status == ButtonStatus.active ? STTheme.of(context).grayColor3 : STTheme.of(context).whiteColor1;
+        status == ButtonStatus.active ? SNTOTheme.of(context).grayColor3 : SNTOTheme.of(context).whiteColor1;
         frameColor = textColor;
         break;
-      case STButtonTheme.light:
+      case SNTOButtonTheme.light:
         textColor = _getBrandColor(context, status);
         backgroundColor = _getLightColor(context, status);
         frameColor = textColor;
         break;
-      case STButtonTheme.defaultTheme:
+      case SNTOButtonTheme.defaultTheme:
       default:
         textColor = _getDefaultTextColor(context, status);
         backgroundColor = _getOutlineDefaultBgColor(context, status);
-        frameColor = STTheme.of(context).grayColor4;
+        frameColor = SNTOTheme.of(context).grayColor4;
     }
     frameWidth = 1;
   }
 
   /// 生成不同主题的文本按钮样式
-  STButtonStyle.generateTextStyleByTheme(BuildContext context, STButtonTheme? theme, ButtonStatus status) {
+  SNTOButtonStyle.generateTextStyleByTheme(BuildContext context, SNTOButtonTheme? theme, ButtonStatus status) {
     switch (theme) {
-      case STButtonTheme.primary:
+      case SNTOButtonTheme.primary:
         textColor = _getBrandColor(context, status);
-        backgroundColor = status == ButtonStatus.active ? STTheme.of(context).grayColor3 : Colors.transparent;
+        backgroundColor = status == ButtonStatus.active ? SNTOTheme.of(context).grayColor3 : Colors.transparent;
         break;
-      case STButtonTheme.danger:
+      case SNTOButtonTheme.danger:
         textColor = _getErrorColor(context, status);
-        backgroundColor = status == ButtonStatus.active ? STTheme.of(context).grayColor3 : Colors.transparent;
+        backgroundColor = status == ButtonStatus.active ? SNTOTheme.of(context).grayColor3 : Colors.transparent;
         break;
-      case STButtonTheme.light:
+      case SNTOButtonTheme.light:
         textColor = _getBrandColor(context, status);
-        backgroundColor = status == ButtonStatus.active ? STTheme.of(context).grayColor3 : Colors.transparent;
+        backgroundColor = status == ButtonStatus.active ? SNTOTheme.of(context).grayColor3 : Colors.transparent;
         break;
-      case STButtonTheme.defaultTheme:
+      case SNTOButtonTheme.defaultTheme:
       default:
         textColor = _getDefaultTextColor(context, status);
-        backgroundColor = status == ButtonStatus.active ? STTheme.of(context).grayColor3 : Colors.transparent;
+        backgroundColor = status == ButtonStatus.active ? SNTOTheme.of(context).grayColor3 : Colors.transparent;
     }
     frameColor = backgroundColor;
   }
@@ -100,11 +100,11 @@ class STButtonStyle{
   Color _getBrandColor(BuildContext context, ButtonStatus status) {
     switch (status) {
       case ButtonStatus.defaultState:
-        return STTheme.of(context).brandNormalColor;
+        return SNTOTheme.of(context).brandNormalColor;
       case ButtonStatus.active:
-        return STTheme.of(context).brandClickColor;
+        return SNTOTheme.of(context).brandClickColor;
       case ButtonStatus.disable:
-        return STTheme.of(context).brandDisabledColor;
+        return SNTOTheme.of(context).brandDisabledColor;
     }
   }
 
@@ -112,31 +112,31 @@ class STButtonStyle{
     switch (status) {
       case ButtonStatus.defaultState:
       case ButtonStatus.disable:
-        return STTheme.of(context).brandLightColor;
+        return SNTOTheme.of(context).brandLightColor;
       case ButtonStatus.active:
-        return STTheme.of(context).brandFocusColor;
+        return SNTOTheme.of(context).brandFocusColor;
     }
   }
 
   Color _getErrorColor(BuildContext context, ButtonStatus status) {
     switch (status) {
       case ButtonStatus.defaultState:
-        return STTheme.of(context).errorNormalColor;
+        return SNTOTheme.of(context).errorNormalColor;
       case ButtonStatus.active:
-        return STTheme.of(context).errorClickColor;
+        return SNTOTheme.of(context).errorClickColor;
       case ButtonStatus.disable:
-        return STTheme.of(context).errorDisabledColor;
+        return SNTOTheme.of(context).errorDisabledColor;
     }
   }
 
   Color _getDefaultBgColor(BuildContext context, ButtonStatus status) {
     switch (status) {
       case ButtonStatus.defaultState:
-        return STTheme.of(context).grayColor3;
+        return SNTOTheme.of(context).grayColor3;
       case ButtonStatus.active:
-        return STTheme.of(context).grayColor5;
+        return SNTOTheme.of(context).grayColor5;
       case ButtonStatus.disable:
-        return STTheme.of(context).grayColor2;
+        return SNTOTheme.of(context).grayColor2;
     }
   }
 
@@ -144,20 +144,20 @@ class STButtonStyle{
     switch (status) {
       case ButtonStatus.defaultState:
       case ButtonStatus.active:
-        return STTheme.of(context).fontGyColor1;
+        return SNTOTheme.of(context).fontGyColor1;
       case ButtonStatus.disable:
-        return STTheme.of(context).fontGyColor4;
+        return SNTOTheme.of(context).fontGyColor4;
     }
   }
 
   Color _getOutlineDefaultBgColor(BuildContext context, ButtonStatus status) {
     switch (status) {
       case ButtonStatus.defaultState:
-        return STTheme.of(context).whiteColor1;
+        return SNTOTheme.of(context).whiteColor1;
       case ButtonStatus.active:
-        return STTheme.of(context).grayColor3;
+        return SNTOTheme.of(context).grayColor3;
       case ButtonStatus.disable:
-        return STTheme.of(context).grayColor2;
+        return SNTOTheme.of(context).grayColor2;
     }
   }
 }

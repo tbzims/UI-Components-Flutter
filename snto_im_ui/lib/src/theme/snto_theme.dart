@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 
 import 'basic.dart';
 import 'resource_delegate.dart';
-import 'st_default_theme.dart';
+import 'snto_default_theme.dart';
 
-class STTheme extends StatelessWidget {
-  const STTheme({
+class SNTOTheme extends StatelessWidget {
+  const SNTOTheme({
     super.key,
     required this.data,
     required this.child,
@@ -19,13 +19,13 @@ class STTheme extends StatelessWidget {
   static bool _needMultiTheme = false;
 
   /// 主题数据
-  static STThemeData? _singleData;
+  static SNTOThemeData? _singleData;
 
   /// 子控件
   final Widget child;
 
   /// 主题数据
-  final STThemeData data;
+  final SNTOThemeData data;
 
   /// Flutter系统主题数据
   final ThemeData? systemData;
@@ -46,32 +46,32 @@ class STTheme extends StatelessWidget {
   }
 
   /// 获取默认主题数据，全局唯一
-  static STThemeData defaultData() {
-    return STThemeData.defaultData();
+  static SNTOThemeData defaultData() {
+    return SNTOThemeData.defaultData();
   }
 
   /// 获取主题数据，如果未传context则获取全局唯一的默认数据,
   /// 传了context，则获取最近的主题，取不到则会获取全局唯一默认数据
-  static STThemeData of([BuildContext? context]) {
+  static SNTOThemeData of([BuildContext? context]) {
     if (!_needMultiTheme || context == null) {
       // 如果context为null,则返回全局默认主题
-      return _singleData ?? STThemeData.defaultData();
+      return _singleData ?? SNTOThemeData.defaultData();
     }
     // 如果传了context，则从其中获取最近主题
     try {
-      var data = Theme.of(context).extensions[STThemeData] as STThemeData?;
-      return data ?? STThemeData.defaultData();
+      var data = Theme.of(context).extensions[SNTOThemeData] as SNTOThemeData?;
+      return data ?? SNTOThemeData.defaultData();
     } catch (e) {
-      return STThemeData.defaultData();
+      return SNTOThemeData.defaultData();
     }
   }
 
   /// 获取主题数据，取不到则可空
   /// 传了context，则获取最近的主题，取不到或未传context则返回null,
-  static STThemeData? ofNullable([BuildContext? context]) {
+  static SNTOThemeData? ofNullable([BuildContext? context]) {
     if (context != null) {
       // 如果传了context，则从其中获取最近主题
-      return Theme.of(context).extensions[STThemeData] as STThemeData?;
+      return Theme.of(context).extensions[SNTOThemeData] as SNTOThemeData?;
     } else {
       // 如果context为null,则返回null
       return null;
@@ -94,38 +94,38 @@ class STTheme extends StatelessWidget {
 }
 
 /// 主题数据
-class STThemeData extends ThemeExtension<STThemeData> {
+class SNTOThemeData extends ThemeExtension<SNTOThemeData> {
   static const String _defaultThemeName = 'default';
-  static STThemeData? _defaultThemeData;
+  static SNTOThemeData? _defaultThemeData;
 
   /// 名称
   late String name;
 
   /// 颜色
-  late STMap<String, Color> colorMap;
+  late SNTOMap<String, Color> colorMap;
 
   /// 字体尺寸
-  late STMap<String, Font> fontMap;
+  late SNTOMap<String, Font> fontMap;
 
   /// 圆角
-  late STMap<String, double> radiusMap;
+  late SNTOMap<String, double> radiusMap;
 
   /// 字体样式
-  late STMap<String, FontFamily> fontFamilyMap;
+  late SNTOMap<String, FontFamily> fontFamilyMap;
 
   /// 阴影
-  late STMap<String, List<BoxShadow>> shadowMap;
+  late SNTOMap<String, List<BoxShadow>> shadowMap;
 
   /// 间隔
-  late STMap<String, double> spacerMap;
+  late SNTOMap<String, double> spacerMap;
 
   /// 映射关系
-  late STMap<String, String> refMap;
+  late SNTOMap<String, String> refMap;
 
   /// 额外定义的结构
-  late STExtraThemeData? extraThemeData;
+  late SNTOExtraThemeData? extraThemeData;
 
-  STThemeData({
+  SNTOThemeData({
     required this.name,
     required this.colorMap,
     required this.fontMap,
@@ -138,11 +138,11 @@ class STThemeData extends ThemeExtension<STThemeData> {
   });
 
   /// 获取默认Data，一个App里只有一个，用于没有context的地方
-  static STThemeData defaultData({STExtraThemeData? extraThemeData}) {
+  static SNTOThemeData defaultData({SNTOExtraThemeData? extraThemeData}) {
     _defaultThemeData ??=
         fromJson(
           _defaultThemeName,
-          STDefaultTheme.defaultThemeConfig,
+          SNTODefaultTheme.defaultThemeConfig,
           extraThemeData: extraThemeData,
         ) ??
         _emptyData(_defaultThemeName, extraThemeData: extraThemeData);
@@ -151,7 +151,7 @@ class STThemeData extends ThemeExtension<STThemeData> {
   }
 
   /// 从父类拷贝
-  STThemeData copyWithTDThemeData(
+  SNTOThemeData copyWithTDThemeData(
     String name, {
     Map<String, Color>? colorMap,
     Map<String, Font>? fontMap,
@@ -159,7 +159,7 @@ class STThemeData extends ThemeExtension<STThemeData> {
     Map<String, FontFamily>? fontFamilyMap,
     Map<String, List<BoxShadow>>? shadowMap,
     Map<String, double>? marginMap,
-    STExtraThemeData? extraThemeData,
+    SNTOExtraThemeData? extraThemeData,
   }) {
     return copyWith(
           name: name,
@@ -171,11 +171,11 @@ class STThemeData extends ThemeExtension<STThemeData> {
           marginMap: marginMap,
           extraThemeData: extraThemeData,
         )
-        as STThemeData;
+        as SNTOThemeData;
   }
 
   @override
-  ThemeExtension<STThemeData> copyWith({
+  ThemeExtension<SNTOThemeData> copyWith({
     String? name,
     Map<String, Color>? colorMap,
     Map<String, Font>? fontMap,
@@ -183,9 +183,9 @@ class STThemeData extends ThemeExtension<STThemeData> {
     Map<String, FontFamily>? fontFamilyMap,
     Map<String, List<BoxShadow>>? shadowMap,
     Map<String, double>? marginMap,
-    STExtraThemeData? extraThemeData,
+    SNTOExtraThemeData? extraThemeData,
   }) {
-    var result = STThemeData(
+    var result = SNTOThemeData(
       name: name ?? 'default',
       colorMap: _copyMap<Color>(this.colorMap, colorMap),
       fontMap: _copyMap<Font>(this.fontMap, fontMap),
@@ -200,8 +200,8 @@ class STThemeData extends ThemeExtension<STThemeData> {
   }
 
   /// 拷贝Map,防止内层
-  STMap<String, T> _copyMap<T>(STMap<String, T> src, Map<String, T>? add) {
-    var map = STMap<String, T>(factory: () => src);
+  SNTOMap<String, T> _copyMap<T>(SNTOMap<String, T> src, Map<String, T>? add) {
+    var map = SNTOMap<String, T>(factory: () => src);
 
     src.forEach((key, value) {
       map[key] = value;
@@ -213,32 +213,32 @@ class STThemeData extends ThemeExtension<STThemeData> {
   }
 
   /// 创建空对象
-  static STThemeData _emptyData(
+  static SNTOThemeData _emptyData(
     String name, {
-    STExtraThemeData? extraThemeData,
+    SNTOExtraThemeData? extraThemeData,
   }) {
-    var refMap = STMap<String, String>();
-    return STThemeData(
+    var refMap = SNTOMap<String, String>();
+    return SNTOThemeData(
       name: name,
-      colorMap: STMap(factory: () => defaultData().colorMap, refs: refMap),
-      fontMap: STMap(factory: () => defaultData().fontMap, refs: refMap),
-      radiusMap: STMap(factory: () => defaultData().radiusMap, refs: refMap),
-      fontFamilyMap: STMap(
+      colorMap: SNTOMap(factory: () => defaultData().colorMap, refs: refMap),
+      fontMap: SNTOMap(factory: () => defaultData().fontMap, refs: refMap),
+      radiusMap: SNTOMap(factory: () => defaultData().radiusMap, refs: refMap),
+      fontFamilyMap: SNTOMap(
         factory: () => defaultData().fontFamilyMap,
         refs: refMap,
       ),
-      shadowMap: STMap(factory: () => defaultData().shadowMap, refs: refMap),
-      spacerMap: STMap(factory: () => defaultData().spacerMap, refs: refMap),
+      shadowMap: SNTOMap(factory: () => defaultData().shadowMap, refs: refMap),
+      spacerMap: SNTOMap(factory: () => defaultData().spacerMap, refs: refMap),
       refMap: refMap,
     );
   }
 
   /// 解析配置的json文件为主题数据
-  static STThemeData? fromJson(
+  static SNTOThemeData? fromJson(
     String name,
     String themeJson, {
     var recoverDefault = false,
-    STExtraThemeData? extraThemeData,
+    SNTOExtraThemeData? extraThemeData,
   }) {
     if (themeJson.isEmpty) {
       return null;
@@ -346,7 +346,7 @@ class STThemeData extends ThemeExtension<STThemeData> {
     return shadowMap[key];
   }
 
-  T? ofExtra<T extends STExtraThemeData>() {
+  T? ofExtra<T extends SNTOExtraThemeData>() {
     try {
       return extraThemeData as T;
     } catch (e) {
@@ -356,14 +356,14 @@ class STThemeData extends ThemeExtension<STThemeData> {
   }
 
   @override
-  ThemeExtension<STThemeData> lerp(
-    ThemeExtension<STThemeData>? other,
+  ThemeExtension<SNTOThemeData> lerp(
+    ThemeExtension<SNTOThemeData>? other,
     double t,
   ) {
-    if (other is! STThemeData) {
+    if (other is! SNTOThemeData) {
       return this;
     }
-    return STThemeData(
+    return SNTOThemeData(
       name: other.name,
       colorMap: other.colorMap,
       fontMap: other.fontMap,
@@ -377,18 +377,18 @@ class STThemeData extends ThemeExtension<STThemeData> {
 }
 
 /// 扩展主题数据
-abstract class STExtraThemeData {
+abstract class SNTOExtraThemeData {
   /// 解析json
   void parse(String name, Map<String, dynamic> curThemeMap);
 }
 
-typedef DefaultMapFactory = STMap? Function();
+typedef DefaultMapFactory = SNTOMap? Function();
 
 /// 自定义Map
-class STMap<K,V> extends DelegatingMap<K, V>{
-  STMap({this.factory, this.refs}) : super({});
+class SNTOMap<K,V> extends DelegatingMap<K, V>{
+  SNTOMap({this.factory, this.refs}) : super({});
   DefaultMapFactory? factory;
-  STMap? refs;
+  SNTOMap? refs;
 
   @override
   V? operator [](Object? key) {
