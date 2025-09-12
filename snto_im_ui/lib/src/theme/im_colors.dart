@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'snto_theme.dart';
+import 'im_theme.dart';
 
 ///
 /// 业务使用时有两种方法替换主题：
@@ -11,7 +11,7 @@ import 'snto_theme.dart';
 /// 如果业务需要扩展，可以按一下方式定义自己的ColorData，只要key在主题中能找到对应颜色即可
 /// TDesign主题包含的颜色，这是一个大而全的色值。业务可以选择自己自己需要的色值进行二次封装，方便使用。
 /// 不过有的色值是内部使用的，必传，否则可能显示异常。
-extension SntoColors on SntoThemeData {
+extension IMColors on IMThemeData {
   /// 功能色组----------------------------------------------------
 
   ///#F2F3FF
