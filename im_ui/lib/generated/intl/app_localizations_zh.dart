@@ -5,8 +5,8 @@ import 'app_localizations.dart';
 // ignore_for_file: type=lint
 
 /// The translations for Chinese (`zh`).
-class SntoImUiLocalizationsZh extends SntoImUiLocalizations {
-  SntoImUiLocalizationsZh([String locale = 'zh']) : super(locale);
+class ImUiLocalizationsZh extends ImUiLocalizations {
+  ImUiLocalizationsZh([String locale = 'zh']) : super(locale);
 
   @override
   String get appTitle => '即时通讯组件库';
@@ -18,8 +18,8 @@ class SntoImUiLocalizationsZh extends SntoImUiLocalizations {
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
-class SntoImUiLocalizationsZhTw extends SntoImUiLocalizationsZh {
-  SntoImUiLocalizationsZhTw(): super('zh_TW');
+class ImUiLocalizationsZhTw extends ImUiLocalizationsZh {
+  ImUiLocalizationsZhTw(): super('zh_TW');
 
   @override
   String get appTitle => '即時通訊元件庫';

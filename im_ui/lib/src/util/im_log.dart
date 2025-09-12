@@ -1,6 +1,6 @@
 typedef CustomLogPrinter = Function(String level, String tag, String msg);
 
-class SntoLog {
+class IMLog {
   static CustomLogPrinter? _customLogPrinter;
 
   static void setCustomLogPrinter(CustomLogPrinter? printer) {

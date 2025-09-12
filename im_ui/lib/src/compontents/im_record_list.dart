@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:snto_im_ui/generated/intl/app_localizations.dart';
+import 'package:im_ui/generated/intl/app_localizations.dart';
 
 /// 记录列表组件
-class SntoRecordList extends StatefulWidget {
-  const SntoRecordList({super.key});
+class RecordList extends StatefulWidget {
+  const RecordList({super.key});
 
   @override
-  State<SntoRecordList> createState() => _SntoRecordListState();
+  State<RecordList> createState() => _RecordListState();
 }
 
-class _SntoRecordListState extends State<SntoRecordList> {
+class _RecordListState extends State<RecordList> {
   @override
   Widget build(BuildContext context) {
-    final S = SntoImUiLocalizations.of(context);
+    final S = ImUiLocalizations.of(context);
     return Container(
       decoration: BoxDecoration(color: Colors.yellowAccent),
       child: Text(

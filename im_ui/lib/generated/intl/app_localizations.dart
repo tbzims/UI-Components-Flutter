@@ -11,10 +11,10 @@ import 'app_localizations_zh.dart';
 
 // ignore_for_file: type=lint
 
-/// Callers can lookup localized strings with an instance of SntoImUiLocalizations
-/// returned by `SntoImUiLocalizations.of(context)`.
+/// Callers can lookup localized strings with an instance of ImUiLocalizations
+/// returned by `ImUiLocalizations.of(context)`.
 ///
-/// Applications need to include `SntoImUiLocalizations.delegate()` in their app's
+/// Applications need to include `ImUiLocalizations.delegate()` in their app's
 /// `localizationDelegates` list, and the locales they support in the app's
 /// `supportedLocales` list. For example:
 ///
@@ -22,8 +22,8 @@ import 'app_localizations_zh.dart';
 /// import 'intl/app_localizations.dart';
 ///
 /// return MaterialApp(
-///   localizationsDelegates: SntoImUiLocalizations.localizationsDelegates,
-///   supportedLocales: SntoImUiLocalizations.supportedLocales,
+///   localizationsDelegates: ImUiLocalizations.localizationsDelegates,
+///   supportedLocales: ImUiLocalizations.supportedLocales,
 ///   home: MyApplicationHome(),
 /// );
 /// ```
@@ -60,18 +60,18 @@ import 'app_localizations_zh.dart';
 /// Select and expand the newly-created Localizations item then, for each
 /// locale your application supports, add a new item and select the locale
 /// you wish to add from the pop-up menu in the Value field. This list should
-/// be consistent with the languages listed in the SntoImUiLocalizations.supportedLocales
+/// be consistent with the languages listed in the ImUiLocalizations.supportedLocales
 /// property.
-abstract class SntoImUiLocalizations {
-  SntoImUiLocalizations(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+abstract class ImUiLocalizations {
+  ImUiLocalizations(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
-  static SntoImUiLocalizations of(BuildContext context) {
-    return Localizations.of<SntoImUiLocalizations>(context, SntoImUiLocalizations)!;
+  static ImUiLocalizations of(BuildContext context) {
+    return Localizations.of<ImUiLocalizations>(context, ImUiLocalizations)!;
   }
 
-  static const LocalizationsDelegate<SntoImUiLocalizations> delegate = _SntoImUiLocalizationsDelegate();
+  static const LocalizationsDelegate<ImUiLocalizations> delegate = _ImUiLocalizationsDelegate();
 
   /// A list of this localizations delegate along with the default localizations
   /// delegates.
@@ -111,28 +111,28 @@ abstract class SntoImUiLocalizations {
   String appCount(Object count);
 }
 
-class _SntoImUiLocalizationsDelegate extends LocalizationsDelegate<SntoImUiLocalizations> {
-  const _SntoImUiLocalizationsDelegate();
+class _ImUiLocalizationsDelegate extends LocalizationsDelegate<ImUiLocalizations> {
+  const _ImUiLocalizationsDelegate();
 
   @override
-  Future<SntoImUiLocalizations> load(Locale locale) {
-    return SynchronousFuture<SntoImUiLocalizations>(lookupSntoImUiLocalizations(locale));
+  Future<ImUiLocalizations> load(Locale locale) {
+    return SynchronousFuture<ImUiLocalizations>(lookupImUiLocalizations(locale));
   }
 
   @override
   bool isSupported(Locale locale) => <String>['en', 'km', 'zh'].contains(locale.languageCode);
 
   @override
-  bool shouldReload(_SntoImUiLocalizationsDelegate old) => false;
+  bool shouldReload(_ImUiLocalizationsDelegate old) => false;
 }
 
-SntoImUiLocalizations lookupSntoImUiLocalizations(Locale locale) {
+ImUiLocalizations lookupImUiLocalizations(Locale locale) {
 
   // Lookup logic when language+country codes are specified.
   switch (locale.languageCode) {
     case 'zh': {
   switch (locale.countryCode) {
-    case 'TW': return SntoImUiLocalizationsZhTw();
+    case 'TW': return ImUiLocalizationsZhTw();
    }
   break;
    }
@@ -140,13 +140,13 @@ SntoImUiLocalizations lookupSntoImUiLocalizations(Locale locale) {
 
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
-    case 'en': return SntoImUiLocalizationsEn();
-    case 'km': return SntoImUiLocalizationsKm();
-    case 'zh': return SntoImUiLocalizationsZh();
+    case 'en': return ImUiLocalizationsEn();
+    case 'km': return ImUiLocalizationsKm();
+    case 'zh': return ImUiLocalizationsZh();
   }
 
   throw FlutterError(
-    'SntoImUiLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+    'ImUiLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
     'an issue with the localizations generation tool. Please file an issue '
     'on GitHub with a reproducible sample app and the gen-l10n configuration '
     'that was used.'

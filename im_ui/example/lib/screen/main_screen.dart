@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:snto_im_ui/snto_im_ui.dart';
+import 'package:im_ui/im_ui.dart';
 
 ///应用主页
 class MainScreen extends HookConsumerWidget {

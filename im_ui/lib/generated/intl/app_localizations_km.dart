@@ -5,8 +5,8 @@ import 'app_localizations.dart';
 // ignore_for_file: type=lint
 
 /// The translations for Khmer Central Khmer (`km`).
-class SntoImUiLocalizationsKm extends SntoImUiLocalizations {
-  SntoImUiLocalizationsKm([String locale = 'km']) : super(locale);
+class ImUiLocalizationsKm extends ImUiLocalizations {
+  ImUiLocalizationsKm([String locale = 'km']) : super(locale);
 
   @override
   String get appTitle => 'បណ្ណាល័យបង្កើតសមាសធាតុសារជជែក';
