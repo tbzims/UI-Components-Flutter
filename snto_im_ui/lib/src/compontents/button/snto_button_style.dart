@@ -137,6 +137,7 @@ class SntoButtonStyle {
       case ButtonStatus.active:
         return SntoTheme.of(context).brandClickColor;
       case ButtonStatus.disable:
+      case ButtonStatus.loading:
         return SntoTheme.of(context).brandDisabledColor;
     }
   }
@@ -145,6 +146,7 @@ class SntoButtonStyle {
     switch (status) {
       case ButtonStatus.defaultState:
       case ButtonStatus.disable:
+      case ButtonStatus.loading:
         return SntoTheme.of(context).brandLightColor;
       case ButtonStatus.active:
         return SntoTheme.of(context).brandFocusColor;
@@ -158,6 +160,7 @@ class SntoButtonStyle {
       case ButtonStatus.active:
         return SntoTheme.of(context).errorClickColor;
       case ButtonStatus.disable:
+      case ButtonStatus.loading:
         return SntoTheme.of(context).errorDisabledColor;
     }
   }
@@ -169,6 +172,7 @@ class SntoButtonStyle {
       case ButtonStatus.active:
         return SntoTheme.of(context).grayColor5;
       case ButtonStatus.disable:
+      case ButtonStatus.loading:
         return SntoTheme.of(context).grayColor2;
     }
   }
@@ -179,6 +183,7 @@ class SntoButtonStyle {
       case ButtonStatus.active:
         return SntoTheme.of(context).fontGyColor1;
       case ButtonStatus.disable:
+      case ButtonStatus.loading:
         return SntoTheme.of(context).fontGyColor4;
     }
   }
@@ -190,6 +195,7 @@ class SntoButtonStyle {
       case ButtonStatus.active:
         return SntoTheme.of(context).grayColor3;
       case ButtonStatus.disable:
+      case ButtonStatus.loading:
         return SntoTheme.of(context).grayColor2;
     }
   }

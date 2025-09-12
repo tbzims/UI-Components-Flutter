@@ -3,19 +3,82 @@ import '../../theme/snto_colors.dart';
 import '../../theme/snto_theme.dart';
 import 'snto_button_style.dart';
 
-enum ButtonSize { large, medium, small, extraSmall }
+/// 定义按钮的显示样式类型
+enum ButtonType {
+  /// 填充型按钮 - 背景色填充整个按钮区域
+  fill,
 
-enum ButtonType { fill, outline, text }
+  /// 描边型按钮 - 带边框，背景透明或半透明
+  outline,
 
-enum ButtonShape { rectangle, round, square, circle, filled }
+  /// 文字型按钮 - 仅显示文字，无背景和边框
+  text,
+}
 
-enum SntoButtonTheme { defaultTheme, primary, danger, light }
+/// 定义按钮的外观形状
+enum ButtonShape {
+  /// 矩形按钮 - 带有较小圆角的矩形
+  rectangle,
 
-enum ButtonStatus { defaultState, active, disable }
+  /// 圆角按钮 - 带有较大圆角的矩形（胶囊形状）
+  round,
 
-enum ButtonIconPosition { left, right, top, bottom }
+  /// 方形按钮 - 几乎无圆角的矩形
+  square,
 
-typedef ButtonEvent = void Function();
+  /// 圆形按钮 - 完全圆形
+  circle,
+
+  /// 填充按钮 - 无圆角，通常用于填充容器
+  filled,
+}
+
+/// 定义按钮的颜色主题风格
+enum SntoButtonTheme {
+  /// 默认主题 - 使用默认的颜色方案
+  defaultTheme,
+
+  /// 主要主题 - 使用主要操作的颜色方案（通常为品牌色）
+  primary,
+
+  /// 危险主题 - 使用危险操作的颜色方案（通常为红色）
+  danger,
+
+  /// 浅色主题 - 使用浅色系的颜色方案
+  light,
+}
+
+/// 定义按钮的不同交互状态
+enum ButtonStatus {
+  /// 默认状态 - 按钮处于正常未交互状态
+  defaultState,
+
+  /// 激活状态 - 按钮被按下或处于激活状态
+  active,
+
+  /// 禁用状态 - 按钮被禁用，无法交互
+  disable,
+
+  /// 加载状态 - 按钮正在执行异步操作
+  loading,
+}
+
+/// 定义图标相对于文字的位置
+enum ButtonIconPosition {
+  /// 图标在左侧
+  left,
+
+  /// 图标在右侧
+  right,
+
+  /// 图标在上方
+  top,
+
+  /// 图标在下方
+  bottom,
+}
+
+typedef ButtonEvent = Future<void> Function();
 
 class SntoButton extends StatefulWidget {
   const SntoButton({
@@ -41,6 +104,9 @@ class SntoButton extends StatefulWidget {
     this.margin,
     this.padding,
     this.iconPosition = ButtonIconPosition.left,
+    this.showLoading = false,
+    this.loadingSize = 20,
+    this.loading,
   });
 
   /// 自控件
@@ -106,12 +172,23 @@ class SntoButton extends StatefulWidget {
   /// 自定义margin
   final EdgeInsets? margin;
 
+  /// 是否展示加载中
+  final bool showLoading;
+
+  /// 加载中图标大小
+  final double loadingSize;
+
+  /// 自定义Loading
+  final Widget? loading;
+
   @override
   State<SntoButton> createState() => _SntoButtonState();
 }
 
 class _SntoButtonState extends State<SntoButton> {
   ButtonStatus _buttonStatus = ButtonStatus.defaultState;
+
+  bool _isLoading = false;
 
   /// 默认样式
   SntoButtonStyle? _innerDefaultStyle;
@@ -148,6 +225,7 @@ class _SntoButtonState extends State<SntoButton> {
       case ButtonStatus.active:
         return _activeStyle;
       case ButtonStatus.disable:
+      case ButtonStatus.loading:
         return _disableStyle;
     }
   }
@@ -182,16 +260,67 @@ class _SntoButtonState extends State<SntoButton> {
         border: _getBorder(context),
         borderRadius: style.radius ?? BorderRadius.all(_getRadius()),
       ),
-      child: widget.child ?? _getChild(),
+      child:
+          _isLoading
+              ? SizedBox(
+                width: widget.loadingSize,
+                height: widget.loadingSize,
+                child: widget.loading ?? _getLoading(),
+              )
+              : widget.child ?? _getChild(),
     );
     if (widget.disabled) {
       return display;
     }
     return GestureDetector(
-      onTap: widget.onTap,
-      onLongPress: widget.onLongPress,
+      onTap: () => onTap(widget.onTap),
+      onLongPress: () => onTap(widget.onLongPress),
+      onTapDown: (_) {
+        if (widget.disabled || _isLoading) {
+          return;
+        }
+        setState(() {
+          _buttonStatus = ButtonStatus.active;
+        });
+      },
+      onTapUp: (_) {
+        if(widget.showLoading) return;
+        Future.delayed(const Duration(milliseconds: 100), () {
+          if (mounted && (!widget.disabled || _isLoading)) {
+            setState(() {
+              _buttonStatus = ButtonStatus.defaultState;
+            });
+          }
+        });
+      },
+      onTapCancel: () {
+        if (widget.disabled || widget.showLoading) return;
+        if (mounted) {
+          setState(() {
+            _buttonStatus = ButtonStatus.defaultState;
+          });
+        }
+      },
       child: display,
     );
+  }
+
+  /// 点击方法
+  Future<void> onTap(ButtonEvent? onTap) async {
+    if (_isLoading || widget.disabled) return;
+    if (widget.showLoading && mounted) {
+      setState(() {
+        _buttonStatus = ButtonStatus.loading;
+        _isLoading = true;
+      });
+    }
+    if (onTap != null) await onTap();
+    if (widget.showLoading && mounted) {
+      setState(() {
+        _buttonStatus = ButtonStatus.defaultState;
+        _isLoading = false;
+      });
+    }
   }
 
   SntoButtonStyle get _defaultStyle {
@@ -262,6 +391,10 @@ class _SntoButtonState extends State<SntoButton> {
       case ButtonShape.filled:
         return Radius.zero;
     }
+  }
+
+  Widget _getLoading() {
+    return CircularProgressIndicator(color: style.textColor, strokeWidth: 2);
   }
 
   Widget _getChild() {
