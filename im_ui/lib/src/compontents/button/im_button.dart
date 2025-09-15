@@ -253,12 +253,19 @@ class _IMButtonState extends State<IMButton> {
       width: widget.width,
       height: widget.height,
       alignment: _alignment,
-      padding: widget.padding ?? EdgeInsets.all(20),
+      padding: widget.padding ?? EdgeInsets.all(10),
       margin: widget.margin,
       decoration: BoxDecoration(
         color: style.backgroundColor,
         border: _getBorder(context),
-        borderRadius: style.radius ?? BorderRadius.all(_getRadius()),
+        shape:
+            widget.shape == ButtonShape.circle
+                ? BoxShape.circle
+                : BoxShape.rectangle,
+        borderRadius:
+            widget.shape == ButtonShape.circle
+                ? null
+                : style.radius ?? BorderRadius.all(_getRadius()),
       ),
       child:
           _isLoading
@@ -284,7 +291,7 @@ class _IMButtonState extends State<IMButton> {
         });
       },
       onTapUp: (_) {
-        if(widget.showLoading) return;
+        if (widget.showLoading) return;
         Future.delayed(const Duration(milliseconds: 100), () {
           if (mounted && (!widget.disabled || _isLoading)) {
             setState(() {
@@ -383,12 +390,12 @@ class _IMButtonState extends State<IMButton> {
   Radius _getRadius() {
     switch (widget.shape) {
       case ButtonShape.rectangle:
-      case ButtonShape.square:
         return Radius.circular(10);
       case ButtonShape.round:
       case ButtonShape.circle:
         return Radius.circular(9999);
       case ButtonShape.filled:
+      case ButtonShape.square:
         return Radius.zero;
     }
   }
