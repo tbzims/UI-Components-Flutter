@@ -49,6 +49,8 @@ class ButtonPage extends StatelessWidget {
               IMButton(
                 text: '加载中按钮',
                 type: ButtonType.fill,
+                width: 110,
+                height: 42,
                 theme: IMButtonTheme.primary,
                 showLoading: true,
                 onTap: () async{

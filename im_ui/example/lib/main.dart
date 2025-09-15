@@ -37,7 +37,7 @@ class _MyAppState extends State<MyApp> {
     IMTheme.needMultiTheme();
     return MaterialApp(
       title: 'UI Component',
-      // 初始化国际化
+      // 初始化国际化 (添加语言后使用 flutter gen-l10n 更多语言)
       localizationsDelegates: ImUiLocalizations.localizationsDelegates,
       supportedLocales: ImUiLocalizations.supportedLocales,
       locale: _locale,

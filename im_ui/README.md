@@ -1,12 +1,10 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# IM UI
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages).
+一个 Flutter 即时通讯 UI 组件库，提供丰富的 UI 组件和功能，包括多主题支持、多语言支持和各种常用组件。
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages).
--->
+## 功能特性
+
+- 🎨 多主题支持：轻松切换浅色/深色主题或其他自定义主题
+- 🌍 多语言支持：内置中英文等多种语言支持，可扩展
+- 🧱 丰富的 UI 组件：包括按钮、列表等常用组件
+- 📱 响应式设计：适配不同屏幕尺寸的设备

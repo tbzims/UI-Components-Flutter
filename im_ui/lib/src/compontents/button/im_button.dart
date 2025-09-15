@@ -3,6 +3,18 @@ import '../../theme/im_colors.dart';
 import '../../theme/im_theme.dart';
 import 'im_button_style.dart';
 
+/// 定义按钮尺寸
+enum IMButtonSize {
+  /// 小尺寸按钮
+  small,
+
+  /// 中等尺寸按钮（默认）
+  medium,
+
+  /// 大尺寸按钮
+  large,
+}
+
 /// 定义按钮的显示样式类型
 enum ButtonType {
   /// 填充型按钮 - 背景色填充整个按钮区域
@@ -78,6 +90,39 @@ enum ButtonIconPosition {
   bottom,
 }
 
+/// IMButton 常量定义
+class IMButtonConstants {
+  /// 默认内边距
+  static const double defaultPadding = 10.0;
+
+  /// 默认边框圆角
+  static const double defaultBorderRadius = 10.0;
+
+  /// 圆形按钮的圆角值
+  static const double circleBorderRadius = 9999.0;
+
+  /// 默认加载图标大小
+  static const double defaultLoadingSize = 20.0;
+
+  /// 默认加载图标线宽
+  static const double defaultLoadingStrokeWidth = 2.0;
+
+  /// 默认图标大小
+  static const double defaultIconSize = 30.0;
+
+  /// 默认图标与文本间距
+  static const double defaultIconTextSpacing = 8.0;
+
+  /// 默认字体大小
+  static const double defaultFontSize = 16.0;
+
+  /// 小按钮尺寸的缩放因子
+  static const double smallSizeFactor = 0.8;
+
+  /// 大按钮尺寸的缩放因子
+  static const double largeSizeFactor = 1.2;
+}
+
 typedef ButtonEvent = Future<void> Function();
 
 class IMButton extends StatefulWidget {
@@ -87,6 +132,7 @@ class IMButton extends StatefulWidget {
     this.type = ButtonType.fill,
     this.shape = ButtonShape.rectangle,
     this.theme,
+    this.size = IMButtonSize.medium,
     this.child,
     this.disabled = false,
     this.style,
@@ -105,8 +151,9 @@ class IMButton extends StatefulWidget {
     this.padding,
     this.iconPosition = ButtonIconPosition.left,
     this.showLoading = false,
-    this.loadingSize = 20,
+    this.loadingSize = IMButtonConstants.defaultLoadingSize,
     this.loading,
+    this.useMaterialInk = false,
   });
 
   /// 自控件
@@ -130,10 +177,14 @@ class IMButton extends StatefulWidget {
   /// 形状：圆角，胶囊，方形，圆形，填充
   final ButtonShape shape;
 
+  /// 按钮尺寸：小、中、大
+  final IMButtonSize size;
+
   /// 主题
   final IMButtonTheme? theme;
 
-  /// 自定义样式，有则优先用它，没有则根据type和theme选取.如果设置了style,则activeStyle和disableStyle也应该设置
+  /// 自定义样式，有则优先用它，没有则根据type和theme选取.
+  /// 如果设置了style,则activeStyle和disableStyle也应该设置
   final IMButtonStyle? style;
 
   /// 自定义点击样式，有则优先用它，没有则根据type和theme选取
@@ -181,6 +232,9 @@ class IMButton extends StatefulWidget {
   /// 自定义Loading
   final Widget? loading;
 
+  //TODO 是否使用 Material Design 的水波纹效果
+  final bool useMaterialInk;
+
   @override
   State<IMButton> createState() => _IMButtonState();
 }
@@ -205,6 +259,12 @@ class _IMButtonState extends State<IMButton> {
   /// 对齐方式
   Alignment? _alignment;
 
+  /// 缓存的样式
+  IMButtonStyle? _cachedStyle;
+
+  /// 缓存的样式状态
+  ButtonStatus? _cachedStatus;
+
   /// 更新参数
   void _updateParams() async {
     _buttonStatus =
@@ -216,18 +276,39 @@ class _IMButtonState extends State<IMButton> {
     if (widget.text != null) {
       _textStyle = widget.disabled ? widget.disableTextStyle : widget.textStyle;
     }
+
+    // 清除缓存样式
+    _cachedStyle = null;
+    _cachedStatus = null;
   }
 
+  /// 获取当前状态下的样式，使用缓存优化性能
   IMButtonStyle get style {
+    // 如果缓存的样式与当前状态一致，则直接返回缓存的样式
+    if (_cachedStyle != null && _cachedStatus == _buttonStatus) {
+      return _cachedStyle!;
+    }
+
+    // 根据状态获取对应样式
+    IMButtonStyle result;
     switch (_buttonStatus) {
       case ButtonStatus.defaultState:
-        return _defaultStyle;
+        result = _defaultStyle;
+        break;
       case ButtonStatus.active:
-        return _activeStyle;
+        result = _activeStyle;
+        break;
       case ButtonStatus.disable:
       case ButtonStatus.loading:
-        return _disableStyle;
+        result = _disableStyle;
+        break;
     }
+
+    // 缓存结果
+    _cachedStyle = result;
+    _cachedStatus = _buttonStatus;
+
+    return result;
   }
 
   @override
@@ -253,7 +334,8 @@ class _IMButtonState extends State<IMButton> {
       width: widget.width,
       height: widget.height,
       alignment: _alignment,
-      padding: widget.padding ?? EdgeInsets.all(10),
+      padding:
+          widget.padding ?? EdgeInsets.all(IMButtonConstants.defaultPadding),
       margin: widget.margin,
       decoration: BoxDecoration(
         color: style.backgroundColor,
@@ -269,16 +351,16 @@ class _IMButtonState extends State<IMButton> {
       ),
       child:
           _isLoading
-              ? SizedBox(
-                width: widget.loadingSize,
-                height: widget.loadingSize,
-                child: widget.loading ?? _getLoading(),
+              ? UnconstrainedBox(
+                child: SizedBox(
+                  width: widget.loadingSize,
+                  height: widget.loadingSize,
+                  child: widget.loading ?? _getLoading(),
+                ),
               )
               : widget.child ?? _getChild(),
     );
-    if (widget.disabled) {
-      return display;
-    }
+    // 使用 GestureDetector 处理手势
     return GestureDetector(
       onTap: () => onTap(widget.onTap),
       onLongPress: () => onTap(widget.onLongPress),
@@ -312,7 +394,7 @@ class _IMButtonState extends State<IMButton> {
     );
   }
 
-  /// 点击方法
+  /// 点击方法，添加错误处理确保状态正确恢复
   Future<void> onTap(ButtonEvent? onTap) async {
     if (_isLoading || widget.disabled) return;
     if (widget.showLoading && mounted) {
@@ -321,12 +403,17 @@ class _IMButtonState extends State<IMButton> {
         _isLoading = true;
       });
     }
-    if (onTap != null) await onTap();
-    if (widget.showLoading && mounted) {
-      setState(() {
-        _buttonStatus = ButtonStatus.defaultState;
-        _isLoading = false;
-      });
+
+    try {
+      if (onTap != null) await onTap();
+    } finally {
+      // 确保即使异步操作出错也能正确恢复状态
+      if (widget.showLoading && mounted) {
+        setState(() {
+          _buttonStatus = ButtonStatus.defaultState;
+          _isLoading = false;
+        });
+      }
     }
   }
 
@@ -364,6 +451,7 @@ class _IMButtonState extends State<IMButton> {
     return null;
   }
 
+  /// 生成内部样式，添加默认返回值提高代码健壮性
   IMButtonStyle _generateInnerStyle() {
     switch (widget.type) {
       case ButtonType.fill:
@@ -387,21 +475,26 @@ class _IMButtonState extends State<IMButton> {
     }
   }
 
+  /// 获取圆角半径，使用常量替代魔法数字
   Radius _getRadius() {
     switch (widget.shape) {
       case ButtonShape.rectangle:
-        return Radius.circular(10);
+        return Radius.circular(IMButtonConstants.defaultBorderRadius);
       case ButtonShape.round:
       case ButtonShape.circle:
-        return Radius.circular(9999);
+        return Radius.circular(IMButtonConstants.circleBorderRadius);
       case ButtonShape.filled:
       case ButtonShape.square:
         return Radius.zero;
     }
   }
 
+  /// 获取加载指示器，使用常量
   Widget _getLoading() {
-    return CircularProgressIndicator(color: style.textColor, strokeWidth: 2);
+    return CircularProgressIndicator(
+      color: style.textColor,
+      strokeWidth: IMButtonConstants.defaultLoadingStrokeWidth,
+    );
   }
 
   Widget _getChild() {
@@ -423,7 +516,7 @@ class _IMButtonState extends State<IMButton> {
             _textStyle ??
             TextStyle(
               color: style.textColor,
-              fontSize: 16,
+              fontSize: IMButtonConstants.defaultFontSize * _getSizeFactor(),
               fontWeight: FontWeight.w500,
               decoration: TextDecoration.none,
             ),
@@ -437,7 +530,14 @@ class _IMButtonState extends State<IMButton> {
     }
 
     if (children.length == 2) {
-      children.insert(1, SizedBox(width: widget.iconTextSpacing ?? 8));
+      children.insert(
+        1,
+        SizedBox(
+          width:
+              widget.iconTextSpacing ??
+              IMButtonConstants.defaultIconTextSpacing,
+        ),
+      );
     }
     return widget.iconPosition == ButtonIconPosition.left ||
             widget.iconPosition == ButtonIconPosition.right
@@ -453,6 +553,18 @@ class _IMButtonState extends State<IMButton> {
         );
   }
 
+  /// 根据按钮尺寸获取缩放因子
+  double _getSizeFactor() {
+    switch (widget.size) {
+      case IMButtonSize.small:
+        return IMButtonConstants.smallSizeFactor;
+      case IMButtonSize.large:
+        return IMButtonConstants.largeSizeFactor;
+      case IMButtonSize.medium:
+        return 1.0;
+    }
+  }
+
   Widget? getIcon() {
     if (widget.iconWidget != null) {
       return widget.iconWidget;
@@ -466,7 +578,7 @@ class _IMButtonState extends State<IMButton> {
             inherit: false,
             color: style.textColor,
             height: 1,
-            fontSize: 30,
+            fontSize: IMButtonConstants.defaultIconSize * _getSizeFactor(),
             fontFamily: widget.icon!.fontFamily,
             package: widget.icon!.fontPackage,
           ),
