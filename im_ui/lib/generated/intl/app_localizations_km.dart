@@ -15,4 +15,7 @@ class ImUiLocalizationsKm extends ImUiLocalizations {
   String appCount(Object count) {
     return 'ចំនួនកម្មវិធីគឺ $count';
   }
+
+  @override
+  String get language => 'ភាសា';
 }

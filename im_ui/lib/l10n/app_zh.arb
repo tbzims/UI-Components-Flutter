@@ -1,4 +1,5 @@
 {
     "appTitle": "即时通讯组件库",
-    "appCount": "应用数量是{count}"
+    "appCount": "应用数量是{count}",
+    "language" : "语言"
 }

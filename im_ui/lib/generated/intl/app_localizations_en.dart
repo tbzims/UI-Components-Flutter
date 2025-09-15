@@ -15,4 +15,7 @@ class ImUiLocalizationsEn extends ImUiLocalizations {
   String appCount(Object count) {
     return 'app count$count';
   }
+
+  @override
+  String get language => 'Language';
 }

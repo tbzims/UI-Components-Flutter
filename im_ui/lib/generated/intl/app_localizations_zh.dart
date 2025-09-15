@@ -15,11 +15,14 @@ class ImUiLocalizationsZh extends ImUiLocalizations {
   String appCount(Object count) {
     return '应用数量是$count';
   }
+
+  @override
+  String get language => '语言';
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
 class ImUiLocalizationsZhTw extends ImUiLocalizationsZh {
-  ImUiLocalizationsZhTw() : super('zh_TW');
+  ImUiLocalizationsZhTw(): super('zh_TW');
 
   @override
   String get appTitle => '即時通訊元件庫';
@@ -28,4 +31,7 @@ class ImUiLocalizationsZhTw extends ImUiLocalizationsZh {
   String appCount(Object count) {
     return '應用數量為 $count';
   }
+
+  @override
+  String get language => '語言';
 }
