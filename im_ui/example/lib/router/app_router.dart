@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../page/base_components/button.dart';
+import '../page/base_components/button_page.dart';
+import '../page/base_components/loading_page.dart';
 
 class RouterName{
   static const String home = '/';
   static const String button = '/button';
-  static const String contact = '/contact';
+  static const String loading = '/loading';
   static const String profile = '/profile';
 }
 
@@ -22,9 +23,9 @@ class AppRouter {
           builder: (_) => const ButtonPage(),
           settings: settings,
         );
-      case RouterName.contact:
+      case RouterName.loading:
         return MaterialPageRoute(
-          builder: (_) => const ContactScreen(),
+          builder: (_) => const LoadingPage(),
           settings: settings,
         );
       case RouterName.profile:

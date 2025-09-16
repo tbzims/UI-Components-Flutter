@@ -1,5 +1,6 @@
 {
     "appTitle" : "IM UI",
     "appCount" : "app count{count}",
-    "language" : "Language"
+    "language" : "Language",
+    "loading": "Loading..."
 }

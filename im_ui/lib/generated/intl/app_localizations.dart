@@ -115,6 +115,12 @@ abstract class ImUiLocalizations {
   /// In en, this message translates to:
   /// **'Language'**
   String get language;
+
+  /// No description provided for @loading.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading...'**
+  String get loading;
 }
 
 class _ImUiLocalizationsDelegate extends LocalizationsDelegate<ImUiLocalizations> {

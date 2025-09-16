@@ -18,4 +18,7 @@ class ImUiLocalizationsKm extends ImUiLocalizations {
 
   @override
   String get language => 'ភាសា';
+
+  @override
+  String get loading => 'កំពុងផ្ទុក...';
 }

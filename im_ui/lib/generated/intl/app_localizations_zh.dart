@@ -18,6 +18,9 @@ class ImUiLocalizationsZh extends ImUiLocalizations {
 
   @override
   String get language => '语言';
+
+  @override
+  String get loading => '加载中...';
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
@@ -34,4 +37,7 @@ class ImUiLocalizationsZhTw extends ImUiLocalizationsZh {
 
   @override
   String get language => '語言';
+
+  @override
+  String get loading => '載入中...';
 }

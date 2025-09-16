@@ -1,5 +1,6 @@
 {
-    "appTitle": "即时通讯组件库",
-    "appCount": "应用数量是{count}",
-    "language" : "语言"
+  "appTitle": "即时通讯组件库",
+  "appCount": "应用数量是{count}",
+  "language": "语言",
+  "loading": "加载中..."
 }

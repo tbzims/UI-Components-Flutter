@@ -12,6 +12,12 @@ import 'im_theme.dart';
 /// TDesign主题包含的颜色，这是一个大而全的色值。业务可以选择自己自己需要的色值进行二次封装，方便使用。
 /// 不过有的色值是内部使用的，必传，否则可能显示异常。
 extension IMColors on IMThemeData {
+
+  /// 主色调
+  Color get primary => colorMap['brandColor5'] ?? const Color(0xFF618DFF);
+
+  /// 文字色
+  Color get textColor => colorMap['brandClickColor'] ?? const Color(0xFF1E1E1E);
   /// 功能色组----------------------------------------------------
 
   ///#F2F3FF
@@ -26,8 +32,7 @@ extension IMColors on IMThemeData {
   ///#8EABFF
   Color get brandColor4 => colorMap['brandColor4'] ?? const Color(0xFF8EABFF);
 
-  ///#618DFF
-  Color get brandColor5 => colorMap['brandColor5'] ?? const Color(0xFF618DFF);
+
 
   ///#366EF4
   Color get brandColor6 => colorMap['brandColor6'] ?? const Color(0xFF366EF4);

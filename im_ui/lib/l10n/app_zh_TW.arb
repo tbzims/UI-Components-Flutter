@@ -1,5 +1,6 @@
 {
-    "appTitle": "即時通訊元件庫",
-    "appCount": "應用數量為 {count}",
-    "language" : "語言"
+  "appTitle": "即時通訊元件庫",
+  "appCount": "應用數量為 {count}",
+  "language": "語言",
+  "loading": "載入中..."
 }

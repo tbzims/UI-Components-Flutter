@@ -63,6 +63,7 @@ class MyHomePage extends StatelessWidget {
 
   final List<Map<String, dynamic>> data = [
     {'title': 'button', 'page': RouterName.button},
+    {'title': 'loading', 'page': RouterName.loading},
   ];
 
   /// 语言列表
