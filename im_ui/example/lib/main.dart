@@ -64,6 +64,9 @@ class MyHomePage extends StatelessWidget {
   final List<Map<String, dynamic>> data = [
     {'title': 'button', 'page': RouterName.button},
     {'title': 'loading', 'page': RouterName.loading},
+    {'title': 'recordListBasic', 'page': RouterName.recordListBasic},
+    {'title': 'recordListRefresh', 'page': RouterName.recordListRefresh},
+    {'title': 'recordListIndexed', 'page': RouterName.recordListIndexed},
   ];
 
   /// 语言列表
@@ -160,7 +163,7 @@ class MyHomePage extends StatelessWidget {
                       title: Text(languages[index]['name']),
                       onTap: () {
                         onLanguageChanged(languages[index]['locale']);
-                        Navigator.of(context).pop();
+                        Navigator.pop(context);
                       },
                     );
                   },

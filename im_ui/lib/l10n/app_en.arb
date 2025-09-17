@@ -2,5 +2,15 @@
     "appTitle" : "IM UI",
     "appCount" : "app count{count}",
     "language" : "Language",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "pullToRefresh": "Pull to refresh",
+    "releaseToRefresh": "Release to refresh",
+    "refreshing": "Refreshing...",
+    "refreshSuccess": "Refresh success",
+    "refreshFailed": "Refresh failed",
+    "pullToLoad": "Pull to load more",
+    "releaseToLoad": "Release to load more",
+    "loadSuccess": "Load success",
+    "loadFailed": "Load failed",
+    "noMore": "No more data"
 }

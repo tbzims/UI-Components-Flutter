@@ -21,11 +21,41 @@ class ImUiLocalizationsZh extends ImUiLocalizations {
 
   @override
   String get loading => '加载中...';
+
+  @override
+  String get pullToRefresh => '下拉刷新';
+
+  @override
+  String get releaseToRefresh => '松手刷新';
+
+  @override
+  String get refreshing => '刷新中...';
+
+  @override
+  String get refreshSuccess => '刷新成功';
+
+  @override
+  String get refreshFailed => '刷新失败';
+
+  @override
+  String get pullToLoad => '上拉加载更多';
+
+  @override
+  String get releaseToLoad => '松手加载更多';
+
+  @override
+  String get loadSuccess => '加载成功';
+
+  @override
+  String get loadFailed => '加载失败';
+
+  @override
+  String get noMore => '没有更多数据';
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
 class ImUiLocalizationsZhTw extends ImUiLocalizationsZh {
-  ImUiLocalizationsZhTw(): super('zh_TW');
+  ImUiLocalizationsZhTw() : super('zh_TW');
 
   @override
   String get appTitle => '即時通訊元件庫';
@@ -40,4 +70,34 @@ class ImUiLocalizationsZhTw extends ImUiLocalizationsZh {
 
   @override
   String get loading => '載入中...';
+
+  @override
+  String get pullToRefresh => '下拉重新整理';
+
+  @override
+  String get releaseToRefresh => '放開重新整理';
+
+  @override
+  String get refreshing => '重新整理中...';
+
+  @override
+  String get refreshSuccess => '重新整理成功';
+
+  @override
+  String get refreshFailed => '重新整理失敗';
+
+  @override
+  String get pullToLoad => '上拉載入更多';
+
+  @override
+  String get releaseToLoad => '放開載入更多';
+
+  @override
+  String get loadSuccess => '載入成功';
+
+  @override
+  String get loadFailed => '載入失敗';
+
+  @override
+  String get noMore => '沒有更多資料';
 }

@@ -21,4 +21,34 @@ class ImUiLocalizationsEn extends ImUiLocalizations {
 
   @override
   String get loading => 'Loading...';
+
+  @override
+  String get pullToRefresh => 'Pull to refresh';
+
+  @override
+  String get releaseToRefresh => 'Release to refresh';
+
+  @override
+  String get refreshing => 'Refreshing...';
+
+  @override
+  String get refreshSuccess => 'Refresh success';
+
+  @override
+  String get refreshFailed => 'Refresh failed';
+
+  @override
+  String get pullToLoad => 'Pull to load more';
+
+  @override
+  String get releaseToLoad => 'Release to load more';
+
+  @override
+  String get loadSuccess => 'Load success';
+
+  @override
+  String get loadFailed => 'Load failed';
+
+  @override
+  String get noMore => 'No more data';
 }
