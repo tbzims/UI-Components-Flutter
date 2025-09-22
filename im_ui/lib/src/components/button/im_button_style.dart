@@ -8,195 +8,128 @@ class IMButtonStyle {
   Color? backgroundColor;
 
   /// 边框颜色
-  Color? frameColor;
+  Color? borderColor;
 
   /// 文字颜色
   Color? textColor;
 
   /// 边框宽度
-  double? frameWidth;
+  double? borderWidth;
 
   /// 自定义圆角
-  BorderRadiusGeometry? radius;
+  BorderRadiusGeometry? borderRadius;
 
   IMButtonStyle({
     this.backgroundColor,
-    this.frameColor,
+    this.borderColor,
     this.textColor,
-    this.frameWidth,
-    this.radius,
+    this.borderWidth,
+    this.borderRadius,
   });
 
-  /// 生成不同主题的填充按钮样式
-  IMButtonStyle.generateFillStyleByTheme(
+  /// 创建填充样式
+  static IMButtonStyle fill({
+    Color? backgroundColor,
+    Color? textColor,
+    BorderRadiusGeometry? borderRadius,
+  }) {
+    return IMButtonStyle(
+      backgroundColor: backgroundColor,
+      textColor: textColor,
+      borderRadius: borderRadius,
+    );
+  }
+
+  /// 创建边框样式
+  static IMButtonStyle border({
+    Color? borderColor,
+    Color? textColor,
+    double? borderWidth,
+    BorderRadiusGeometry? borderRadius,
+  }) {
+    return IMButtonStyle(
+      borderColor: borderColor,
+      textColor: textColor,
+      borderWidth: borderWidth ?? 1.0,
+      borderRadius: borderRadius,
+    );
+  }
+
+  /// 创建文本样式
+  static IMButtonStyle text({
+    Color? textColor,
+  }) {
+    return IMButtonStyle(
+      textColor: textColor,
+    );
+  }
+
+  /// 根据主题和按钮类型生成默认样式
+  static IMButtonStyle generateStyleByTheme(
     BuildContext context,
-    IMButtonTheme? theme,
-    ButtonStatus status,
+    IMButtonType type,
+    IMButtonStatus status,
   ) {
-    switch (theme) {
-      case IMButtonTheme.primary:
-        textColor = IMTheme.of(context).brand1;
-        backgroundColor = _getBrandColor(context, status);
-        break;
-      case IMButtonTheme.danger:
-        textColor = IMTheme.of(context).brand1;
-        backgroundColor = _getErrorColor(context, status);
-        break;
-      case IMButtonTheme.light:
-        textColor = _getBrandColor(context, status);
-        backgroundColor = _getLightColor(context, status);
-        break;
-      case IMButtonTheme.defaultTheme:
-      default:
-        textColor = _getDefaultTextColor(context, status);
-        backgroundColor = _getDefaultBgColor(context, status);
-    }
-    frameColor = backgroundColor;
-  }
+    final theme = IMTheme.of(context);
 
-  /// 生成不同主题的描边按钮样式
-  IMButtonStyle.generateOutlineStyleByTheme(
-    BuildContext context,
-    IMButtonTheme? theme,
-    ButtonStatus status,
-  ) {
-    switch (theme) {
-      case IMButtonTheme.primary:
-        textColor = _getBrandColor(context, status);
-        backgroundColor =
-            status == ButtonStatus.active
-                ? IMTheme.of(context).fontGyColor1
-                : IMTheme.of(context).fontGyColor1;
-        frameColor = textColor;
-        break;
-      case IMButtonTheme.danger:
-        textColor = _getErrorColor(context, status);
-        backgroundColor =
-            status == ButtonStatus.active
-                ? IMTheme.of(context).fontGyColor1
-                : IMTheme.of(context).fontGyColor1;
-        frameColor = textColor;
-        break;
-      case IMButtonTheme.light:
-        textColor = _getBrandColor(context, status);
-        backgroundColor = _getLightColor(context, status);
-        frameColor = textColor;
-        break;
-      case IMButtonTheme.defaultTheme:
-      default:
-        textColor = _getDefaultTextColor(context, status);
-        backgroundColor = _getOutlineDefaultBgColor(context, status);
-        frameColor = IMTheme.of(context).fontGyColor1;
-    }
-    frameWidth = 1;
-  }
-
-  /// 生成不同主题的文本按钮样式
-  IMButtonStyle.generateTextStyleByTheme(
-    BuildContext context,
-    IMButtonTheme? theme,
-    ButtonStatus status,
-  ) {
-    switch (theme) {
-      case IMButtonTheme.primary:
-        textColor = _getBrandColor(context, status);
-        backgroundColor =
-            status == ButtonStatus.active
-                ? IMTheme.of(context).fontGyColor1
-                : Colors.transparent;
-        break;
-      case IMButtonTheme.danger:
-        textColor = _getErrorColor(context, status);
-        backgroundColor =
-            status == ButtonStatus.active
-                ? IMTheme.of(context).fontGyColor1
-                : Colors.transparent;
-        break;
-      case IMButtonTheme.light:
-        textColor = _getBrandColor(context, status);
-        backgroundColor =
-            status == ButtonStatus.active
-                ? IMTheme.of(context).fontGyColor1
-                : Colors.transparent;
-        break;
-      case IMButtonTheme.defaultTheme:
-      default:
-        textColor = _getDefaultTextColor(context, status);
-        backgroundColor =
-            status == ButtonStatus.active
-                ? IMTheme.of(context).fontGyColor1
-                : Colors.transparent;
-    }
-    frameColor = backgroundColor;
-  }
-
-  Color _getBrandColor(BuildContext context, ButtonStatus status) {
-    switch (status) {
-      case ButtonStatus.defaultState:
-        return IMTheme.of(context).brand1;
-      case ButtonStatus.active:
-        return IMTheme.of(context).brand1;
-      case ButtonStatus.disable:
-      case ButtonStatus.loading:
-        return IMTheme.of(context).brand1;
-    }
-  }
-
-  Color _getLightColor(BuildContext context, ButtonStatus status) {
-    switch (status) {
-      case ButtonStatus.defaultState:
-      case ButtonStatus.disable:
-      case ButtonStatus.loading:
-        return IMTheme.of(context).brand1;
-      case ButtonStatus.active:
-        return IMTheme.of(context).brand1;
-    }
-  }
-
-  Color _getErrorColor(BuildContext context, ButtonStatus status) {
-    switch (status) {
-      case ButtonStatus.defaultState:
-        return IMTheme.of(context).brand1;
-      case ButtonStatus.active:
-        return IMTheme.of(context).brand1;
-      case ButtonStatus.disable:
-      case ButtonStatus.loading:
-        return IMTheme.of(context).brand1;
-    }
-  }
-
-  Color _getDefaultBgColor(BuildContext context, ButtonStatus status) {
-    switch (status) {
-      case ButtonStatus.defaultState:
-        return IMTheme.of(context).fontGyColor1;
-      case ButtonStatus.active:
-        return IMTheme.of(context).fontGyColor1;
-      case ButtonStatus.disable:
-      case ButtonStatus.loading:
-        return IMTheme.of(context).fontGyColor1;
-    }
-  }
-
-  Color _getDefaultTextColor(BuildContext context, ButtonStatus status) {
-    switch (status) {
-      case ButtonStatus.defaultState:
-      case ButtonStatus.active:
-        return IMTheme.of(context).fontGyColor1;
-      case ButtonStatus.disable:
-      case ButtonStatus.loading:
-        return IMTheme.of(context).fontGyColor4;
-    }
-  }
-
-  Color _getOutlineDefaultBgColor(BuildContext context, ButtonStatus status) {
-    switch (status) {
-      case ButtonStatus.defaultState:
-        return IMTheme.of(context).fontGyColor1;
-      case ButtonStatus.active:
-        return IMTheme.of(context).fontGyColor1;
-      case ButtonStatus.disable:
-      case ButtonStatus.loading:
-        return IMTheme.of(context).fontGyColor1;
+    switch (type) {
+      case IMButtonType.fill:
+        switch (status) {
+          case IMButtonStatus.normal:
+            return IMButtonStyle.fill(
+              backgroundColor: theme.brand1,
+              textColor: theme.fontGyColor6,
+              borderRadius: BorderRadius.circular(6),
+            );
+          case IMButtonStatus.pressed:
+            return IMButtonStyle.fill(
+              backgroundColor: theme.brand2,
+              textColor: theme.fontGyColor6,
+              borderRadius: BorderRadius.circular(6),
+            );
+          default: // disabled, loading
+            return IMButtonStyle.fill(
+              backgroundColor: theme.brand4,
+              textColor: theme.fontGyColor6,
+              borderRadius: BorderRadius.circular(6),
+            );
+        }
+      case IMButtonType.border:
+        switch (status) {
+          case IMButtonStatus.normal:
+            return IMButtonStyle.border(
+              borderColor: theme.brand1,
+              textColor: theme.brand1,
+              borderRadius: BorderRadius.circular(6),
+            );
+          case IMButtonStatus.pressed:
+            return IMButtonStyle.border(
+              borderColor: theme.brand2,
+              textColor: theme.brand2,
+              borderRadius: BorderRadius.circular(6),
+            );
+          default: // disabled, loading
+            return IMButtonStyle.border(
+              borderColor: theme.brand4,
+              textColor: theme.brand4,
+              borderRadius: BorderRadius.circular(6),
+            );
+        }
+      case IMButtonType.text:
+        switch (status) {
+          case IMButtonStatus.normal:
+            return IMButtonStyle.text(
+              textColor: theme.brand1,
+            );
+          case IMButtonStatus.pressed:
+            return IMButtonStyle.text(
+              textColor: theme.brand2,
+            );
+          default: // disabled, loading
+            return IMButtonStyle.text(
+              textColor: theme.brand4,
+            );
+        }
     }
   }
 }

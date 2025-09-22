@@ -1,160 +1,411 @@
 import 'package:flutter/material.dart';
 import 'package:im_ui/im_ui.dart';
 
-class ButtonPage extends StatelessWidget {
+class ButtonPage extends StatefulWidget {
   const ButtonPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final theme = IMTheme.of(context);
-    return Scaffold(
-      backgroundColor: theme.fontGyColor1,
-      appBar: AppBar(
-        title: const Text('Button'),
-        backgroundColor: theme.fontGyColor1,
-      ),
-      body: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(16),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                '组件类型',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 16),
-              Wrap(
-                spacing: 16,
-                runSpacing: 10,
-                children: [
-                  IMButton(
-                    text: '默认按钮',
-                    type: ButtonType.fill,
-                    theme: IMButtonTheme.primary,
-                  ),
-                  IMButton(
-                    text: '描边按钮',
-                    type: ButtonType.outline,
-                    theme: IMButtonTheme.primary,
-                  ),
-                  IMButton(
-                    text: '文字按钮',
-                    type: ButtonType.text,
-                    theme: IMButtonTheme.primary,
-                  ),
-                  IMButton(
-                    text: '禁用按钮',
-                    type: ButtonType.fill,
-                    theme: IMButtonTheme.primary,
-                    disabled: true,
-                  ),
-                  IMButton(
-                    text: '加载中按钮',
-                    type: ButtonType.fill,
-                    width: 110,
-                    height: 42,
-                    theme: IMButtonTheme.primary,
-                    showLoading: true,
-                    onTap: () async {
-                      await Future.delayed(Duration(seconds: 2));
-                    },
-                  ),
-                ],
-              ),
-              SizedBox(height: 30),
-              Text(
-                '带有图标的按钮',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 16),
-              Wrap(
-                spacing: 16,
-                runSpacing: 10,
-                children: [
-                  IMButton(
-                    text: '左图标',
-                    icon: Icons.apps_outlined,
-                    type: ButtonType.fill,
-                    theme: IMButtonTheme.primary,
-                  ),
-                  IMButton(
-                    text: '右图标',
-                    icon: Icons.apps_outlined,
-                    iconPosition: ButtonIconPosition.right,
-                    type: ButtonType.fill,
-                    theme: IMButtonTheme.primary,
-                  ),
-                  IMButton(
-                    icon: Icons.apps_outlined,
-                    type: ButtonType.fill,
-                    theme: IMButtonTheme.primary,
-                  ),
-                  IMButton(
-                    text: '上图标',
-                    icon: Icons.apps_outlined,
-                    type: ButtonType.fill,
-                    theme: IMButtonTheme.primary,
-                    iconPosition: ButtonIconPosition.top,
-                  ),
-                  IMButton(
-                    text: '下图标',
-                    icon: Icons.apps_outlined,
-                    type: ButtonType.fill,
-                    theme: IMButtonTheme.primary,
-                    iconPosition: ButtonIconPosition.bottom,
-                  ),
-                ],
-              ),
-              SizedBox(height: 30),
-              Text(
-                '按钮形状',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 16),
-              Wrap(
-                spacing: 16,
-                runSpacing: 10,
-                children: [
-                  IMButton(
-                    text: '胶囊按钮',
-                    type: ButtonType.fill,
-                    shape: ButtonShape.round,
-                    theme: IMButtonTheme.primary,
-                  ),
-                  IMButton(
-                    text: '圆角按钮',
-                    type: ButtonType.fill,
-                    shape: ButtonShape.rectangle,
-                    theme: IMButtonTheme.primary,
-                  ),
+  State<StatefulWidget> createState() => _ButtonPageState();
+}
 
-                  IMButton(
-                    text: '圆形\n按钮',
-                    width: 60,
-                    height: 60,
-                    padding: EdgeInsets.zero,
-                    type: ButtonType.fill,
-                    shape: ButtonShape.circle,
-                    theme: IMButtonTheme.primary,
+class _ButtonPageState extends State<ButtonPage> {
+  bool _isDisabled = false;
+  bool _showLoading = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('IMButton 示例'),
+        backgroundColor: IMTheme.of(context).fontGyColor1,
+        foregroundColor: Colors.white,
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // 控制按钮
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                IMButton(
+                  text: _isDisabled ? '启用按钮' : '禁用按钮',
+                  type: IMButtonType.fill,
+                  onTap: () {
+                    setState(() {
+                      _isDisabled = !_isDisabled;
+                    });
+                  },
+                ),
+                IMButton(
+                  text: _showLoading ? '停止加载' : '开始加载',
+                  type: IMButtonType.border,
+                  onTap: () {
+                    setState(() {
+                      _showLoading = !_showLoading;
+                    });
+                  },
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+
+            // 基础按钮部分
+            const Text(
+              '基础按钮',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 16),
+
+            // 默认状态
+            const Text(
+              '默认状态',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+            ),
+            const SizedBox(height: 8),
+            Wrap(
+              spacing: 10,
+              runSpacing: 10,
+              children: [
+                IMButton(
+                  text: '填充样式',
+                  type: IMButtonType.fill,
+                  disabled: _isDisabled,
+                  showLoading: _showLoading,
+                ),
+                IMButton(
+                  text: '边框样式',
+                  type: IMButtonType.border,
+                  disabled: _isDisabled,
+                  showLoading: _showLoading,
+                ),
+                IMButton(
+                  text: '文字样式',
+                  type: IMButtonType.text,
+                  disabled: _isDisabled,
+                  showLoading: _showLoading,
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+
+            // 点击状态
+            const Text(
+              '点击状态',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+            ),
+            const SizedBox(height: 8),
+            Wrap(
+              spacing: 10,
+              runSpacing: 10,
+              children: [
+                IMButton(
+                  text: '填充样式',
+                  type: IMButtonType.fill,
+                  status: IMButtonStatus.pressed,
+                  disabled: _isDisabled,
+                  showLoading: _showLoading,
+                ),
+                IMButton(
+                  text: '边框样式',
+                  type: IMButtonType.border,
+                  status: IMButtonStatus.pressed,
+                  disabled: _isDisabled,
+                  showLoading: _showLoading,
+                ),
+                IMButton(
+                  text: '文字样式',
+                  type: IMButtonType.text,
+                  status: IMButtonStatus.pressed,
+                  disabled: _isDisabled,
+                  showLoading: _showLoading,
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+
+            // 禁用状态
+            const Text(
+              '禁用状态',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+            ),
+            const SizedBox(height: 8),
+            Wrap(
+              spacing: 10,
+              runSpacing: 10,
+              children: [
+                IMButton(
+                  text: '填充样式',
+                  type: IMButtonType.fill,
+                  disabled: true,
+                  showLoading: _showLoading,
+                ),
+                IMButton(
+                  text: '边框样式',
+                  type: IMButtonType.border,
+                  disabled: true,
+                  showLoading: _showLoading,
+                ),
+                IMButton(
+                  text: '文字样式',
+                  type: IMButtonType.text,
+                  disabled: true,
+                  showLoading: _showLoading,
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+
+            // 加载状态
+            const Text(
+              '加载状态',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+            ),
+            const SizedBox(height: 8),
+            Wrap(
+              spacing: 10,
+              runSpacing: 10,
+              children: [
+                IMButton(
+                  text: '填充样式',
+                  type: IMButtonType.fill,
+                  showLoading: true,
+                  disabled: _isDisabled,
+                ),
+                IMButton(
+                  text: '边框样式',
+                  type: IMButtonType.border,
+                  showLoading: true,
+                  disabled: _isDisabled,
+                ),
+                IMButton(
+                  text: '文字样式',
+                  type: IMButtonType.text,
+                  showLoading: true,
+                  disabled: _isDisabled,
+                ),
+              ],
+            ),
+            const SizedBox(height: 30),
+
+            // 文字+图标按钮部分
+            const Text(
+              '文字+图标按钮',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 16),
+
+            // 默认状态
+            const Text(
+              '默认状态',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+            ),
+            const SizedBox(height: 8),
+            Wrap(
+              spacing: 10,
+              runSpacing: 10,
+              children: [
+                IMButton(
+                  text: '填充样式',
+                  type: IMButtonType.fill,
+                  icon: const Icon(Icons.add, size: 18),
+                  disabled: _isDisabled,
+                  showLoading: _showLoading,
+                ),
+                IMButton(
+                  text: '边框样式',
+                  type: IMButtonType.border,
+                  icon: const Icon(Icons.edit, size: 18),
+                  disabled: _isDisabled,
+                  showLoading: _showLoading,
+                ),
+                IMButton(
+                  text: '文字样式',
+                  type: IMButtonType.text,
+                  icon: const Icon(Icons.delete, size: 18),
+                  disabled: _isDisabled,
+                  showLoading: _showLoading,
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+
+            // 点击状态
+            const Text(
+              '点击状态',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+            ),
+            const SizedBox(height: 8),
+            Wrap(
+              spacing: 10,
+              runSpacing: 10,
+              children: [
+                IMButton(
+                  text: '填充样式',
+                  type: IMButtonType.fill,
+                  status: IMButtonStatus.pressed,
+                  icon: const Icon(Icons.add, size: 18),
+                  disabled: _isDisabled,
+                  showLoading: _showLoading,
+                ),
+                IMButton(
+                  text: '边框样式',
+                  type: IMButtonType.border,
+                  status: IMButtonStatus.pressed,
+                  icon: const Icon(Icons.edit, size: 18),
+                  disabled: _isDisabled,
+                  showLoading: _showLoading,
+                ),
+                IMButton(
+                  text: '文字样式',
+                  type: IMButtonType.text,
+                  status: IMButtonStatus.pressed,
+                  icon: const Icon(Icons.delete, size: 18),
+                  disabled: _isDisabled,
+                  showLoading: _showLoading,
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+
+            // 禁用状态
+            const Text(
+              '禁用状态',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+            ),
+            const SizedBox(height: 8),
+            Wrap(
+              spacing: 10,
+              runSpacing: 10,
+              children: [
+                IMButton(
+                  text: '填充样式',
+                  type: IMButtonType.fill,
+                  icon: const Icon(Icons.add, size: 18),
+                  disabled: true,
+                  showLoading: _showLoading,
+                ),
+                IMButton(
+                  text: '边框样式',
+                  type: IMButtonType.border,
+                  icon: const Icon(Icons.edit, size: 18),
+                  disabled: true,
+                  showLoading: _showLoading,
+                ),
+                IMButton(
+                  text: '文字样式',
+                  type: IMButtonType.text,
+                  icon: const Icon(Icons.delete, size: 18),
+                  disabled: true,
+                  showLoading: _showLoading,
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+
+            // 加载状态
+            const Text(
+              '加载状态',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+            ),
+            const SizedBox(height: 8),
+            Wrap(
+              spacing: 10,
+              runSpacing: 10,
+              children: [
+                IMButton(
+                  text: '填充样式',
+                  type: IMButtonType.fill,
+                  icon: const Icon(Icons.add, size: 18),
+                  showLoading: true,
+                  disabled: _isDisabled,
+                ),
+                IMButton(
+                  text: '边框样式',
+                  type: IMButtonType.border,
+                  icon: const Icon(Icons.edit, size: 18),
+                  showLoading: true,
+                  disabled: _isDisabled,
+                ),
+                IMButton(
+                  text: '文字样式',
+                  type: IMButtonType.text,
+                  icon: const Icon(Icons.delete, size: 18),
+                  showLoading: true,
+                  disabled: _isDisabled,
+                ),
+              ],
+            ),
+            const SizedBox(height: 30),
+
+            // 不同布局的按钮
+            const Text(
+              '不同布局按钮',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 16),
+            Wrap(
+              spacing: 10,
+              runSpacing: 10,
+              children: [
+                IMButton(
+                  text: '纵向布局',
+                  type: IMButtonType.fill,
+                  icon: const Icon(Icons.add),
+                  layout: IMButtonLayout.vertical,
+                  disabled: _isDisabled,
+                  showLoading: _showLoading,
+                ),
+                IMButton(
+                  text: '横向布局',
+                  type: IMButtonType.border,
+                  icon: const Icon(Icons.edit),
+                  layout: IMButtonLayout.horizontal,
+                  disabled: _isDisabled,
+                  showLoading: _showLoading,
+                ),
+              ],
+            ),
+            const SizedBox(height: 30),
+
+            // 自定义样式的按钮
+            const Text(
+              '自定义样式按钮',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 16),
+            Wrap(
+              spacing: 10,
+              runSpacing: 10,
+              children: [
+                IMButton(
+                  text: '自定义填充',
+                  backgroundColor: Colors.purple,
+                  textStyle: const TextStyle(color: Colors.white),
+                  borderRadius: 20,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 15,
                   ),
-                  IMButton(
-                    text: '方形按钮',
-                    type: ButtonType.fill,
-                    shape: ButtonShape.square,
-                    theme: IMButtonTheme.primary,
+                ),
+                IMButton(
+                  text: '自定义边框',
+                  borderColor: Colors.green,
+                  borderWidth: 2,
+                  textStyle: const TextStyle(color: Colors.green),
+                  borderRadius: 10,
+                ),
+                IMButton(
+                  text: '自定义文字',
+                  textStyle: const TextStyle(
+                    color: Colors.orange,
+                    fontWeight: FontWeight.bold,
                   ),
-                  IMButton(
-                    text: '填充按钮',
-                    type: ButtonType.fill,
-                    shape: ButtonShape.filled,
-                    theme: IMButtonTheme.primary,
-                  ),
-                ],
-              ),
-            ],
-          ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );

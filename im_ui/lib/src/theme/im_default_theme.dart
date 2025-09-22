@@ -3,14 +3,6 @@ class IMDefaultTheme {
   static String defaultThemeConfig = '''
 {
   "default": {
-    "ref": {
-      "brandLightColor": "brand1",
-      "brandFocusColor": "brand2",
-      "brandDisabledColor": "brand3",
-      "brandHoverColor": "brand4",
-      "brandNormalColor": "brand5",
-      "brandClickColor": "brand6"
-    },
     "color": {
       "brand1": "#FF007AFF",
       "brand2": "#FF73B6FF",

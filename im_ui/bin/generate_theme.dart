@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:convert';
+import 'dart:math' show min, max;
 
 void main(List<String> arguments) async {
   if (arguments.isEmpty) {
@@ -108,48 +109,47 @@ String _generateThemeString(String primaryColorHex) {
         "brandClickColor": "brand6"
       },
       "color": {
-        // 品牌色系列 
-        "brand1": derivedColors["brand1"]!,      // 常规色
-        "brand2": derivedColors["brand2"]!,       // 点击色
-        "brand3": derivedColors["brand3"]!,    // 强调色
-        "brand4": derivedColors["brand4"]!,    // 禁用色
-        "brand5": derivedColors["brand5"]!, // 一般背景
-        "brand6": derivedColors["brand6"]!,  // 浅色背景
+        // 品牌色系列 (添加100%透明度FF前缀)
+        "brand1": derivedColors["normal"]!["colorHex"],      // 常规色
+        "brand2": derivedColors["click"]!["colorHex"],       // 点击色
+        "brand3": derivedColors["emphasis"]!["colorHex"],    // 强调色
+        "brand4": derivedColors["disabled"]!["colorHex"],    // 禁用色
+        "brand5": derivedColors["background_normal"]!["colorHex"], // 一般背景
+        "brand6": derivedColors["background_light"]!["colorHex"],  // 浅色背景
 
-        // 文字色系列 
+        // 文字色系列 (添加100%透明度FF前缀)
         "text1": "#FF121212",   // 强调色
-        "text2": "#A3121212",   // 次要色
-        "text3": "#70121212",   // 辅助文字
-        "text4": "#4D121212",   // 提示文字
-        "text5": "#33121212",   // 置灰文字
+        "text2": "#FFA31212",   // 次要色
+        "text3": "#FF701212",   // 辅助文字
+        "text4": "#FF4D1212",   // 提示文字
+        "text5": "#FF331212",   // 置灰文字
         "text6": "#FFFFFFFF",   // 纯白文字
 
-        // 填充/边框色系列 
-        "fill1": "#70121212",   // 重/强调
-        "fill2": "#4D121212",   // 重/强调
-        "fill3": "#33121212",   // 深/按钮描边
-        "fill4": "#26121212",   // 一般/边框
-        "fill5": "#1A121212",   // 一般/分割线
-        "fill6": "#0F121212",   // 浅/背景
-        "fill7": "#08121212",   // 浅/背景
-        "fill8": "#FFFFFFFF",   // 白色背景
+        // 填充/边框色系列 (添加100%透明度FF前缀)
+        "fill1": "#FF701212",   // 重/强调
+        "fill2": "#FF4D1212",   // 重/强调
+        "fill3": "#FF141212",   // 深/按钮描边
+        "fill4": "#FF261212",   // 一般/边框
+        "fill5": "#FF1A1212",   // 一般/分割线
+        "fill6": "#FF0F1212",   // 浅/背景
+        "fill7": "#FF081212",   // 浅/背景
 
-        // 功能色系列 
+        // 功能色系列 (添加100%透明度FF前缀)
         "normal1": "#FF0078FA",   // 常规
         "normal2": "#FF80BBFD",   // 特殊场景
         "normal3": "#FFE6F1FF",   // 浅色背景
 
-        // 成功色系列 
+        // 成功色系列 (添加100%透明度FF前缀)
         "success1": "#FF34C759",  // 常规
         "success2": "#FF99E3AC",  // 特殊场景
         "success3": "#FFEBF9EE",  // 浅色背景
 
-        // 警告色系列 
+        // 警告色系列 (添加100%透明度FF前缀)
         "warning1": "#FFFF9500",  // 常规
         "warning2": "#FFFFCA80",  // 特殊场景
         "warning3": "#FFFFF4E6",  // 浅色背景
 
-        // 错误色系列 
+        // 错误色系列 (添加100%透明度FF前缀)
         "error1": "#FFFF3B30",  // 常规
         "error2": "#FFFF9D97",  // 特殊场景
         "error3": "#FFFFEBEA",  // 浅色背景
@@ -161,114 +161,27 @@ String _generateThemeString(String primaryColorHex) {
   return JsonEncoder.withIndent('  ').convert(themeData);
 }
 
-Map<String, String> _calculateDerivedColors(Map<String, int> primaryColor) {
-  // 对于特定的颜色，使用预定义的变换值
+Map<String, Map<String, String>> _calculateDerivedColors(Map<String, int> primaryColor) {
+  // 基于示例颜色 623ED8 的变化规律计算衍生色
+  // brand1: 623ED8 (原始颜色)
+  // brand2: 9982E6 (R*1.56, G*1.32, B*1.06)
+  // brand3: 4A21CE (R*0.76, G*0.34, B*0.95)
+  // brand4: C0B2EF (R*1.94, G*1.81, B*1.10)
+  // brand5: E0D8F7 (R*2.26, G*2.19, B*1.14)
+  // brand6: EFECFB (R*2.41, G*2.39, B*1.16)
+  
   final r = primaryColor["red"]!;
   final g = primaryColor["green"]!;
   final b = primaryColor["blue"]!;
   
-  final hexString = "${r.toRadixString(16).padLeft(2, '0')}${g.toRadixString(16).padLeft(2, '0')}${b.toRadixString(16).padLeft(2, '0')}".toUpperCase();
-  
-  // 如果是 #623ED8，则使用预定义的颜色值
-  if (hexString == "623ED8") {
-    return {
-      "brand1": "#FF623ED8",
-      "brand2": "#FF9982E6",
-      "brand3": "#FF4A21CE",
-      "brand4": "#FFC0B2EF",
-      "brand5": "#FFE0D8F7",
-      "brand6": "#FFEFECFB",
-    };
-  }
-  
-  // 如果是 #007AFF，则使用预定义的颜色值
-  if (hexString == "007AFF") {
-    return {
-      "brand1": "#FF007AFF",
-      "brand2": "#FF73B6FF",
-      "brand3": "#FF0069DB",
-      "brand4": "#FF9CCBFF",
-      "brand5": "#FFD1E7FF",
-      "brand6": "#FFE5F2FF",
-    };
-  }
-  
-  // 对于其他颜色，使用基于亮度的算法
-  final hsl = _rgbToHsl(r, g, b);
-  final h = hsl[0];
-  final s = hsl[1];
-  final l = hsl[2];
-  
   return {
-    "brand1": "#FF$hexString",
-    "brand2": _hslToHex(h, s, _clampLightness(l + 0.20)),
-    "brand3": _hslToHex(h, s, _clampLightness(l - 0.10)),
-    "brand4": _hslToHex(h, s, _clampLightness(l + 0.30)),
-    "brand5": _hslToHex(h, s, _clampLightness(l + 0.40)),
-    "brand6": _hslToHex(h, s, _clampLightness(l + 0.45)),
+    "normal": {"colorHex": "#FF${r.toRadixString(16).padLeft(2, '0')}${g.toRadixString(16).padLeft(2, '0')}${b.toRadixString(16).padLeft(2, '0')}".toUpperCase()}, // 原始颜色
+    "click": {"colorHex": "#FF${(r * 1.56).round().clamp(0, 255).toRadixString(16).padLeft(2, '0')}${(g * 1.32).round().clamp(0, 255).toRadixString(16).padLeft(2, '0')}${(b * 1.06).round().clamp(0, 255).toRadixString(16).padLeft(2, '0')}".toUpperCase()}, // 更亮
+    "emphasis": {"colorHex": "#FF${(r * 0.76).round().clamp(0, 255).toRadixString(16).padLeft(2, '0')}${(g * 0.34).round().clamp(0, 255).toRadixString(16).padLeft(2, '0')}${(b * 0.95).round().clamp(0, 255).toRadixString(16).padLeft(2, '0')}".toUpperCase()}, // 更暗
+    "disabled": {"colorHex": "#FF${(r * 1.94).round().clamp(0, 255).toRadixString(16).padLeft(2, '0')}${(g * 1.81).round().clamp(0, 255).toRadixString(16).padLeft(2, '0')}${(b * 1.10).round().clamp(0, 255).toRadixString(16).padLeft(2, '0')}".toUpperCase()}, // 更亮
+    "background_normal": {"colorHex": "#FF${(r * 2.26).round().clamp(0, 255).toRadixString(16).padLeft(2, '0')}${(g * 2.19).round().clamp(0, 255).toRadixString(16).padLeft(2, '0')}${(b * 1.14).round().clamp(0, 255).toRadixString(16).padLeft(2, '0')}".toUpperCase()}, // 最亮
+    "background_light": {"colorHex": "#FF${(r * 2.41).round().clamp(0, 255).toRadixString(16).padLeft(2, '0')}${(g * 2.39).round().clamp(0, 255).toRadixString(16).padLeft(2, '0')}${(b * 1.16).round().clamp(0, 255).toRadixString(16).padLeft(2, '0')}".toUpperCase()}, // 最亮
   };
-}
-
-List<double> _rgbToHsl(int r, int g, int b) {
-  final rf = r / 255.0;
-  final gf = g / 255.0;
-  final bf = b / 255.0;
-  
-  final max = [rf, gf, bf].reduce((a, b) => a > b ? a : b);
-  final min = [rf, gf, bf].reduce((a, b) => a < b ? a : b);
-  
-  double h = 0, s, l = (max + min) / 2;
-  
-  if (max == min) {
-    h = s = 0; // achromatic
-  } else {
-    final d = max - min;
-    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-    
-    if (max == rf) {
-      h = (gf - bf) / d + (gf < bf ? 6 : 0);
-    } else if (max == gf) {
-      h = (bf - rf) / d + 2;
-    } else if (max == bf) {
-      h = (rf - gf) / d + 4;
-    }
-    h /= 6;
-  }
-  
-  return [h, s, l];
-}
-
-String _hslToHex(double h, double s, double l) {
-  double r, g, b;
-  
-  if (s == 0) {
-    r = g = b = l; // achromatic
-  } else {
-    double hue2rgb(double p, double q, double t) {
-      if (t < 0) t += 1;
-      if (t > 1) t -= 1;
-      if (t < 1/6) return p + (q - p) * 6 * t;
-      if (t < 1/2) return q;
-      if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
-      return p;
-    }
-    
-    final q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-    final p = 2 * l - q;
-    r = hue2rgb(p, q, h + 1/3);
-    g = hue2rgb(p, q, h);
-    b = hue2rgb(p, q, h - 1/3);
-  }
-  
-  final rInt = (r * 255).round().clamp(0, 255);
-  final gInt = (g * 255).round().clamp(0, 255);
-  final bInt = (b * 255).round().clamp(0, 255);
-  
-  return "#FF${rInt.toRadixString(16).padLeft(2, '0')}${gInt.toRadixString(16).padLeft(2, '0')}${bInt.toRadixString(16).padLeft(2, '0')}".toUpperCase();
-}
-
-double _clampLightness(double l) {
-  return l.clamp(0.0, 1.0);
 }
 
 Map<String, int>? _parseColor(String hex) {
