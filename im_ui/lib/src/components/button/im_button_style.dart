@@ -35,11 +35,11 @@ class IMButtonStyle {
   ) {
     switch (theme) {
       case IMButtonTheme.primary:
-        textColor = IMTheme.of(context).fontWhColor1;
+        textColor = IMTheme.of(context).brand1;
         backgroundColor = _getBrandColor(context, status);
         break;
       case IMButtonTheme.danger:
-        textColor = IMTheme.of(context).fontWhColor1;
+        textColor = IMTheme.of(context).brand1;
         backgroundColor = _getErrorColor(context, status);
         break;
       case IMButtonTheme.light:
@@ -65,16 +65,16 @@ class IMButtonStyle {
         textColor = _getBrandColor(context, status);
         backgroundColor =
             status == ButtonStatus.active
-                ? IMTheme.of(context).grayColor3
-                : IMTheme.of(context).whiteColor1;
+                ? IMTheme.of(context).fontGyColor1
+                : IMTheme.of(context).fontGyColor1;
         frameColor = textColor;
         break;
       case IMButtonTheme.danger:
         textColor = _getErrorColor(context, status);
         backgroundColor =
             status == ButtonStatus.active
-                ? IMTheme.of(context).grayColor3
-                : IMTheme.of(context).whiteColor1;
+                ? IMTheme.of(context).fontGyColor1
+                : IMTheme.of(context).fontGyColor1;
         frameColor = textColor;
         break;
       case IMButtonTheme.light:
@@ -86,7 +86,7 @@ class IMButtonStyle {
       default:
         textColor = _getDefaultTextColor(context, status);
         backgroundColor = _getOutlineDefaultBgColor(context, status);
-        frameColor = IMTheme.of(context).grayColor4;
+        frameColor = IMTheme.of(context).fontGyColor1;
     }
     frameWidth = 1;
   }
@@ -102,21 +102,21 @@ class IMButtonStyle {
         textColor = _getBrandColor(context, status);
         backgroundColor =
             status == ButtonStatus.active
-                ? IMTheme.of(context).grayColor3
+                ? IMTheme.of(context).fontGyColor1
                 : Colors.transparent;
         break;
       case IMButtonTheme.danger:
         textColor = _getErrorColor(context, status);
         backgroundColor =
             status == ButtonStatus.active
-                ? IMTheme.of(context).grayColor3
+                ? IMTheme.of(context).fontGyColor1
                 : Colors.transparent;
         break;
       case IMButtonTheme.light:
         textColor = _getBrandColor(context, status);
         backgroundColor =
             status == ButtonStatus.active
-                ? IMTheme.of(context).grayColor3
+                ? IMTheme.of(context).fontGyColor1
                 : Colors.transparent;
         break;
       case IMButtonTheme.defaultTheme:
@@ -124,7 +124,7 @@ class IMButtonStyle {
         textColor = _getDefaultTextColor(context, status);
         backgroundColor =
             status == ButtonStatus.active
-                ? IMTheme.of(context).grayColor3
+                ? IMTheme.of(context).fontGyColor1
                 : Colors.transparent;
     }
     frameColor = backgroundColor;
@@ -133,12 +133,12 @@ class IMButtonStyle {
   Color _getBrandColor(BuildContext context, ButtonStatus status) {
     switch (status) {
       case ButtonStatus.defaultState:
-        return IMTheme.of(context).brandNormalColor;
+        return IMTheme.of(context).brand1;
       case ButtonStatus.active:
-        return IMTheme.of(context).brandClickColor;
+        return IMTheme.of(context).brand1;
       case ButtonStatus.disable:
       case ButtonStatus.loading:
-        return IMTheme.of(context).brandDisabledColor;
+        return IMTheme.of(context).brand1;
     }
   }
 
@@ -147,33 +147,33 @@ class IMButtonStyle {
       case ButtonStatus.defaultState:
       case ButtonStatus.disable:
       case ButtonStatus.loading:
-        return IMTheme.of(context).brandLightColor;
+        return IMTheme.of(context).brand1;
       case ButtonStatus.active:
-        return IMTheme.of(context).brandFocusColor;
+        return IMTheme.of(context).brand1;
     }
   }
 
   Color _getErrorColor(BuildContext context, ButtonStatus status) {
     switch (status) {
       case ButtonStatus.defaultState:
-        return IMTheme.of(context).errorNormalColor;
+        return IMTheme.of(context).brand1;
       case ButtonStatus.active:
-        return IMTheme.of(context).errorClickColor;
+        return IMTheme.of(context).brand1;
       case ButtonStatus.disable:
       case ButtonStatus.loading:
-        return IMTheme.of(context).errorDisabledColor;
+        return IMTheme.of(context).brand1;
     }
   }
 
   Color _getDefaultBgColor(BuildContext context, ButtonStatus status) {
     switch (status) {
       case ButtonStatus.defaultState:
-        return IMTheme.of(context).grayColor3;
+        return IMTheme.of(context).fontGyColor1;
       case ButtonStatus.active:
-        return IMTheme.of(context).grayColor5;
+        return IMTheme.of(context).fontGyColor1;
       case ButtonStatus.disable:
       case ButtonStatus.loading:
-        return IMTheme.of(context).grayColor2;
+        return IMTheme.of(context).fontGyColor1;
     }
   }
 
@@ -191,12 +191,12 @@ class IMButtonStyle {
   Color _getOutlineDefaultBgColor(BuildContext context, ButtonStatus status) {
     switch (status) {
       case ButtonStatus.defaultState:
-        return IMTheme.of(context).whiteColor1;
+        return IMTheme.of(context).fontGyColor1;
       case ButtonStatus.active:
-        return IMTheme.of(context).grayColor3;
+        return IMTheme.of(context).fontGyColor1;
       case ButtonStatus.disable:
       case ButtonStatus.loading:
-        return IMTheme.of(context).grayColor2;
+        return IMTheme.of(context).fontGyColor1;
     }
   }
 }

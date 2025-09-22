@@ -2,9 +2,7 @@ import 'dart:convert';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-
 import 'basic.dart';
-import 'resource_delegate.dart';
 import 'im_default_theme.dart';
 
 class IMTheme extends StatelessWidget {
@@ -38,12 +36,12 @@ class IMTheme extends StatelessWidget {
   /// 设置资源代理,
   /// needAlwaysBuild=true:每次都会走build方法;如果全局有多个Delegate,需要区分情况去获取,则可以设置needAlwaysBuild为true,业务自己判断返回哪个delegate
   /// needAlwaysBuild=false:返回delegate为null,则每次都会走build方法,返回了
-  static void setResourceBuilder(
-    TDTDResourceBuilder delegate, {
-    bool needAlwaysBuild = false,
-  }) {
-    TDResourceManager.instance.setResourceBuilder(delegate, needAlwaysBuild);
-  }
+  // static void setResourceBuilder(
+  //   TDTDResourceBuilder delegate, {
+  //   bool needAlwaysBuild = false,
+  // }) {
+  //   TDResourceManager.instance.setResourceBuilder(delegate, needAlwaysBuild);
+  // }
 
   /// 获取默认主题数据，全局唯一
   static IMThemeData defaultData() {
@@ -248,7 +246,7 @@ class IMThemeData extends ThemeExtension<IMThemeData> {
       final themeConfig = json.decode(themeJson);
       if (themeConfig.containsKey(name)) {
         var theme = _emptyData(name);
-        Map<String, dynamic> curThemeMap = themeConfig['$name'];
+        Map<String, dynamic> curThemeMap = themeConfig[name];
 
         /// 设置颜色
         Map<String, dynamic>? colorsMap = curThemeMap['color'];
@@ -259,56 +257,50 @@ class IMThemeData extends ThemeExtension<IMThemeData> {
           }
         });
 
-        /// 设置颜色
-        Map<String, dynamic>? refMap = curThemeMap['ref'];
-        refMap?.forEach((key, value) {
-          theme.refMap[key] = value;
-        });
-
         /// 设置字体尺寸
         Map<String, dynamic>? fontsMap = curThemeMap['font'];
         fontsMap?.forEach((key, value) {
           theme.fontMap[key] = Font.fromJson(value);
         });
 
-        /// 设置圆角
-        Map<String, dynamic>? cornersMap = curThemeMap['radius'];
-        cornersMap?.forEach((key, value) {
-          theme.radiusMap[key] = value.toDouble();
-        });
-
-        /// 设置字体
-        Map<String, dynamic>? fontFamilyMap = curThemeMap['fontFamily'];
-        fontFamilyMap?.forEach((key, value) {
-          theme.fontFamilyMap[key] = FontFamily.fromJson(value);
-        });
-
-        /// 设置阴影
-        Map<String, dynamic>? shadowMap = curThemeMap['shadow'];
-        shadowMap?.forEach((key, value) {
-          var list = <BoxShadow>[];
-          for (var element in (value as List)) {
-            list.add(
-              BoxShadow(
-                color: toColor(element['color']) ?? Colors.black,
-                blurRadius: element['blurRadius'].toDouble(),
-                spreadRadius: element['spreadRadius'].toDouble(),
-                offset: Offset(
-                  element['offset']?['x'].toDouble() ?? 0,
-                  element['offset']?['y'].toDouble() ?? 0,
-                ),
-              ),
-            );
-          }
-
-          theme.shadowMap[key] = list;
-        });
-
-        /// 设置Margin
-        Map<String, dynamic>? marginsMap = curThemeMap['margin'];
-        marginsMap?.forEach((key, value) {
-          theme.spacerMap[key] = value.toDouble();
-        });
+        // /// 设置圆角
+        // Map<String, dynamic>? cornersMap = curThemeMap['radius'];
+        // cornersMap?.forEach((key, value) {
+        //   theme.radiusMap[key] = value.toDouble();
+        // });
+        //
+        // /// 设置字体
+        // Map<String, dynamic>? fontFamilyMap = curThemeMap['fontFamily'];
+        // fontFamilyMap?.forEach((key, value) {
+        //   theme.fontFamilyMap[key] = FontFamily.fromJson(value);
+        // });
+        //
+        // /// 设置阴影
+        // Map<String, dynamic>? shadowMap = curThemeMap['shadow'];
+        // shadowMap?.forEach((key, value) {
+        //   var list = <BoxShadow>[];
+        //   for (var element in (value as List)) {
+        //     list.add(
+        //       BoxShadow(
+        //         color: toColor(element['color']) ?? Colors.black,
+        //         blurRadius: element['blurRadius'].toDouble(),
+        //         spreadRadius: element['spreadRadius'].toDouble(),
+        //         offset: Offset(
+        //           element['offset']?['x'].toDouble() ?? 0,
+        //           element['offset']?['y'].toDouble() ?? 0,
+        //         ),
+        //       ),
+        //     );
+        //   }
+        //
+        //   theme.shadowMap[key] = list;
+        // });
+        //
+        // /// 设置Margin
+        // Map<String, dynamic>? marginsMap = curThemeMap['margin'];
+        // marginsMap?.forEach((key, value) {
+        //   theme.spacerMap[key] = value.toDouble();
+        // });
 
         if (extraThemeData != null) {
           extraThemeData.parse(name, curThemeMap);
@@ -334,17 +326,17 @@ class IMThemeData extends ThemeExtension<IMThemeData> {
     return fontMap[key];
   }
 
-  double? ofCorner(String? key) {
-    return radiusMap[key];
-  }
-
-  FontFamily? ofFontFamily(String? key) {
-    return fontFamilyMap[key];
-  }
-
-  List<BoxShadow>? ofShadow(String? key) {
-    return shadowMap[key];
-  }
+  // double? ofCorner(String? key) {
+  //   return radiusMap[key];
+  // }
+  //
+  // FontFamily? ofFontFamily(String? key) {
+  //   return fontFamilyMap[key];
+  // }
+  //
+  // List<BoxShadow>? ofShadow(String? key) {
+  //   return shadowMap[key];
+  // }
 
   T? ofExtra<T extends IMExtraThemeData>() {
     try {

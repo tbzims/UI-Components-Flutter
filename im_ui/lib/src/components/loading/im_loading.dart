@@ -129,7 +129,7 @@ class IMLoading extends StatelessWidget {
   Color _getPrimaryColor(BuildContext context) {
     try {
       // 尝试从IMTheme获取主色调
-      return IMTheme.of(context).primary;
+      return IMTheme.of(context).brand1;
     } catch (e) {
       // 如果获取失败，使用Material主题的主色调
       try {
@@ -172,7 +172,7 @@ class IMLoading extends StatelessWidget {
       text ?? '',
       style:
           textStyle ??
-          TextStyle(fontSize: 14, color: IMTheme.of(context).textColor),
+          TextStyle(fontSize: 14, color: IMTheme.of(context).fontGyColor1),
     );
   }
 }

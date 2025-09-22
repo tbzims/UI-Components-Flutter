@@ -10,7 +10,10 @@ class RecordListBasicPage extends StatefulWidget {
 
 class _RecordListBasicPageState extends State<RecordListBasicPage> {
   // 普通列表数据
-  final List<String> _normalListItems = List.generate(20, (index) => 'Item $index');
+  final List<String> _normalListItems = List.generate(
+    20,
+    (index) => 'Item $index',
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +22,7 @@ class _RecordListBasicPageState extends State<RecordListBasicPage> {
       backgroundColor: theme.colorMap['whiteColor1'],
       appBar: AppBar(
         title: const Text('Basic Record List'),
-        backgroundColor: theme.brandColor6,
+        backgroundColor: theme.fontGyColor1,
       ),
       body: Container(
         width: double.infinity,
@@ -32,26 +35,18 @@ class _RecordListBasicPageState extends State<RecordListBasicPage> {
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 8),
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: theme.colorMap['grayColor3']!),
-                ),
-                child: IMRecordList.noLoading(
-                  items: _normalListItems
-                      .map((item) => IMRecordItem(
-                            title: item,
-                            hasArrow: true,
-                            onTap: () {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('点击了 $item')),
-                              );
-                            },
-                          ))
-                      .toList(),
-                ),
-              ),
-            ),
+            // Expanded(
+            //   child: Container(
+            //     decoration: BoxDecoration(
+            //       border: Border.all(color: theme.colorMap['grayColor3']!),
+            //     ),
+            //     child: IMRecordList.noLoading(
+            //       items: _normalListItems
+            //           .map((item) => IMRecordItem(title: item))
+            //           .toList(),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),

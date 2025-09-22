@@ -8,10 +8,10 @@ class ButtonPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = IMTheme.of(context);
     return Scaffold(
-      backgroundColor: theme.brandColor1,
+      backgroundColor: theme.fontGyColor1,
       appBar: AppBar(
         title: const Text('Button'),
-        backgroundColor: theme.brandColor6,
+        backgroundColor: theme.fontGyColor1,
       ),
       body: Container(
         width: double.infinity,

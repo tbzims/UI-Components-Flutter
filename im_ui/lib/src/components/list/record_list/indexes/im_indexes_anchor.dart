@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 /// 移除了特定的字体、大小、颜色和圆角样式，使用默认值代替
 class IMIndexesAnchor extends StatelessWidget {
   const IMIndexesAnchor({
-    Key? key,
+    super.key,
     required this.sticky,
     required this.text,
     required this.capsuleTheme,
     this.builderAnchor,
     required this.activeIndex,
-  }) : super(key: key);
+  });
 
   /// 索引是否吸顶
   final bool sticky;

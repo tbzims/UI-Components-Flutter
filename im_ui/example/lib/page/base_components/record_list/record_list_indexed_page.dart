@@ -67,7 +67,7 @@ class RecordListIndexedPage extends StatelessWidget {
       backgroundColor: theme.colorMap['whiteColor1'],
       appBar: AppBar(
         title: const Text('Indexed Record List'),
-        backgroundColor: theme.brandColor6,
+        backgroundColor: theme.fontGyColor1,
       ),
       body: Container(
         width: double.infinity,
@@ -80,17 +80,17 @@ class RecordListIndexedPage extends StatelessWidget {
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 8),
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: theme.colorMap['grayColor3']!),
-                ),
-                child: IMRecordList.indexed(
-                  indexedItems: indexedItems,
-                  indexList: indexList,
-                ),
-              ),
-            ),
+            // Expanded(
+            //   child: Container(
+            //     decoration: BoxDecoration(
+            //       border: Border.all(color: theme.colorMap['grayColor3']!),
+            //     ),
+            //     child: IMRecordList.indexed(
+            //       indexedItems: indexedItems,
+            //       indexList: indexList,
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),

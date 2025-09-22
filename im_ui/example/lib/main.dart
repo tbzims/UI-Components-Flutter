@@ -44,7 +44,7 @@ class _MyAppState extends State<MyApp> {
       // 初始化主题
       theme: ThemeData(
         extensions: [_themeData],
-        colorScheme: ColorScheme.light(primary: _themeData.brandNormalColor),
+        colorScheme: ColorScheme.light(primary: _themeData.brand1),
       ),
       // 初始化路由
       onGenerateRoute: AppRouter.generateRoute,
@@ -56,7 +56,8 @@ class _MyAppState extends State<MyApp> {
 
 class MyHomePage extends StatelessWidget {
   final Function(Locale) onLanguageChanged;
-  MyHomePage({super.key,required this.onLanguageChanged});
+
+  MyHomePage({super.key, required this.onLanguageChanged});
 
   /// header
   final List<String> header = ['基础组件', '表单组件', '反馈组件', '导航组件', '其他组件'];
@@ -64,9 +65,9 @@ class MyHomePage extends StatelessWidget {
   final List<Map<String, dynamic>> data = [
     {'title': 'button', 'page': RouterName.button},
     {'title': 'loading', 'page': RouterName.loading},
-    {'title': 'recordListBasic', 'page': RouterName.recordListBasic},
-    {'title': 'recordListRefresh', 'page': RouterName.recordListRefresh},
-    {'title': 'recordListIndexed', 'page': RouterName.recordListIndexed},
+    {'title': 'recordList', 'page': RouterName.recordList},
+    {'title': 'recordList', 'page': RouterName.recordList},
+    {'title': 'recordItem', 'page': RouterName.recordItem},
   ];
 
   /// 语言列表
@@ -86,14 +87,14 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'UI Components',
-          style: TextStyle(color: theme.brandColor1),
+          style: TextStyle(color: theme.fontGyColor1),
         ),
         actions: [
           IMButton(
             text: localizations.language,
             type: ButtonType.text,
             textStyle: TextStyle(
-              color: theme.brandColor1,
+              color: Color(0xFFE6F1FF),
               fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
@@ -102,7 +103,7 @@ class MyHomePage extends StatelessWidget {
             },
           ),
         ],
-        backgroundColor: theme.brandColor7,
+        backgroundColor: theme.fontGyColor1,
       ),
       body: ListView.separated(
         shrinkWrap: true,
@@ -119,6 +120,7 @@ class MyHomePage extends StatelessWidget {
       ),
     );
   }
+
   void _showLanguageDrawer(BuildContext context) {
     final theme = IMTheme.of(context);
 
@@ -133,7 +135,7 @@ class MyHomePage extends StatelessWidget {
                 padding: EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   border: Border(
-                    bottom: BorderSide(color: theme.brandColor4, width: 1),
+                    bottom: BorderSide(color: theme.fontGyColor1, width: 1),
                   ),
                 ),
                 child: Row(

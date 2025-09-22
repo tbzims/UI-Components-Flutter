@@ -309,7 +309,7 @@ class IMFooterWidgetState extends State<IMFooterWidget>
   /// 获取默认图标颜色
   Color _getDefaultIconColor() {
     try {
-      return IMTheme.of(context).brandColor7;
+      return IMTheme.of(context).brand1;
     } catch (e) {
       try {
         return Theme.of(context).primaryColor;

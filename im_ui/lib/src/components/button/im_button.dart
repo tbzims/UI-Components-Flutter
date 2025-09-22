@@ -444,7 +444,7 @@ class _IMButtonState extends State<IMButton> {
   Border? _getBorder(BuildContext context) {
     if (style.frameWidth != null && style.frameWidth != 0) {
       return Border.all(
-        color: style.frameColor ?? IMTheme.of(context).grayColor3,
+        color: style.frameColor ?? IMTheme.of(context).fill1,
         width: style.frameWidth!,
       );
     }
