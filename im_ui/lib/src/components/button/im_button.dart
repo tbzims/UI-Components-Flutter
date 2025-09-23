@@ -56,9 +56,6 @@ class IMButton extends StatefulWidget {
   /// 按钮点击回调
   final IMButtonCallback? onTap;
 
-  /// 按钮长按回调
-  final IMButtonCallback? onLongPress;
-
   /// 按钮文字样式
   final TextStyle? textStyle;
 
@@ -111,7 +108,6 @@ class IMButton extends StatefulWidget {
     this.status = IMButtonStatus.normal,
     this.disabled = false,
     this.onTap,
-    this.onLongPress,
     this.textStyle,
     this.width,
     this.maxWidth,
@@ -250,14 +246,6 @@ class _IMButtonState extends State<IMButton> with TickerProviderStateMixin {
     }
   }
 
-  /// 处理按钮长按事件
-  void _onLongPress() {
-    // 只有在正常和按下状态下才能长按
-    if (_status == IMButtonStatus.normal || _status == IMButtonStatus.pressed) {
-      widget.onLongPress?.call();
-    }
-  }
-
   /// 获取按钮样式
   IMButtonStyle _getStyle() {
     // 如果有自定义样式，优先使用
@@ -351,27 +339,39 @@ class _IMButtonState extends State<IMButton> with TickerProviderStateMixin {
           iconColor: style.textColor,
         );
     
-    // 根据是否显示加载状态返回相应的内容，使用动画
-    return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 200),
-      transitionBuilder: (Widget child, Animation<double> animation) {
-        return FadeTransition(
-          opacity: animation,
-          child: ScaleTransition(
-            scale: animation,
-            child: child,
-          ),
-        );
-      },
-      child: widget.showLoading 
-        ? KeyedSubtree(
-            key: const ValueKey('loading'),
-            child: loadingContent,
-          )
-        : KeyedSubtree(
-            key: const ValueKey('content'),
-            child: normalContent,
-          ),
+    // 使用 Stack 和 AnimatedBuilder 实现双向动画效果
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        // 普通内容
+        AnimatedBuilder(
+          animation: _loadingAnimationController,
+          builder: (context, child) {
+            return Opacity(
+              opacity: 1.0 - _loadingAnimationController.value,
+              child: Transform.scale(
+                scale: 1.0 - 0.2 * _loadingAnimationController.value,
+                child: child,
+              ),
+            );
+          },
+          child: normalContent,
+        ),
+        // 加载内容
+        AnimatedBuilder(
+          animation: _loadingAnimationController,
+          builder: (context, child) {
+            return Opacity(
+              opacity: _loadingAnimationController.value,
+              child: Transform.scale(
+                scale: 0.8 + 0.2 * _loadingAnimationController.value,
+                child: child,
+              ),
+            );
+          },
+          child: loadingContent,
+        ),
+      ],
     );
   }
 
@@ -420,7 +420,6 @@ class _IMButtonState extends State<IMButton> with TickerProviderStateMixin {
         onTapUp: (_) => _onTapUp(),
         onTapCancel: _onTapCancel,
         onTap: _onTap,
-        onLongPress: _onLongPress,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           decoration: _buildDecoration(style),

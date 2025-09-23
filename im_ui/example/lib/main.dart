@@ -92,9 +92,9 @@ class MyHomePage extends StatelessWidget {
         actions: [
           IMButton(
             text: localizations.language,
-            // type: ButtonType.text,
+            type: IMButtonType.text,
             textStyle: TextStyle(
-              color: theme.fontGyColor1,
+              color: theme.fontGyColor6,
               fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
