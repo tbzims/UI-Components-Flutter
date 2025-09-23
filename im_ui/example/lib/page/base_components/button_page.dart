@@ -349,7 +349,6 @@ class _ButtonPageState extends State<ButtonPage> {
               runSpacing: 10,
               children: [
                 IMButton(
-                  textStyle: const TextStyle(fontSize: 16, color: Colors.blue),
                   type: IMButtonType.fill,
                   icon: const Icon(Icons.add),
                   width: 40,
@@ -360,8 +359,8 @@ class _ButtonPageState extends State<ButtonPage> {
                 IMButton(
                   text: '纵向布局',
                   width: 40,
-                  textStyle: const TextStyle(fontSize: 16, color: Colors.blue),
                   type: IMButtonType.fill,
+                  style: IMButtonStyle(textColor: Colors.black),
                   icon: const Icon(Icons.add),
                   layout: IMButtonLayout.vertical,
                   verticalStatus: IMVerticalStatus.separate,
@@ -371,9 +370,11 @@ class _ButtonPageState extends State<ButtonPage> {
                 IMButton(
                   text: '纵向布局',
                   width: 40,
-                  borderRadius: 40,
-                  textStyle: const TextStyle(fontSize: 16, color: Colors.blue),
                   type: IMButtonType.fill,
+                  style: IMButtonStyle(
+                    textColor: Colors.black,
+                    borderRadius: BorderRadius.circular(50),
+                  ),
                   icon: const Icon(Icons.add),
                   layout: IMButtonLayout.vertical,
                   verticalStatus: IMVerticalStatus.separate,
@@ -383,10 +384,12 @@ class _ButtonPageState extends State<ButtonPage> {
                 IMButton(
                   text: '纵向布局',
                   width: 80,
-                  borderRadius: 0,
-                  textStyle: const TextStyle(fontSize: 16),
                   type: IMButtonType.fill,
                   icon: const Icon(Icons.add),
+                  style: IMButtonStyle(
+                    borderRadius: BorderRadius.circular(0),
+                    textColor: Colors.black,
+                  ),
                   layout: IMButtonLayout.vertical,
                   verticalStatus: IMVerticalStatus.merge,
                   disabled: _isDisabled,
@@ -406,29 +409,57 @@ class _ButtonPageState extends State<ButtonPage> {
               spacing: 10,
               runSpacing: 10,
               children: [
+                // 示例：用户可以传入不同状态的颜色
                 IMButton(
-                  text: '自定义填充',
-                  backgroundColor: Colors.purple,
-                  textStyle: const TextStyle(color: Colors.white),
-                  borderRadius: 20,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 15,
+                  text: "自定义颜色",
+                  style: IMButtonStyle.fill(
+                    backgroundColor: Colors.redAccent,
+                    backgroundColors: {
+                      IMButtonStatus.normal: Colors.redAccent,
+                      IMButtonStatus.pressed: ?Colors.red[200],
+                      IMButtonStatus.disabled: ?Colors.red[100],
+                    },
+                    textColor: Colors.white,
+                    textColors: {
+                      IMButtonStatus.normal: Colors.white,
+                      IMButtonStatus.pressed: Colors.white70,
+                      IMButtonStatus.disabled: Colors.white10,
+                    },
                   ),
+                  onTap: () {
+                    // 按钮点击事件
+                  },
                 ),
                 IMButton(
-                  text: '自定义边框',
-                  borderColor: Colors.green,
-                  borderWidth: 2,
-                  textStyle: const TextStyle(color: Colors.green),
-                  borderRadius: 10,
+                  text: "自定义颜色",
+                  type: IMButtonType.border,
+                  style: IMButtonStyle.border(
+                    borderColor: Colors.redAccent,
+                    borderColors: {
+                      IMButtonStatus.normal: Colors.redAccent,
+                      IMButtonStatus.pressed: ?Colors.red[200],
+                      IMButtonStatus.disabled: ?Colors.red[100],
+                    },
+                  ),
+                  onTap: () {
+                    // 按钮点击事件
+                  },
                 ),
                 IMButton(
-                  text: '自定义文字',
-                  textStyle: const TextStyle(
-                    color: Colors.orange,
-                    fontWeight: FontWeight.bold,
+                  text: "自定义颜色",
+                  type: IMButtonType.text,
+                  style: IMButtonStyle.text(
+                    textColor: Colors.redAccent,
+                    textColors: {
+                      // 不同状态的背景色
+                      IMButtonStatus.normal: Colors.redAccent,
+                      IMButtonStatus.pressed: ?Colors.red[200],
+                      IMButtonStatus.disabled: ?Colors.red[100],
+                    },
                   ),
+                  onTap: () {
+                    // 按钮点击事件
+                  },
                 ),
               ],
             ),

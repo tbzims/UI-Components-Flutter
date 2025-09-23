@@ -59,8 +59,8 @@ class IMButton extends StatefulWidget {
   /// 按钮文字
   final String? text;
 
-  /// 按钮文字样式
-  final TextStyle? textStyle;
+  /// 按钮文字大小
+  final double? textSize;
 
   /// 间距
   final double? spacing;
@@ -95,15 +95,6 @@ class IMButton extends StatefulWidget {
   /// 按钮外边距
   final EdgeInsets? margin;
 
-  /// 按钮圆角
-  final double? borderRadius;
-
-  /// 按钮背景颜色
-  final Color? backgroundColor;
-
-  /// 按钮边框颜色
-  final Color? borderColor;
-
   /// 按钮边框宽度
   final double? borderWidth;
 
@@ -119,19 +110,16 @@ class IMButton extends StatefulWidget {
   const IMButton({
     super.key,
     this.text,
+    this.textSize = 16,
     this.type = IMButtonType.fill,
     this.status = IMButtonStatus.normal,
     this.disabled = false,
     this.onTap,
-    this.textStyle,
     this.width,
     this.maxWidth,
     this.percentWidth,
     this.padding,
     this.margin,
-    this.borderRadius,
-    this.backgroundColor,
-    this.borderColor,
     this.borderWidth,
     this.style,
     this.loadingWidget,
@@ -266,22 +254,12 @@ class _IMButtonState extends State<IMButton> with TickerProviderStateMixin {
 
   /// 获取按钮样式
   IMButtonStyle _getStyle() {
-    // 如果有自定义样式，优先使用
+    // 如果有自定义样式，优先使用，并与默认样式合并
     if (widget.style != null) {
-      return widget.style!;
-    }
-
-    // 如果有自定义颜色属性，创建自定义样式
-    if (widget.backgroundColor != null ||
-        widget.borderColor != null ||
-        widget.borderRadius != null) {
-      return IMButtonStyle(
-        backgroundColor: widget.backgroundColor ?? _getDefaultBackgroundColor(),
-        borderColor: widget.borderColor,
-        textColor: widget.textStyle?.color,
-        borderRadius: widget.borderRadius != null
-            ? BorderRadius.circular(widget.borderRadius!)
-            : null,
+      return widget.style!.mergeWithDefaults(
+        context,
+        widget.type,
+        _status,
       );
     }
 
@@ -291,23 +269,6 @@ class _IMButtonState extends State<IMButton> with TickerProviderStateMixin {
       widget.type,
       _status,
     );
-  }
-
-  /// 获取默认背景颜色
-  Color? _getDefaultBackgroundColor() {
-    final theme = IMTheme.of(context);
-    if (widget.type == IMButtonType.fill) {
-      switch (_status) {
-        case IMButtonStatus.normal:
-          return theme.brand1;
-        case IMButtonStatus.pressed:
-          return theme.brand2;
-        case IMButtonStatus.disabled:
-        case IMButtonStatus.loading:
-          return theme.brand4;
-      }
-    }
-    return null;
   }
 
   /// 构建按钮内容
@@ -337,12 +298,12 @@ class _IMButtonState extends State<IMButton> with TickerProviderStateMixin {
           children.add(
             Text(
               widget.text ?? '',
-              style: widget.textStyle ??
-                  TextStyle(
-                    color: style.textColor,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                  ),
+              style: TextStyle(
+                color: style.getTextColor(_status, buttonType: widget.type) ??
+                    style.textColor,
+                fontSize: widget.textSize,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           );
         }
@@ -376,8 +337,9 @@ class _IMButtonState extends State<IMButton> with TickerProviderStateMixin {
     // 构建加载内容
     Widget loadingContent = widget.loadingWidget ??
         IMLoading(
-          size: 20,
-          iconColor: style.textColor,
+          size: widget.textSize ?? 16,
+          iconColor: style.getTextColor(_status, buttonType: widget.type) ??
+              style.textColor,
         );
 
     // 使用 Stack 和 AnimatedBuilder 实现双向动画效果
@@ -421,21 +383,23 @@ class _IMButtonState extends State<IMButton> with TickerProviderStateMixin {
     switch (widget.type) {
       case IMButtonType.fill:
         return BoxDecoration(
-          color: style.backgroundColor,
+          color: style.getBackgroundColor(_status) ?? style.backgroundColor,
           borderRadius: style.borderRadius ?? BorderRadius.circular(6),
         );
       case IMButtonType.border:
         return BoxDecoration(
-          color: style.backgroundColor,
+          color: style.getBackgroundColor(_status) ?? style.backgroundColor,
           borderRadius: style.borderRadius ?? BorderRadius.circular(6),
           border: Border.all(
-            color: style.borderColor ?? IMTheme.of(context).brand1,
+            color: style.getBorderColor(_status) ??
+                style.borderColor ??
+                IMTheme.of(context).brand1,
             width: style.borderWidth ?? 1.0,
           ),
         );
       case IMButtonType.text:
         return BoxDecoration(
-          color: style.backgroundColor,
+          color: style.getBackgroundColor(_status) ?? style.backgroundColor,
           borderRadius: style.borderRadius ?? BorderRadius.circular(6),
         );
     }
@@ -478,12 +442,13 @@ class _IMButtonState extends State<IMButton> with TickerProviderStateMixin {
         if (widget.text != null) ...[
           SizedBox(height: widget.spacing),
           Text(
-            widget.text!,
-            style: widget.textStyle ??
-                TextStyle(
-                  color: style.textColor,
-                  fontSize: 16,
-                ),
+            widget.text ?? '',
+            style: TextStyle(
+              color: style.getTextColor(_status, buttonType: widget.type) ??
+                  style.textColor,
+              fontSize: widget.textSize,
+              fontWeight: FontWeight.w500,
+            ),
           )
         ]
       ]);

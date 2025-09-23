@@ -94,11 +94,6 @@ class MyHomePage extends StatelessWidget {
           IMButton(
             text: localizations.language,
             type: IMButtonType.text,
-            textStyle: TextStyle(
-              color: theme.fontGyColor6,
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
             onTap: () async {
               _showLanguageDrawer(context);
             },
