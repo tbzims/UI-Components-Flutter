@@ -17,8 +17,7 @@ class _ButtonPageState extends State<ButtonPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('IMButton 示例'),
-        backgroundColor: IMTheme.of(context).fontGyColor1,
-        foregroundColor: Colors.white,
+        backgroundColor: IMTheme.of(context).brand1,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -209,14 +208,14 @@ class _ButtonPageState extends State<ButtonPage> {
                 IMButton(
                   text: '填充样式',
                   type: IMButtonType.fill,
-                  icon: const Icon(Icons.add, size: 18),
+                  icon: const Icon(Icons.add, size: 20),
                   disabled: _isDisabled,
                   showLoading: _showLoading,
                 ),
                 IMButton(
                   text: '边框样式',
                   type: IMButtonType.border,
-                  icon: const Icon(Icons.edit, size: 18),
+                  icon: const Icon(Icons.edit, size: 20),
                   disabled: _isDisabled,
                   showLoading: _showLoading,
                 ),
@@ -341,7 +340,7 @@ class _ButtonPageState extends State<ButtonPage> {
 
             // 不同布局的按钮
             const Text(
-              '不同布局按钮',
+              '纵向布局',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
@@ -350,18 +349,46 @@ class _ButtonPageState extends State<ButtonPage> {
               runSpacing: 10,
               children: [
                 IMButton(
-                  text: '纵向布局',
+                  textStyle: const TextStyle(fontSize: 16, color: Colors.blue),
                   type: IMButtonType.fill,
                   icon: const Icon(Icons.add),
+                  width: 40,
                   layout: IMButtonLayout.vertical,
                   disabled: _isDisabled,
                   showLoading: _showLoading,
                 ),
                 IMButton(
-                  text: '横向布局',
-                  type: IMButtonType.border,
-                  icon: const Icon(Icons.edit),
-                  layout: IMButtonLayout.horizontal,
+                  text: '纵向布局',
+                  width: 40,
+                  textStyle: const TextStyle(fontSize: 16, color: Colors.blue),
+                  type: IMButtonType.fill,
+                  icon: const Icon(Icons.add),
+                  layout: IMButtonLayout.vertical,
+                  verticalStatus: IMVerticalStatus.separate,
+                  disabled: _isDisabled,
+                  showLoading: _showLoading,
+                ),
+                IMButton(
+                  text: '纵向布局',
+                  width: 40,
+                  borderRadius: 40,
+                  textStyle: const TextStyle(fontSize: 16, color: Colors.blue),
+                  type: IMButtonType.fill,
+                  icon: const Icon(Icons.add),
+                  layout: IMButtonLayout.vertical,
+                  verticalStatus: IMVerticalStatus.separate,
+                  disabled: _isDisabled,
+                  showLoading: _showLoading,
+                ),
+                IMButton(
+                  text: '纵向布局',
+                  width: 80,
+                  borderRadius: 0,
+                  textStyle: const TextStyle(fontSize: 16),
+                  type: IMButtonType.fill,
+                  icon: const Icon(Icons.add),
+                  layout: IMButtonLayout.vertical,
+                  verticalStatus: IMVerticalStatus.merge,
                   disabled: _isDisabled,
                   showLoading: _showLoading,
                 ),

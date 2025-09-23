@@ -38,26 +38,47 @@ enum IMButtonLayout {
   vertical,
 }
 
+/// 纵向布局样式
+enum IMVerticalStatus {
+  /// 文字和图标分离
+  separate,
+
+  /// 文字和图标合并
+  merge,
+}
+
 typedef IMButtonCallback = void Function();
 
 class IMButton extends StatefulWidget {
-  /// 按钮文字
-  final String? text;
-
   /// 按钮样式类型
   final IMButtonType type;
 
   /// 按钮状态
   final IMButtonStatus status;
 
+  /// 按钮文字
+  final String? text;
+
+  /// 按钮文字样式
+  final TextStyle? textStyle;
+
+  /// 间距
+  final double? spacing;
+
+  /// 自定义按钮图标 (支持SVG,PNG等)
+  final Widget? icon;
+
+  /// 是否显示加载状态
+  final bool showLoading;
+
+  /// 自定义加载图标
+  final Widget? loadingWidget;
+
   /// 按钮是否禁用
   final bool disabled;
 
   /// 按钮点击回调
   final IMButtonCallback? onTap;
-
-  /// 按钮文字样式
-  final TextStyle? textStyle;
 
   /// 按钮宽度（具体数值）
   final double? width;
@@ -89,17 +110,11 @@ class IMButton extends StatefulWidget {
   /// 自定义按钮样式
   final IMButtonStyle? style;
 
-  /// 自定义加载图标
-  final Widget? loadingWidget;
-
-  /// 自定义按钮图标 (支持SVG,PNG等)
-  final Widget? icon;
-
   /// 按钮布局方向
   final IMButtonLayout layout;
 
-  /// 是否显示加载状态
-  final bool showLoading;
+  /// 纵向布局样式
+  final IMVerticalStatus? verticalStatus;
 
   const IMButton({
     super.key,
@@ -122,7 +137,9 @@ class IMButton extends StatefulWidget {
     this.loadingWidget,
     this.icon,
     this.layout = IMButtonLayout.horizontal,
+    this.verticalStatus,
     this.showLoading = false,
+    this.spacing = 8.0,
   });
 
   @override
@@ -132,25 +149,26 @@ class IMButton extends StatefulWidget {
 class _IMButtonState extends State<IMButton> with TickerProviderStateMixin {
   /// 当前按钮状态
   late IMButtonStatus _status;
-  
+
   /// 用于控制加载动画的控制器
   late AnimationController _loadingAnimationController;
 
   @override
   void initState() {
     super.initState();
-    
+
     // 初始化动画控制器
     _loadingAnimationController = AnimationController(
       duration: const Duration(milliseconds: 200),
       vsync: this,
     );
-    
+
     // 初始化状态
     if (widget.disabled) {
       _status = IMButtonStatus.disabled;
     } else if (widget.showLoading) {
       _status = IMButtonStatus.loading;
+      _loadingAnimationController.forward();
     } else {
       _status = widget.status;
     }
@@ -258,7 +276,7 @@ class _IMButtonState extends State<IMButton> with TickerProviderStateMixin {
         widget.borderColor != null ||
         widget.borderRadius != null) {
       return IMButtonStyle(
-        backgroundColor: widget.backgroundColor,
+        backgroundColor: widget.backgroundColor ?? _getDefaultBackgroundColor(),
         borderColor: widget.borderColor,
         textColor: widget.textStyle?.color,
         borderRadius: widget.borderRadius != null
@@ -275,11 +293,28 @@ class _IMButtonState extends State<IMButton> with TickerProviderStateMixin {
     );
   }
 
+  /// 获取默认背景颜色
+  Color? _getDefaultBackgroundColor() {
+    final theme = IMTheme.of(context);
+    if (widget.type == IMButtonType.fill) {
+      switch (_status) {
+        case IMButtonStatus.normal:
+          return theme.brand1;
+        case IMButtonStatus.pressed:
+          return theme.brand2;
+        case IMButtonStatus.disabled:
+        case IMButtonStatus.loading:
+          return theme.brand4;
+      }
+    }
+    return null;
+  }
+
   /// 构建按钮内容
   Widget _buildContent(IMButtonStyle style) {
     // 构建普通内容（图标+文字）
     Widget normalContent;
-    
+
     // 如果没有文字和图标
     if (widget.text == null && widget.icon == null) {
       normalContent = const SizedBox();
@@ -294,25 +329,31 @@ class _IMButtonState extends State<IMButton> with TickerProviderStateMixin {
 
       // 添加文字
       if (widget.text != null) {
-        children.add(
-          Text(
-            widget.text!,
-            style: widget.textStyle ??
-                TextStyle(
-                  color: style.textColor,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                ),
-          ),
-        );
+        // 是纵向布局
+        bool isVertical = widget.layout == IMButtonLayout.vertical;
+        // 是分离布局
+        bool isSeparate = widget.verticalStatus == IMVerticalStatus.separate;
+        if (!(isVertical && isSeparate)) {
+          children.add(
+            Text(
+              widget.text ?? '',
+              style: widget.textStyle ??
+                  TextStyle(
+                    color: style.textColor,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+            ),
+          );
+        }
       }
 
       // 添加图标和文字之间的间距
       if (children.length == 2) {
         if (widget.layout == IMButtonLayout.horizontal) {
-          children.insert(1, const SizedBox(width: 8));
-        } else {
-          children.insert(1, const SizedBox(height: 8));
+          children.insert(1, SizedBox(width: widget.spacing));
+        } else if (widget.layout == IMButtonLayout.vertical) {
+          children.insert(1, SizedBox(height: widget.spacing));
         }
       }
 
@@ -331,14 +372,14 @@ class _IMButtonState extends State<IMButton> with TickerProviderStateMixin {
               children: children,
             );
     }
-    
+
     // 构建加载内容
     Widget loadingContent = widget.loadingWidget ??
         IMLoading(
           size: 20,
           iconColor: style.textColor,
         );
-    
+
     // 使用 Stack 和 AnimatedBuilder 实现双向动画效果
     return Stack(
       alignment: Alignment.center,
@@ -410,6 +451,42 @@ class _IMButtonState extends State<IMButton> with TickerProviderStateMixin {
       buttonWidth = widget.width;
     } else if (widget.percentWidth != null && widget.maxWidth != null) {
       buttonWidth = widget.maxWidth! * widget.percentWidth!;
+    }
+    if (widget.layout == IMButtonLayout.vertical &&
+        widget.verticalStatus == IMVerticalStatus.separate) {
+      return Column(children: [
+        Container(
+          width: buttonWidth,
+          margin: widget.margin,
+          child: GestureDetector(
+            onTapDown: (_) => _onTapDown(),
+            onTapUp: (_) => _onTapUp(),
+            onTapCancel: _onTapCancel,
+            onTap: _onTap,
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              decoration: _buildDecoration(style),
+              padding:
+                  widget.padding ?? const EdgeInsets.symmetric(vertical: 8),
+              child: Center(
+                child: _buildContent(style),
+              ),
+            ),
+          ),
+        ),
+        // 添加文字
+        if (widget.text != null) ...[
+          SizedBox(height: widget.spacing),
+          Text(
+            widget.text!,
+            style: widget.textStyle ??
+                TextStyle(
+                  color: style.textColor,
+                  fontSize: 16,
+                ),
+          )
+        ]
+      ]);
     }
 
     return Container(

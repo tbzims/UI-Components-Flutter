@@ -87,8 +87,9 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'UI Components',
-          style: TextStyle(color: theme.fontGyColor1),
+          style: TextStyle(color: theme.fontGyColor6),
         ),
+        backgroundColor: IMTheme.of(context).brand1,
         actions: [
           IMButton(
             text: localizations.language,
@@ -103,7 +104,6 @@ class MyHomePage extends StatelessWidget {
             },
           ),
         ],
-        backgroundColor: theme.fontGyColor1,
       ),
       body: ListView.separated(
         shrinkWrap: true,

@@ -55,7 +55,7 @@ class ImUiLocalizationsZh extends ImUiLocalizations {
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
 class ImUiLocalizationsZhTw extends ImUiLocalizationsZh {
-  ImUiLocalizationsZhTw(): super('zh_TW');
+  ImUiLocalizationsZhTw() : super('zh_TW');
 
   @override
   String get appTitle => '即時通訊元件庫';
