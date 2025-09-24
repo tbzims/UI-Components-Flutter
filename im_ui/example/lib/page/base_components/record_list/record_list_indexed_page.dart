@@ -64,10 +64,10 @@ class RecordListIndexedPage extends StatelessWidget {
     List<String> indexList = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
 
     return Scaffold(
-      backgroundColor: theme.colorMap['whiteColor1'],
+      backgroundColor: theme.brand6,
       appBar: AppBar(
         title: const Text('Indexed Record List'),
-        backgroundColor: theme.fontGyColor1,
+        backgroundColor: theme.brand1,
       ),
       body: Container(
         width: double.infinity,
@@ -80,17 +80,12 @@ class RecordListIndexedPage extends StatelessWidget {
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 8),
-            // Expanded(
-            //   child: Container(
-            //     decoration: BoxDecoration(
-            //       border: Border.all(color: theme.colorMap['grayColor3']!),
-            //     ),
-            //     child: IMRecordList.indexed(
-            //       indexedItems: indexedItems,
-            //       indexList: indexList,
-            //     ),
-            //   ),
-            // ),
+            Expanded(
+              child: IMRecordList.indexed(
+                indexedItems: indexedItems,
+                indexList: indexList,
+              ),
+            ),
           ],
         ),
       ),

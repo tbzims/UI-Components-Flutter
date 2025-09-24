@@ -19,10 +19,10 @@ class _RecordListBasicPageState extends State<RecordListBasicPage> {
   Widget build(BuildContext context) {
     final theme = IMTheme.of(context);
     return Scaffold(
-      backgroundColor: theme.colorMap['whiteColor1'],
+      backgroundColor: theme.brand6,
       appBar: AppBar(
         title: const Text('Basic Record List'),
-        backgroundColor: theme.fontGyColor1,
+        backgroundColor: theme.brand1,
       ),
       body: Container(
         width: double.infinity,
@@ -35,18 +35,13 @@ class _RecordListBasicPageState extends State<RecordListBasicPage> {
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 8),
-            // Expanded(
-            //   child: Container(
-            //     decoration: BoxDecoration(
-            //       border: Border.all(color: theme.colorMap['grayColor3']!),
-            //     ),
-            //     child: IMRecordList.noLoading(
-            //       items: _normalListItems
-            //           .map((item) => IMRecordItem(title: item))
-            //           .toList(),
-            //     ),
-            //   ),
-            // ),
+            Expanded(
+              child: IMRecordList.noLoading(
+                items: _normalListItems
+                    .map((item) => IMRecordItem(title: item))
+                    .toList(),
+              ),
+            ),
           ],
         ),
       ),

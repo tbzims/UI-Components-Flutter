@@ -9,10 +9,10 @@ class LoadingPage extends StatelessWidget {
     final theme = IMTheme.of(context);
     final localizations = ImUiLocalizations.of(context);
     return Scaffold(
-      backgroundColor: theme.fontGyColor1,
+      backgroundColor: theme.brand6,
       appBar: AppBar(
         title: const Text('Loading'),
-        backgroundColor: theme.fontGyColor1,
+        backgroundColor: theme.brand1,
       ),
       body: Container(
         width: double.infinity,

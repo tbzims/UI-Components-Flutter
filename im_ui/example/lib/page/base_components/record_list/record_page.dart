@@ -10,10 +10,10 @@ class RecordPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = IMTheme.of(context);
     return Scaffold(
-      backgroundColor: theme.colorMap['whiteColor1'],
+      backgroundColor: theme.brand6,
       appBar: AppBar(
         title: const Text('Record List'),
-        backgroundColor: theme.fontGyColor1,
+        backgroundColor: theme.brand1,
       ),
       body: SizedBox(
         width: MediaQuery.of(context).size.width,

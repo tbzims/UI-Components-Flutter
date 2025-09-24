@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:im_ui/im_ui.dart';
 import 'router/app_router.dart';
 
@@ -25,9 +26,17 @@ class _MyAppState extends State<MyApp> {
     _themeData = IMThemeData.defaultData();
   }
 
+  /// 切换语言
   void _changeLanguage(Locale locale) {
     setState(() {
       _locale = locale;
+    });
+  }
+
+  /// 切换主题
+  void _changeTheme(IMThemeData theme) {
+    setState(() {
+      _themeData = theme;
     });
   }
 
@@ -49,7 +58,10 @@ class _MyAppState extends State<MyApp> {
       // 初始化路由
       onGenerateRoute: AppRouter.generateRoute,
       initialRoute: RouterName.home,
-      home: MyHomePage(onLanguageChanged: _changeLanguage),
+      home: MyHomePage(
+        onLanguageChanged: _changeLanguage,
+        onThemeChanged: _changeTheme,
+      ),
     );
   }
 }
@@ -57,7 +69,13 @@ class _MyAppState extends State<MyApp> {
 class MyHomePage extends StatelessWidget {
   final Function(Locale) onLanguageChanged;
 
-  MyHomePage({super.key, required this.onLanguageChanged});
+  final Function(IMThemeData) onThemeChanged;
+
+  MyHomePage({
+    super.key,
+    required this.onLanguageChanged,
+    required this.onThemeChanged,
+  });
 
   /// header
   final List<String> header = ['基础组件', '表单组件', '反馈组件', '导航组件', '其他组件'];
@@ -78,12 +96,34 @@ class MyHomePage extends StatelessWidget {
     {'name': 'ខ្មែរ', 'locale': Locale('km', 'KH')},
   ];
 
+  // 从assets文件中读取JSON
+  Future<void> loadThemeFromAssets(
+      BuildContext context,
+      String themeName,
+      ) async {
+    try {
+      // 加载主题文件
+      String themeJson = await rootBundle.loadString(
+        'assets/themes/${themeName}_theme.json',
+      );
+      IMThemeData? theme = IMThemeData.fromJson('default', themeJson);
+      if (theme != null) {
+        onThemeChanged(theme);
+      } else {
+        print('解析主题文件失败: $themeName');
+      }
+    } catch (e) {
+      print('加载主题失败: $themeName, 错误信息: ${e.toString()}');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     // 获取当前主题数据
     final theme = IMTheme.of(context);
     final localizations = ImUiLocalizations.of(context);
     return Scaffold(
+      backgroundColor: IMTheme.of(context).brand6,
       appBar: AppBar(
         title: Text(
           'UI Components',
@@ -94,24 +134,66 @@ class MyHomePage extends StatelessWidget {
           IMButton(
             text: localizations.language,
             type: IMButtonType.text,
+            style: IMButtonStyle.text(textColor: theme.fontGyColor6),
             onTap: () async {
               _showLanguageDrawer(context);
             },
           ),
         ],
       ),
-      body: ListView.separated(
-        shrinkWrap: true,
-        itemCount: data.length,
-        padding: EdgeInsets.symmetric(horizontal: 20),
-        separatorBuilder: (_, i) => Container(),
-        itemBuilder: (_, i) => Padding(
-          padding: EdgeInsets.only(top: 10),
-          child: IMButton(
-            text: data[i]['title'],
-            onTap: () => Navigator.of(context).pushNamed(data[i]['page']),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Text(
+              '主题切换',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
           ),
-        ),
+          SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              IMButton(
+                text: '默认主题',
+                style: IMButtonStyle(backgroundColor: Color(0xFF007AFF)),
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                onTap: () {
+                  onThemeChanged(IMThemeData.defaultData());
+                },
+              ),
+              IMButton(
+                text: '红色主题',
+                style: IMButtonStyle(backgroundColor: Color(0xFFF44336)),
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                onTap: () => loadThemeFromAssets(context, 'red'),
+              ),
+              IMButton(
+                text: '紫色主题',
+                style: IMButtonStyle(backgroundColor: Color(0xFF7B1FA2)),
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                onTap: () => loadThemeFromAssets(context, 'purple'),
+              ),
+            ],
+          ),
+          SizedBox(height: 10),
+          Expanded(
+            child: ListView.separated(
+              shrinkWrap: true,
+              itemCount: data.length,
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              separatorBuilder: (_, i) => Container(),
+              itemBuilder: (_, i) => Padding(
+                padding: EdgeInsets.only(top: 10),
+                child: IMButton(
+                  text: data[i]['title'],
+                  onTap: () => Navigator.of(context).pushNamed(data[i]['page']),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

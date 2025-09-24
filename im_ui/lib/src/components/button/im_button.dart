@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:im_ui/im_ui.dart';
-import 'im_button_style.dart';
 
 /// 定义按钮的显示样式类型
 enum IMButtonType {
@@ -118,7 +117,7 @@ class IMButton extends StatefulWidget {
     this.width,
     this.maxWidth,
     this.percentWidth,
-    this.padding,
+    this.padding = const EdgeInsets.all(8),
     this.margin,
     this.borderWidth,
     this.style,
@@ -430,8 +429,7 @@ class _IMButtonState extends State<IMButton> with TickerProviderStateMixin {
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 200),
               decoration: _buildDecoration(style),
-              padding:
-                  widget.padding ?? const EdgeInsets.symmetric(vertical: 8),
+              padding: widget.padding,
               child: Center(
                 child: _buildContent(style),
               ),
@@ -465,7 +463,7 @@ class _IMButtonState extends State<IMButton> with TickerProviderStateMixin {
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           decoration: _buildDecoration(style),
-          padding: widget.padding ?? const EdgeInsets.symmetric(vertical: 8),
+          padding: widget.padding,
           child: Center(
             child: _buildContent(style),
           ),
