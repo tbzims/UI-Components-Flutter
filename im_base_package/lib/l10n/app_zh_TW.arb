@@ -1,0 +1,16 @@
+{
+  "appTitle": "即時通訊元件庫",
+  "appCount": "應用數量為 {count}",
+  "language" : "語言",
+  "loading": "載入中...",
+  "pullToRefresh": "下拉重新整理",
+  "releaseToRefresh": "放開重新整理",
+  "refreshing": "重新整理中...",
+  "refreshSuccess": "重新整理成功",
+  "refreshFailed": "重新整理失敗",
+  "pullToLoad": "上拉載入更多",
+  "releaseToLoad": "放開載入更多",
+  "loadSuccess": "載入成功",
+  "loadFailed": "載入失敗",
+  "noMore": "沒有更多資料"
+}
