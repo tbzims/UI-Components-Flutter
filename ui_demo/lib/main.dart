@@ -1,122 +1,258 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:im_base_package/im_base_package.dart';
+
+import 'router/app_router.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  /// 主题
+  late IMThemeData _themeData;
+
+  Locale _locale = const Locale('zh', 'CN');
+
+  @override
+  void initState() {
+    super.initState();
+    _themeData = IMThemeData.defaultData();
   }
-}
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
+  /// 切换语言
+  void _changeLanguage(Locale locale) {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
+      _locale = locale;
+    });
+  }
+
+  /// 切换主题
+  void _changeTheme(IMThemeData theme) {
+    setState(() {
+      _themeData = theme;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
+    // 使用多套主题
+    IMTheme.needMultiTheme();
+    return MaterialApp(
+      title: 'UI Component',
+      // 初始化国际化 (添加语言后使用 flutter gen-l10n 更多语言)
+      localizationsDelegates: ImUiLocalizations.localizationsDelegates,
+      supportedLocales: ImUiLocalizations.supportedLocales,
+      locale: _locale,
+      // 初始化主题
+      theme: ThemeData(
+        extensions: [_themeData],
+        colorScheme: ColorScheme.light(primary: _themeData.brand1),
+      ),
+      // 初始化路由
+      onGenerateRoute: AppRouter.generateRoute,
+      initialRoute: RouterName.home,
+      home: MyHomePage(
+        onLanguageChanged: _changeLanguage,
+        onThemeChanged: _changeTheme,
+      ),
+    );
+  }
+}
+
+class MyHomePage extends StatelessWidget {
+  final Function(Locale) onLanguageChanged;
+
+  final Function(IMThemeData) onThemeChanged;
+
+  MyHomePage({
+    super.key,
+    required this.onLanguageChanged,
+    required this.onThemeChanged,
+  });
+
+  /// header
+  final List<String> header = ['基础组件', '表单组件', '反馈组件', '导航组件', '其他组件'];
+
+  final List<Map<String, dynamic>> data = [
+    {'title': 'button', 'page': RouterName.button},
+    {'title': 'loading', 'page': RouterName.loading},
+    // {'title': 'recordList', 'page': RouterName.recordList},
+    // {'title': 'recordList', 'page': RouterName.recordList},
+    // {'title': 'recordItem', 'page': RouterName.recordItem},
+  ];
+
+  /// 语言列表
+  final List<Map<String, dynamic>> languages = [
+    {'name': '中文(简体)', 'locale': Locale('zh', 'CN')},
+    {'name': '中文(繁體)', 'locale': Locale('zh', 'TW')},
+    {'name': 'English', 'locale': Locale('en', 'US')},
+    {'name': 'ខ្មែរ', 'locale': Locale('km', 'KH')},
+  ];
+
+  // 从assets文件中读取JSON
+  Future<void> loadThemeFromAssets(
+      BuildContext context,
+      String themeName,
+      ) async {
+    try {
+      // 加载主题文件
+      String themeJson = await rootBundle.loadString(
+        'assets/themes/${themeName}_theme.json',
+      );
+      IMThemeData? theme = IMThemeData.fromJson('default', themeJson);
+      if (theme != null) {
+        onThemeChanged(theme);
+      } else {
+        print('解析主题文件失败: $themeName');
+      }
+    } catch (e) {
+      print('加载主题失败: $themeName, 错误信息: ${e.toString()}');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // 获取当前主题数据
+    final theme = IMTheme.of(context);
+    final localizations = ImUiLocalizations.of(context);
     return Scaffold(
+      backgroundColor: IMTheme.of(context).brand6,
       appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+        title: Text(
+          'UI Components',
+          style: TextStyle(color: theme.fontGyColor6),
         ),
+        backgroundColor: IMTheme.of(context).brand1,
+        actions: [
+          IMButton(
+            text: localizations.language,
+            type: IMButtonType.text,
+            style: IMButtonStyle.text(textColor: theme.fontGyColor6),
+            onTap: () async {
+              _showLanguageDrawer(context);
+            },
+          ),
+        ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Text(
+              '主题切换',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+          ),
+          SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              IMButton(
+                text: '默认主题',
+                style: IMButtonStyle(backgroundColor: Color(0xFF007AFF)),
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                onTap: () {
+                  onThemeChanged(IMThemeData.defaultData());
+                },
+              ),
+              IMButton(
+                text: '红色主题',
+                style: IMButtonStyle(backgroundColor: Color(0xFFF44336)),
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                onTap: () => loadThemeFromAssets(context, 'red'),
+              ),
+              IMButton(
+                text: '紫色主题',
+                style: IMButtonStyle(backgroundColor: Color(0xFF7B1FA2)),
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                onTap: () => loadThemeFromAssets(context, 'purple'),
+              ),
+            ],
+          ),
+          SizedBox(height: 10),
+          Expanded(
+            child: ListView.separated(
+              shrinkWrap: true,
+              itemCount: data.length,
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              separatorBuilder: (_, i) => Container(),
+              itemBuilder: (_, i) => Padding(
+                padding: EdgeInsets.only(top: 10),
+                child: IMButton(
+                  text: data[i]['title'],
+                  onTap: () => Navigator.of(context).pushNamed(data[i]['page']),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showLanguageDrawer(BuildContext context) {
+    final theme = IMTheme.of(context);
+
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return SizedBox(
+          height: 300,
+          child: Column(
+            children: [
+              Container(
+                padding: EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(color: theme.fontGyColor1, width: 1),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      '选择语言',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.close),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: languages.length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      title: Text(languages[index]['name']),
+                      onTap: () {
+                        onLanguageChanged(languages[index]['locale']);
+                        Navigator.pop(context);
+                      },
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

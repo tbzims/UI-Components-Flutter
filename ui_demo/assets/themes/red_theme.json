@@ -1,0 +1,37 @@
+{
+  "default": {
+    "color": {
+      "brand1": "#FFF44336",
+      "brand2": "#FFF4938C",
+      "brand3": "#FFD23A2E",
+      "brand4": "#FFF4AFAA",
+      "brand5": "#FFF4D4D2",
+      "brand6": "#FFF4E2E1",
+      "text1": "#FF121212",
+      "text2": "#FFA31212",
+      "text3": "#FF701212",
+      "text4": "#FF4D1212",
+      "text5": "#FF331212",
+      "text6": "#FFFFFFFF",
+      "fill1": "#FF701212",
+      "fill2": "#FF4D1212",
+      "fill3": "#FF141212",
+      "fill4": "#FF261212",
+      "fill5": "#FF1A1212",
+      "fill6": "#FF0F1212",
+      "fill7": "#FF081212",
+      "normal1": "#FF0078FA",
+      "normal2": "#FF80BBFD",
+      "normal3": "#FFE6F1FF",
+      "success1": "#FF34C759",
+      "success2": "#FF99E3AC",
+      "success3": "#FFEBF9EE",
+      "warning1": "#FFFF9500",
+      "warning2": "#FFFFCA80",
+      "warning3": "#FFFFF4E6",
+      "error1": "#FFFF3B30",
+      "error2": "#FFFF9D97",
+      "error3": "#FFFFEBEA"
+    }
+  }
+}
