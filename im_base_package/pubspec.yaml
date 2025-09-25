@@ -26,9 +26,8 @@ executables:
 
 flutter:
   uses-material-design: true
-  generate: true # 启用代码生成
-flutter_intl:
-  enabled: true
+  # 启用代码生成
+  generate: true
 
 # To add assets to your package, add an assets section, like this:
 # assets:
