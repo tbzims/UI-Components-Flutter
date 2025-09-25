@@ -1,7 +1,7 @@
 {
   "appTitle": "即时通讯组件库",
   "appCount": "应用数量是{count}",
-  "language" : "语言",
+  "language": "语言",
   "loading": "加载中...",
   "pullToRefresh": "下拉刷新",
   "releaseToRefresh": "松手刷新",
@@ -12,5 +12,10 @@
   "releaseToLoad": "松手加载更多",
   "loadSuccess": "加载成功",
   "loadFailed": "加载失败",
-  "noMore": "没有更多数据"
+  "noMore": "没有更多数据",
+  "edit": "编辑",
+  "delete": "删除",
+  "confirm": "确认",
+  "cancel": "取消",
+  "pcLoadOnClick": "点击加载更多"
 }

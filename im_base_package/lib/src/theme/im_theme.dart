@@ -259,9 +259,16 @@ class IMThemeData extends ThemeExtension<IMThemeData> {
 
         /// 设置字体尺寸
         Map<String, dynamic>? fontsMap = curThemeMap['font'];
-        fontsMap?.forEach((key, value) {
-          theme.fontMap[key] = Font.fromJson(value);
+        fontsMap?.forEach((platform, platformFonts) {
+          if (platformFonts is Map<String, dynamic>) {
+            platformFonts.forEach((fontName, fontConfig) {
+              if (fontConfig is Map<String, dynamic>) {
+                theme.fontMap['${platform}_$fontName'] = Font.fromJson(fontConfig);
+              }
+            });
+          }
         });
+
 
         // /// 设置圆角
         // Map<String, dynamic>? cornersMap = curThemeMap['radius'];

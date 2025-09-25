@@ -12,5 +12,10 @@
   "releaseToLoad": "放開載入更多",
   "loadSuccess": "載入成功",
   "loadFailed": "載入失敗",
-  "noMore": "沒有更多資料"
+  "noMore": "沒有更多資料",
+  "edit": "編輯",
+  "delete": "刪除",
+  "confirm": "確認",
+  "cancel": "取消",
+  "pcLoadOnClick": "點擊加載更多"
 }

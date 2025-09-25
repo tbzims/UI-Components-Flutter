@@ -1,8 +1,4 @@
-// ignore: unused_import
-import 'package:intl/intl.dart' as intl;
 import 'app_localizations.dart';
-
-// ignore_for_file: type=lint
 
 /// The translations for Khmer Central Khmer (`km`).
 class ImUiLocalizationsKm extends ImUiLocalizations {
@@ -51,4 +47,19 @@ class ImUiLocalizationsKm extends ImUiLocalizations {
 
   @override
   String get noMore => 'គ្មាន​ទិន្នន័យ​បន្ថែម​ទៀត​ហើយ';
+
+  @override
+  String get edit => 'កែសម្រួល';
+
+  @override
+  String get delete => 'លុប';
+
+  @override
+  String get confirm => 'យល់ព្រម';
+
+  @override
+  String get cancel => 'បោះបង់';
+
+  @override
+  String get pcLoadOnClick => 'បង្កើតឡើងនៅពេលចុច';
 }

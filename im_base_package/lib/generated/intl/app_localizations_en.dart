@@ -1,8 +1,4 @@
-// ignore: unused_import
-import 'package:intl/intl.dart' as intl;
 import 'app_localizations.dart';
-
-// ignore_for_file: type=lint
 
 /// The translations for English (`en`).
 class ImUiLocalizationsEn extends ImUiLocalizations {
@@ -51,4 +47,19 @@ class ImUiLocalizationsEn extends ImUiLocalizations {
 
   @override
   String get noMore => 'No more data';
+
+  @override
+  String get edit => 'Edit';
+
+  @override
+  String get delete => 'Delete';
+
+  @override
+  String get confirm => 'Confirm';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get pcLoadOnClick => 'Load on Click';
 }

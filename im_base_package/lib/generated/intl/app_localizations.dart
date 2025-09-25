@@ -6,10 +6,10 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
 import 'app_localizations_en.dart';
+import 'app_localizations_ja.dart';
 import 'app_localizations_km.dart';
+import 'app_localizations_tr.dart';
 import 'app_localizations_zh.dart';
-
-// ignore_for_file: type=lint
 
 /// Callers can lookup localized strings with an instance of ImUiLocalizations
 /// returned by `ImUiLocalizations.of(context)`.
@@ -19,7 +19,7 @@ import 'app_localizations_zh.dart';
 /// `supportedLocales` list. For example:
 ///
 /// ```dart
-/// import 'intl/app_localizations.dart';
+/// import 'gen_l10n/app_localizations.dart';
 ///
 /// return MaterialApp(
 ///   localizationsDelegates: ImUiLocalizations.localizationsDelegates,
@@ -63,8 +63,7 @@ import 'app_localizations_zh.dart';
 /// be consistent with the languages listed in the ImUiLocalizations.supportedLocales
 /// property.
 abstract class ImUiLocalizations {
-  ImUiLocalizations(String locale)
-      : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+  ImUiLocalizations(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -72,8 +71,7 @@ abstract class ImUiLocalizations {
     return Localizations.of<ImUiLocalizations>(context, ImUiLocalizations)!;
   }
 
-  static const LocalizationsDelegate<ImUiLocalizations> delegate =
-      _ImUiLocalizationsDelegate();
+  static const LocalizationsDelegate<ImUiLocalizations> delegate = _ImUiLocalizationsDelegate();
 
   /// A list of this localizations delegate along with the default localizations
   /// delegates.
@@ -85,8 +83,7 @@ abstract class ImUiLocalizations {
   /// Additional delegates can be added by appending to this list in
   /// MaterialApp. This list does not have to be used at all if a custom list
   /// of delegates is preferred or required.
-  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
-      <LocalizationsDelegate<dynamic>>[
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
     delegate,
     GlobalMaterialLocalizations.delegate,
     GlobalCupertinoLocalizations.delegate,
@@ -96,7 +93,9 @@ abstract class ImUiLocalizations {
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
     Locale('en'),
+    Locale('ja'),
     Locale('km'),
+    Locale('tr'),
     Locale('zh'),
     Locale('zh', 'TW')
   ];
@@ -184,52 +183,78 @@ abstract class ImUiLocalizations {
   /// In en, this message translates to:
   /// **'No more data'**
   String get noMore;
+
+  /// No description provided for @edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get edit;
+
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
+
+  /// No description provided for @confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get confirm;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @pcLoadOnClick.
+  ///
+  /// In en, this message translates to:
+  /// **'Load on Click'**
+  String get pcLoadOnClick;
 }
 
-class _ImUiLocalizationsDelegate
-    extends LocalizationsDelegate<ImUiLocalizations> {
+class _ImUiLocalizationsDelegate extends LocalizationsDelegate<ImUiLocalizations> {
   const _ImUiLocalizationsDelegate();
 
   @override
   Future<ImUiLocalizations> load(Locale locale) {
-    return SynchronousFuture<ImUiLocalizations>(
-        lookupImUiLocalizations(locale));
+    return SynchronousFuture<ImUiLocalizations>(lookupImUiLocalizations(locale));
   }
 
   @override
-  bool isSupported(Locale locale) =>
-      <String>['en', 'km', 'zh'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>['en', 'ja', 'km', 'tr', 'zh'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_ImUiLocalizationsDelegate old) => false;
 }
 
 ImUiLocalizations lookupImUiLocalizations(Locale locale) {
+
   // Lookup logic when language+country codes are specified.
   switch (locale.languageCode) {
-    case 'zh':
-      {
-        switch (locale.countryCode) {
-          case 'TW':
-            return ImUiLocalizationsZhTw();
-        }
-        break;
-      }
+    case 'zh': {
+  switch (locale.countryCode) {
+    case 'TW': return ImUiLocalizationsZhTw();
+   }
+  break;
+   }
   }
 
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
-    case 'en':
-      return ImUiLocalizationsEn();
-    case 'km':
-      return ImUiLocalizationsKm();
-    case 'zh':
-      return ImUiLocalizationsZh();
+    case 'en': return ImUiLocalizationsEn();
+    case 'ja': return ImUiLocalizationsJa();
+    case 'km': return ImUiLocalizationsKm();
+    case 'tr': return ImUiLocalizationsTr();
+    case 'zh': return ImUiLocalizationsZh();
   }
 
   throw FlutterError(
-      'ImUiLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
-      'an issue with the localizations generation tool. Please file an issue '
-      'on GitHub with a reproducible sample app and the gen-l10n configuration '
-      'that was used.');
+    'ImUiLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+    'an issue with the localizations generation tool. Please file an issue '
+    'on GitHub with a reproducible sample app and the gen-l10n configuration '
+    'that was used.'
+  );
 }

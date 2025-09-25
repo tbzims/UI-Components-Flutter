@@ -1,8 +1,4 @@
-// ignore: unused_import
-import 'package:intl/intl.dart' as intl;
 import 'app_localizations.dart';
-
-// ignore_for_file: type=lint
 
 /// The translations for Chinese (`zh`).
 class ImUiLocalizationsZh extends ImUiLocalizations {
@@ -51,11 +47,26 @@ class ImUiLocalizationsZh extends ImUiLocalizations {
 
   @override
   String get noMore => '没有更多数据';
+
+  @override
+  String get edit => '编辑';
+
+  @override
+  String get delete => '删除';
+
+  @override
+  String get confirm => '确认';
+
+  @override
+  String get cancel => '取消';
+
+  @override
+  String get pcLoadOnClick => '点击加载更多';
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
 class ImUiLocalizationsZhTw extends ImUiLocalizationsZh {
-  ImUiLocalizationsZhTw() : super('zh_TW');
+  ImUiLocalizationsZhTw(): super('zh_TW');
 
   @override
   String get appTitle => '即時通訊元件庫';
@@ -100,4 +111,19 @@ class ImUiLocalizationsZhTw extends ImUiLocalizationsZh {
 
   @override
   String get noMore => '沒有更多資料';
+
+  @override
+  String get edit => '編輯';
+
+  @override
+  String get delete => '刪除';
+
+  @override
+  String get confirm => '確認';
+
+  @override
+  String get cancel => '取消';
+
+  @override
+  String get pcLoadOnClick => '點擊加載更多';
 }

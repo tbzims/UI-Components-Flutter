@@ -304,7 +304,7 @@ class _IMButtonState extends State<IMButton> with TickerProviderStateMixin {
                 color: style.getTextColor(_status, buttonType: widget.type) ??
                     style.textColor,
                 fontSize: widget.textSize,
-                fontWeight: FontWeight.w500,
+                fontWeight: IMTheme.of(context).ofFont('buttonText')?.fontWeight ??FontWeight.w500,
               ),
             ),
           );

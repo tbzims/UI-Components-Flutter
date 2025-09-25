@@ -12,5 +12,10 @@
     "releaseToLoad": "Release to load more",
     "loadSuccess": "Load success",
     "loadFailed": "Load failed",
-    "noMore": "No more data"
+    "noMore": "No more data",
+    "edit": "Edit",
+    "delete": "Delete",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "pcLoadOnClick": "Load on Click"
 }

@@ -1,0 +1,21 @@
+{
+  "appTitle": "IM Arayüzü",
+  "appCount": "uygulama sayısı {count}",
+  "language": "Dil",
+  "loading": "Yükleniyor...",
+  "pullToRefresh": "Yenilemek için çek",
+  "releaseToRefresh": "Yenilemek için bırak",
+  "refreshing": "Yenileniyor...",
+  "refreshSuccess": "Yenileme başarılı",
+  "refreshFailed": "Yenileme başarısız",
+  "pullToLoad": "Daha fazla yüklemek için çek",
+  "releaseToLoad": "Daha fazla yüklemek için bırak",
+  "loadSuccess": "Yükleme başarılı",
+  "loadFailed": "Yükleme başarısız",
+  "noMore": "Daha fazla veri yok",
+  "edit": "Düzenle",
+  "delete": "Sil",
+  "confirm": "Onayla",
+  "cancel": "İptal",
+  "pcLoadOnClick": "Tıklamayla Yükle"
+}

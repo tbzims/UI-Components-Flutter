@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:im_base_package/im_base_package.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'router/app_router.dart';
 
@@ -47,8 +48,13 @@ class _MyAppState extends State<MyApp> {
     IMTheme.needMultiTheme();
     return MaterialApp(
       title: 'UI Component',
-      // 初始化国际化 (添加语言后使用 flutter gen-l10n 更多语言)
-      localizationsDelegates: ImUiLocalizations.localizationsDelegates,
+      // 多语言
+      localizationsDelegates:[
+        ...ImUiLocalizations.localizationsDelegates,
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
       supportedLocales: ImUiLocalizations.supportedLocales,
       locale: _locale,
       // 初始化主题
@@ -95,6 +101,8 @@ class MyHomePage extends StatelessWidget {
     {'name': '中文(繁體)', 'locale': Locale('zh', 'TW')},
     {'name': 'English', 'locale': Locale('en', 'US')},
     {'name': 'ខ្មែរ', 'locale': Locale('km', 'KH')},
+    {'name': '言語', 'locale': Locale('ja', 'JP')},
+    {'name': 'Dil', 'locale': Locale('tr', 'TR')},
   ];
 
   // 从assets文件中读取JSON

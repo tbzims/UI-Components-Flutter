@@ -1,0 +1,21 @@
+{
+  "appTitle": "インスタントメッセージUI",
+  "appCount": "アプリ数{count}",
+  "language": "言語",
+  "loading": "読み込み中...",
+  "pullToRefresh": "引き下げて更新",
+  "releaseToRefresh": "離して更新",
+  "refreshing": "更新中...",
+  "refreshSuccess": "更新成功",
+  "refreshFailed": "更新失敗",
+  "pullToLoad": "引き上げてさらに読み込む",
+  "releaseToLoad": "離してさらに読み込む",
+  "loadSuccess": "読み込み成功",
+  "loadFailed": "読み込み失敗",
+  "noMore": "データがありません",
+  "edit": "編集",
+  "delete": "削除",
+  "confirm": "確認",
+  "cancel": "キャンセル",
+  "pcLoadOnClick": "クリックで読み込み"
+}

@@ -96,8 +96,9 @@ String _generateThemeString(String primaryColorHex) {
   }
 
   // 转换为HSV
-  final primaryHsv = _rgbToHsv(primaryColor["red"]!, primaryColor["green"]!, primaryColor["blue"]!);
-  
+  final primaryHsv = _rgbToHsv(
+      primaryColor["red"]!, primaryColor["green"]!, primaryColor["blue"]!);
+
   // 计算衍生色（基于HSV模型）
   final derivedColors = _calculateDerivedColorsWithHsv(primaryHsv);
 
@@ -149,6 +150,153 @@ String _generateThemeString(String primaryColorHex) {
         "error1": "#FFFF3B30", // 常规
         "error2": "#FFFF9D97", // 特殊场景
         "error3": "#FFFFEBEA", // 浅色背景
+      },
+      'font': {
+        'mobile': {
+          "captionText": {"fontSize": 10, "lineHeight": 12, "fontWeight": 400},
+          "auxiliaryTextSmall": {
+            "fontSize": 12,
+            "lineHeight": 16,
+            "fontWeight": 400,
+          },
+          "auxiliaryText": {
+            "fontSize": 14,
+            "lineHeight": 20,
+            "fontWeight": 400,
+          },
+          "bodyContent": {
+            "fontSize": 16,
+            "lineHeight": 22,
+            "fontWeight": 400,
+          },
+          "bodyContentLarge": {
+            "fontSize": 18,
+            "lineHeight": 24,
+            "fontWeight": 400,
+          },
+          "titleMin": {
+            "fontSize": 14,
+            "lineHeight": 20,
+            "fontWeight": 500,
+          },
+          "titleSmall": {
+            "fontSize": 16,
+            "lineHeight": 22,
+            "fontWeight": 500,
+          },
+          "titleMedium": {
+            "fontSize": 18,
+            "lineHeight": 24,
+            "fontWeight": 500,
+          },
+          "titleLarge": {
+            "fontSize": 20,
+            "lineHeight": 28,
+            "fontWeight": 500,
+          },
+          "headlineMin": {
+            "fontSize": 24,
+            "lineHeight": 36,
+            "fontWeight": 600,
+          },
+          "headlineSmall": {
+            "fontSize": 28,
+            "lineHeight": 36,
+            "fontWeight": 600,
+          },
+          "headlineMedium": {
+            "fontSize": 32,
+            "lineHeight": 44,
+            "fontWeight": 600,
+          },
+          "headlineLarge": {
+            "fontSize": 40,
+            "lineHeight": 24,
+            "fontWeight": 600,
+          },
+          "headlineSuperLarge": {
+            "fontSize": 48,
+            "lineHeight": 56,
+            "fontWeight": 600,
+          },
+          "headlineSuperLargeX": {
+            "fontSize": 56,
+            "lineHeight": 64,
+            "fontWeight": 600,
+          }
+        },
+        'pc': {
+          "captionText": {
+            "fontSize": 10,
+            "lineHeight": 12,
+            "fontWeight": 400,
+          },
+          "auxiliaryText": {
+            "fontSize": 12,
+            "lineHeight": 20,
+            "fontWeight": 400,
+          },
+          "bodyContent": {
+            "fontSize": 14,
+            "lineHeight": 22,
+            "fontWeight": 400,
+          },
+          "bodyContentLarge": {
+            "fontSize": 16,
+            "lineHeight": 24,
+            "fontWeight": 400,
+          },
+          "titleMin": {
+            "fontSize": 12,
+            "lineHeight": 20,
+            "fontWeight": 500,
+          },
+          "titleSmall": {
+            "fontSize": 14,
+            "lineHeight": 22,
+            "fontWeight": 500,
+          },
+          "titleMedium": {
+            "fontSize": 16,
+            "lineHeight": 24,
+            "fontWeight": 500,
+          },
+          "titleLarge": {
+            "fontSize": 20,
+            "lineHeight": 28,
+            "fontWeight": 500,
+          },
+          "headlineMin": {
+            "fontSize": 24,
+            "lineHeight": 36,
+            "fontWeight": 600,
+          },
+          "headlineSmall": {
+            "fontSize": 28,
+            "lineHeight": 36,
+            "fontWeight": 600,
+          },
+          "headlineMedium": {
+            "fontSize": 32,
+            "lineHeight": 44,
+            "fontWeight": 600,
+          },
+          "headlineLarge": {
+            "fontSize": 40,
+            "lineHeight": 24,
+            "fontWeight": 600,
+          },
+          "headlineSuperLarge": {
+            "fontSize": 48,
+            "lineHeight": 56,
+            "fontWeight": 600,
+          },
+          "headlineSuperLargeX": {
+            "fontSize": 56,
+            "lineHeight": 64,
+            "fontWeight": 600,
+          }
+        },
       }
     }
   };
@@ -157,11 +305,12 @@ String _generateThemeString(String primaryColorHex) {
   return JsonEncoder.withIndent('  ').convert(themeData);
 }
 
-Map<String, Map<String, String>> _calculateDerivedColorsWithHsv(Map<String, double> primaryHsv) {
+Map<String, Map<String, String>> _calculateDerivedColorsWithHsv(
+    Map<String, double> primaryHsv) {
   final h = primaryHsv["hue"]!;
   final s = primaryHsv["saturation"]!;
   final v = primaryHsv["value"]!;
-  
+
   // 基于提供的示例数据进行计算
   // #007AFF 的 HSV 约为 (211, 100%, 100%)
   // #73B6FF: HSV  (211, 54.9%, 100%) - 点击色（降低饱和度）
@@ -169,7 +318,7 @@ Map<String, Map<String, String>> _calculateDerivedColorsWithHsv(Map<String, doub
   // #9CCBFF: HSV  (211, 38.8%, 100%) - 禁用色（进一步降低饱和度）
   // #D1E7FF: HSV  (211, 18.0%, 100%) - 一般背景（大大降低饱和度）
   // #E5F2FF: HSV  (211, 10.2%, 100%) - 浅色背景（极低饱和度）
-  
+
   return {
     "normal": {
       "colorHex": _hsvToHex(h, s, v) // 原始颜色
@@ -224,19 +373,19 @@ Map<String, double> _rgbToHsv(int r, int g, int b) {
   final rf = r / 255.0;
   final gf = g / 255.0;
   final bf = b / 255.0;
-  
+
   final maxVal = max(rf, max(gf, bf));
   final minVal = min(rf, min(gf, bf));
   final delta = maxVal - minVal;
-  
+
   double h = 0.0;
   double s = 0.0;
   final v = maxVal;
-  
+
   if (maxVal != 0) {
     s = delta / maxVal;
   }
-  
+
   if (delta != 0) {
     if (maxVal == rf) {
       h = (gf - bf) / delta + (gf < bf ? 6 : 0);
@@ -247,7 +396,7 @@ Map<String, double> _rgbToHsv(int r, int g, int b) {
     }
     h /= 6;
   }
-  
+
   return {
     "hue": h,
     "saturation": s,
@@ -257,7 +406,7 @@ Map<String, double> _rgbToHsv(int r, int g, int b) {
 
 String _hsvToHex(double h, double s, double v) {
   int r, g, b;
-  
+
   if (s == 0) {
     r = g = b = (v * 255).round();
   } else {
@@ -266,19 +415,45 @@ String _hsvToHex(double h, double s, double v) {
     final p = v * (1 - s);
     final q = v * (1 - f * s);
     final t = v * (1 - (1 - f) * s);
-    
+
     switch (i % 6) {
-      case 0: r = (v * 255).round(); g = (t * 255).round(); b = (p * 255).round(); break;
-      case 1: r = (q * 255).round(); g = (v * 255).round(); b = (p * 255).round(); break;
-      case 2: r = (p * 255).round(); g = (v * 255).round(); b = (t * 255).round(); break;
-      case 3: r = (p * 255).round(); g = (q * 255).round(); b = (v * 255).round(); break;
-      case 4: r = (t * 255).round(); g = (p * 255).round(); b = (v * 255).round(); break;
-      case 5: r = (v * 255).round(); g = (p * 255).round(); b = (q * 255).round(); break;
-      default: r = g = b = 0;
+      case 0:
+        r = (v * 255).round();
+        g = (t * 255).round();
+        b = (p * 255).round();
+        break;
+      case 1:
+        r = (q * 255).round();
+        g = (v * 255).round();
+        b = (p * 255).round();
+        break;
+      case 2:
+        r = (p * 255).round();
+        g = (v * 255).round();
+        b = (t * 255).round();
+        break;
+      case 3:
+        r = (p * 255).round();
+        g = (q * 255).round();
+        b = (v * 255).round();
+        break;
+      case 4:
+        r = (t * 255).round();
+        g = (p * 255).round();
+        b = (v * 255).round();
+        break;
+      case 5:
+        r = (v * 255).round();
+        g = (p * 255).round();
+        b = (q * 255).round();
+        break;
+      default:
+        r = g = b = 0;
     }
   }
-  
-  return "#FF${r.toRadixString(16).padLeft(2, '0')}${g.toRadixString(16).padLeft(2, '0')}${b.toRadixString(16).padLeft(2, '0')}".toUpperCase();
+
+  return "#FF${r.toRadixString(16).padLeft(2, '0')}${g.toRadixString(16).padLeft(2, '0')}${b.toRadixString(16).padLeft(2, '0')}"
+      .toUpperCase();
 }
 
 Future<void> _writeToFile(String content, String outputPath) async {
