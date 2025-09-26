@@ -1,0 +1,30 @@
+name: im_record_list
+description: "A new Flutter project."
+version: 0.0.1
+homepage: https://github.com/tbzims/UI-Components-Flutter/im_record_list
+
+environment:
+  sdk: '>=3.2.0 <4.0.0'
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  # 刷新组件
+  easy_refresh: ^3.4.0
+  # 侧滑组件
+  flutter_slidable: ^4.0.1
+
+  # 组件化基础依赖
+  im_base_package:
+    git:
+      url: https://github.com/tbzims/UI-Components-Flutter.git
+      path: im_base_package
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
