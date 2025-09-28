@@ -7,18 +7,6 @@ export 'package:flutter_slidable/flutter_slidable.dart';
 
 typedef IMClick = void Function(IMRecordItem cell);
 
-/// 单元格类型
-enum IMRecordItemType {
-  /// 基础样式
-  base,
-
-  /// 图标数据单元格
-  iconData,
-
-  /// 头像数据单元格
-  avatarData,
-}
-
 /// 内容对齐方式
 enum IMRecordItemAlign {
   /// 左对齐
@@ -32,28 +20,201 @@ enum IMRecordItemAlign {
 }
 
 class IMRecordItem extends StatefulWidget {
-  const IMRecordItem.base({
+  /// 单元格
+  /// * [bgColor] - 背景颜色
+  /// * [tapColor] - 点击背景颜色
+  /// * [onTap] - 点击事件
+  /// * [onLongPress] - 长按事件
+  /// * [enableSwipe] - 是否启用侧滑
+  /// * [extentRatio] - 侧滑宽度占整行百分比
+  /// * [swipeActions] - 侧滑操作按钮
+  /// * [groupTag] - 组标签，用于管理同一组内的侧滑项
+  /// * [align] - 内容对齐方式
+  /// * [margin] - 外边距
+  /// * [padding] - 内边距
+  /// * [bordered] - 是否显示下边框
+  /// * [leftWidget] - 最左侧图标组件
+  /// * [rightWidget] - 最右侧图标组件
+  /// * [titleWidget] - 标题组件
+  /// * [descriptionWidget] - 下方内容描述组件
+  const IMRecordItem({
     super.key,
-    this.type = IMRecordItemType.base,
     this.bgColor,
     this.tapColor,
     this.onTap,
+    this.onLongPress,
     this.enableSwipe = false,
+    this.extentRatio,
     this.swipeActions,
     this.groupTag,
     this.align = IMRecordItemAlign.center,
     this.margin,
-    this.padding,
-    this.onLongPress,
+    this.padding = const EdgeInsets.all(16.0),
     this.bordered,
     this.leftWidget,
     this.rightWidget,
     this.titleWidget,
     this.descriptionWidget,
-  });
+  }) : assert(
+          swipeActions == null || swipeActions.length <= 3,
+          '滑动操作按钮数量不能超过3个',
+        );
 
-  /// 单元格类型
-  final IMRecordItemType type;
+  /// 基础单元格样式
+  /// * [bgColor] - 背景颜色
+  /// * [tapColor] - 点击背景颜色
+  /// * [onTap] - 点击事件
+  /// * [onLongPress] - 长按事件
+  /// * [enableSwipe] - 是否启用侧滑
+  /// * [extentRatio] - 侧滑宽度占整行百分比
+  /// * [swipeActions] - 侧滑操作按钮
+  /// * [groupTag] - 组标签，用于管理同一组内的侧滑项
+  /// * [align] - 内容对齐方式
+  /// * [margin] - 外边距
+  /// * [padding] - 内边距
+  /// * [bordered] - 是否显示下边框
+  /// * [titleWidget] - 标题组件
+  /// * [descriptionWidget] - 下方内容描述组件
+  const IMRecordItem.base({
+    super.key,
+    this.bgColor,
+    this.tapColor,
+    this.onTap,
+    this.onLongPress,
+    this.enableSwipe = false,
+    this.extentRatio,
+    this.swipeActions,
+    this.groupTag,
+    this.align = IMRecordItemAlign.center,
+    this.margin,
+    this.padding = const EdgeInsets.all(16.0),
+    this.bordered,
+    this.titleWidget = const Text(
+      '标题标题标题标题',
+      style: TextStyle(
+        fontSize: 16.0,
+        color: Colors.black,
+      ),
+    ),
+    this.descriptionWidget,
+  })  : leftWidget = null,
+        rightWidget = null;
+
+  /// 数据单元格样式
+  /// * [bgColor] - 背景颜色
+  /// * [tapColor] - 点击背景颜色
+  /// * [onTap] - 点击事件
+  /// * [onLongPress] - 长按事件
+  /// * [enableSwipe] - 是否启用侧滑
+  /// * [extentRatio] - 侧滑宽度占整行百分比
+  /// * [swipeActions] - 侧滑操作按钮
+  /// * [groupTag] - 组标签，用于管理同一组内的侧滑项
+  /// * [align] - 内容对齐方式
+  /// * [margin] - 外边距
+  /// * [padding] - 内边距
+  /// * [bordered] - 是否显示下边框
+  /// * [titleWidget] - 标题组件
+  /// * [descriptionWidget] - 下方内容描述组件
+  const IMRecordItem.iconData({
+    super.key,
+    this.bgColor,
+    this.tapColor,
+    this.onTap,
+    this.onLongPress,
+    this.enableSwipe = false,
+    this.extentRatio,
+    this.swipeActions,
+    this.groupTag,
+    this.align = IMRecordItemAlign.center,
+    this.margin,
+    this.padding = const EdgeInsets.all(16.0),
+    this.bordered,
+    this.leftWidget = const Icon(
+      Icons.file_copy_rounded,
+      size: 24.0,
+      color: Colors.grey,
+    ),
+    this.titleWidget = const Text(
+      '标题标题标题标题',
+      style: TextStyle(
+        fontSize: 16.0,
+        color: Colors.black,
+      ),
+    ),
+    this.descriptionWidget = const Text(
+      '副标题副标题副标题副标题副标题副标',
+      style: TextStyle(
+        fontSize: 14.0,
+        color: Colors.grey,
+      ),
+    ),
+  }) : rightWidget = null;
+
+  /// 头像单元格样式
+  /// * [bgColor] - 背景颜色
+  /// * [tapColor] - 点击背景颜色
+  /// * [onTap] - 点击事件
+  /// * [onLongPress] - 长按事件
+  /// * [enableSwipe] - 是否启用侧滑
+  /// * [extentRatio] - 侧滑宽度占整行百分比
+  /// * [swipeActions] - 侧滑操作按钮
+  /// * [groupTag] - 组标签，用于管理同一组内的侧滑项
+  /// * [align] - 内容对齐方式
+  /// * [margin] - 外边距
+  /// * [padding] - 内边距
+  /// * [bordered] - 是否显示下边框
+  /// * [leftWidget] - 最左侧图标组件
+  /// * [rightWidget] - 最右侧图标组件
+  /// * [titleWidget] - 标题组件
+  /// * [descriptionWidget] - 下方内容描述组件
+  const IMRecordItem.avatarData({
+    super.key,
+    this.bgColor,
+    this.tapColor,
+    this.onTap,
+    this.onLongPress,
+    this.enableSwipe = false,
+    this.extentRatio,
+    this.swipeActions,
+    this.groupTag,
+    this.align = IMRecordItemAlign.center,
+    this.margin,
+    this.padding = const EdgeInsets.all(16.0),
+    this.bordered,
+    this.leftWidget = const CircleAvatar(
+      radius: 16.0,
+      backgroundColor: Colors.grey,
+    ),
+    this.titleWidget = const Text(
+      '标题标题标题标题',
+      style: TextStyle(
+        fontSize: 16.0,
+        color: Colors.black,
+      ),
+    ),
+    this.descriptionWidget = const Text(
+      '副标题副标题副标题副标题副标题副标',
+      style: TextStyle(
+        fontSize: 14.0,
+        color: Colors.grey,
+      ),
+    ),
+    this.rightWidget = const Row(children: [
+      Icon(
+        Icons.add,
+        size: 16.0,
+        color: Colors.grey,
+      ),
+      SizedBox(width: 4.0),
+      Text(
+        '右侧文字',
+        style: TextStyle(
+          fontSize: 14.0,
+          color: Colors.grey,
+        ),
+      )
+    ]),
+  });
 
   /// 单元格对齐方式
   final IMRecordItemAlign align;
@@ -81,6 +242,9 @@ class IMRecordItem extends StatefulWidget {
 
   /// 是否启用侧滑
   final bool enableSwipe;
+
+  /// 侧滑宽度占整行百分比
+  final double? extentRatio;
 
   /// 侧滑操作按钮
   final List<SlidableAction>? swipeActions;
@@ -148,10 +312,14 @@ class IMRecordItem extends StatefulWidget {
 class _IMRecordItemState extends State<IMRecordItem>
     with TickerProviderStateMixin {
   late SlidableController _slidableController;
+  late Color _bgColor;
+
+  bool _isLongPressed = false;
 
   @override
   void initState() {
     super.initState();
+    _resetBgColor();
     // 如果是侧滑项，创建SlidableController
     if (widget.enableSwipe) {
       _slidableController = SlidableController(this);
@@ -190,6 +358,44 @@ class _IMRecordItemState extends State<IMRecordItem>
     }
   }
 
+  /// 点击切换背景色
+  void _toggleBgColor() {
+    if (mounted) {
+      setState(() {
+        _bgColor = widget.tapColor ?? Colors.grey.shade300;
+      });
+    }
+  }
+
+  /// 恢复背景色
+  void _resetBgColor() {
+    if (mounted) {
+      setState(() {
+        _bgColor = widget.bgColor ?? Colors.transparent;
+      });
+    }
+  }
+
+  /// 长按开始
+  void _onLongPressStart() {
+    if (mounted) {
+      setState(() {
+        _isLongPressed = true;
+        _bgColor = widget.tapColor ?? Colors.grey.shade300;
+      });
+    }
+  }
+
+  /// 长按结束
+  void _onLongPressEnd() {
+    if (mounted) {
+      setState(() {
+        _isLongPressed = false;
+        _bgColor = widget.bgColor ?? Colors.transparent;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     // 主体内容
@@ -204,6 +410,7 @@ class _IMRecordItemState extends State<IMRecordItem>
             widget.swipeActions != null && widget.swipeActions!.isNotEmpty
                 ? ActionPane(
                     motion: const ScrollMotion(),
+                    extentRatio: widget.extentRatio ?? 0.5,
                     children: widget.swipeActions!,
                   )
                 : null,
@@ -216,9 +423,6 @@ class _IMRecordItemState extends State<IMRecordItem>
 
   /// 构建内容组件
   Widget _buildContent() {
-    // 设置默认内边距
-    EdgeInsets padding = widget.padding ?? const EdgeInsets.all(16.0);
-
     // 根据对齐方式设置主轴对齐
     MainAxisAlignment mainAxisAlignment;
     switch (widget.align) {
@@ -233,54 +437,52 @@ class _IMRecordItemState extends State<IMRecordItem>
         break;
     }
 
-    return Container(
-      margin: widget.margin,
-      color: widget.bgColor,
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: widget.onTap != null ? () => widget.onTap!(widget) : null,
-          onLongPress: widget.onLongPress != null
-              ? () => widget.onLongPress!(widget)
-              : null,
-          highlightColor: widget.tapColor,
-          child: Padding(
-            padding: padding,
-            child: Row(
-              mainAxisAlignment: mainAxisAlignment,
-              children: [
-                // 左侧组件
-                if (widget.leftWidget != null) ...[
-                  widget.leftWidget!,
-                  const SizedBox(width: 12),
+    return GestureDetector(
+      onTap: widget.onTap != null ? () => widget.onTap!(widget) : null,
+      onLongPress:
+          widget.onLongPress != null ? () => widget.onLongPress!(widget) : null,
+      onTapDown: (_) => _toggleBgColor(),
+      onTapUp: (_) => _resetBgColor(),
+      onTapCancel: () => _resetBgColor(),
+      onLongPressStart: (_) => _onLongPressStart(),
+      onLongPressEnd: (_) => _onLongPressEnd(),
+      child: Container(
+        margin: widget.margin,
+        color: _bgColor,
+        padding: widget.padding,
+        child: Row(
+          mainAxisAlignment: mainAxisAlignment,
+          children: [
+            // 左侧组件
+            if (widget.leftWidget != null) ...[
+              widget.leftWidget!,
+              const SizedBox(width: 12),
+            ],
+
+            // 中间内容区域（可扩展）
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // 标题组件
+                  if (widget.titleWidget != null) widget.titleWidget!,
+
+                  // 描述组件
+                  if (widget.descriptionWidget != null) ...[
+                    const SizedBox(height: 4),
+                    widget.descriptionWidget!,
+                  ],
                 ],
-
-                // 中间内容区域（可扩展）
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      // 标题组件
-                      if (widget.titleWidget != null) widget.titleWidget!,
-
-                      // 描述组件
-                      if (widget.descriptionWidget != null) ...[
-                        const SizedBox(height: 4),
-                        widget.descriptionWidget!,
-                      ],
-                    ],
-                  ),
-                ),
-
-                // 右侧组件
-                if (widget.rightWidget != null) ...[
-                  const SizedBox(width: 12),
-                  widget.rightWidget!,
-                ],
-              ],
+              ),
             ),
-          ),
+
+            // 右侧组件
+            if (widget.rightWidget != null) ...[
+              const SizedBox(width: 12),
+              widget.rightWidget!,
+            ],
+          ],
         ),
       ),
     );

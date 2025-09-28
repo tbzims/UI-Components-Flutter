@@ -25,7 +25,7 @@ class IMRecordList extends StatefulWidget {
     this.listType = IMListType.list,
     this.children,
     this.listHeight,
-    this.itemCount = 0,
+    this.itemCount,
     this.itemExtent,
     this.itemBuilder,
   })  : onRefresh = null,
@@ -50,7 +50,7 @@ class IMRecordList extends StatefulWidget {
     this.customHeader,
     this.customFooter,
     this.itemBuilder,
-    this.itemCount = 0,
+    this.itemCount,
     this.listHeight,
     this.itemExtent,
   })  : indexedItems = null,
@@ -74,7 +74,7 @@ class IMRecordList extends StatefulWidget {
         enablePullDown = false,
         enablePullUp = false,
         itemBuilder = null,
-        itemCount = 0;
+        itemCount = null;
 
   /// 背景色
   final Color? bgColor;
@@ -107,7 +107,7 @@ class IMRecordList extends StatefulWidget {
   final List<Widget>? children;
 
   /// 列表项数量
-  final int itemCount;
+  final int? itemCount;
 
   /// 构建每个列表项的回调 (用于builder和separated)
   final Widget? Function(BuildContext, int)? itemBuilder;
@@ -233,10 +233,19 @@ class _IMRecordListState extends State<IMRecordList> {
 
   /// 构建普通列表 (list和loading类型)
   Widget _buildNormalList() {
-    List<Widget> children = [];
-
     ListView listView = ListView();
-    if (widget.children != null) {
+
+    if (widget.itemBuilder != null) {
+      listView = ListView.builder(
+        itemCount: widget.itemCount,
+        itemExtent: widget.itemExtent,
+        itemBuilder: (BuildContext context, int index) {
+          return widget.itemBuilder!(context, index);
+        },
+      );
+    }
+    List<Widget> children = [];
+    if (widget.children != null && widget.children!.isNotEmpty) {
       children.addAll(widget.children!);
       listView = ListView.builder(
         itemCount: children.length,
@@ -247,17 +256,8 @@ class _IMRecordListState extends State<IMRecordList> {
       );
     }
 
-    if (widget.itemCount > 0 && widget.itemBuilder != null) {
-      listView = ListView.builder(
-        itemCount: widget.itemCount,
-        itemExtent: widget.itemExtent,
-        itemBuilder: (BuildContext context, int index) {
-          return widget.itemBuilder!(context, index);
-        },
-      );
-    }
     // 如果没有数据，显示空状态
-    if (children.isEmpty) {
+    if (children.isEmpty && widget.itemBuilder == null) {
       return _buildEmptyState();
     }
 
