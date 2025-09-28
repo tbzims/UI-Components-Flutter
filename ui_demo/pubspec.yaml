@@ -18,6 +18,11 @@ dependencies:
       url: https://github.com/tbzims/UI-Components-Flutter.git
       path: im_base_package
 
+  im_record_list:
+    git:
+      url: https://github.com/tbzims/UI-Components-Flutter.git
+      path: im_record_list
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -49,7 +49,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'UI Component',
       // 多语言
-      localizationsDelegates:[
+      localizationsDelegates: [
         ...ImUiLocalizations.localizationsDelegates,
         GlobalMaterialLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
@@ -87,14 +87,6 @@ class MyHomePage extends StatelessWidget {
   /// header
   final List<String> header = ['基础组件', '表单组件', '反馈组件', '导航组件', '其他组件'];
 
-  final List<Map<String, dynamic>> data = [
-    {'title': 'button', 'page': RouterName.button},
-    {'title': 'loading', 'page': RouterName.loading},
-    // {'title': 'recordList', 'page': RouterName.recordList},
-    // {'title': 'recordList', 'page': RouterName.recordList},
-    // {'title': 'recordItem', 'page': RouterName.recordItem},
-  ];
-
   /// 语言列表
   final List<Map<String, dynamic>> languages = [
     {'name': '中文(简体)', 'locale': Locale('zh', 'CN')},
@@ -107,9 +99,9 @@ class MyHomePage extends StatelessWidget {
 
   // 从assets文件中读取JSON
   Future<void> loadThemeFromAssets(
-      BuildContext context,
-      String themeName,
-      ) async {
+    BuildContext context,
+    String themeName,
+  ) async {
     try {
       // 加载主题文件
       String themeJson = await rootBundle.loadString(
@@ -150,59 +142,72 @@ class MyHomePage extends StatelessWidget {
           ),
         ],
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Text(
-              '主题切换',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-          ),
-          SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              IMButton(
-                text: '默认主题',
-                style: IMButtonStyle(backgroundColor: Color(0xFF007AFF)),
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                onTap: () {
-                  onThemeChanged(IMThemeData.defaultData());
-                },
-              ),
-              IMButton(
-                text: '红色主题',
-                style: IMButtonStyle(backgroundColor: Color(0xFFF44336)),
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                onTap: () => loadThemeFromAssets(context, 'red'),
-              ),
-              IMButton(
-                text: '紫色主题',
-                style: IMButtonStyle(backgroundColor: Color(0xFF7B1FA2)),
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                onTap: () => loadThemeFromAssets(context, 'purple'),
-              ),
-            ],
-          ),
-          SizedBox(height: 10),
-          Expanded(
-            child: ListView.separated(
-              shrinkWrap: true,
-              itemCount: data.length,
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              separatorBuilder: (_, i) => Container(),
-              itemBuilder: (_, i) => Padding(
-                padding: EdgeInsets.only(top: 10),
-                child: IMButton(
-                  text: data[i]['title'],
-                  onTap: () => Navigator.of(context).pushNamed(data[i]['page']),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.symmetric(horizontal: 10),
+        child: Column(
+          spacing: 10,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            title('切换主题'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                IMButton(
+                  text: '默认主题',
+                  style: IMButtonStyle(backgroundColor: Color(0xFF007AFF)),
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  onTap: () {
+                    onThemeChanged(IMThemeData.defaultData());
+                  },
                 ),
-              ),
+                IMButton(
+                  text: '红色主题',
+                  style: IMButtonStyle(backgroundColor: Color(0xFFF44336)),
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  onTap: () => loadThemeFromAssets(context, 'red'),
+                ),
+                IMButton(
+                  text: '紫色主题',
+                  style: IMButtonStyle(backgroundColor: Color(0xFF7B1FA2)),
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  onTap: () => loadThemeFromAssets(context, 'purple'),
+                ),
+              ],
             ),
-          ),
-        ],
+            title('基础组件'),
+            IMButton(
+              text: '按钮组件',
+              onTap: () => Navigator.of(context).pushNamed(RouterName.button),
+            ),
+            IMButton(
+              text: '加载组件',
+              onTap: () => Navigator.of(context).pushNamed(RouterName.loading),
+            ),
+            title('记录列表'),
+            IMButton(
+              text: '基础列表',
+              onTap: () => Navigator.of(context).pushNamed(RouterName.baseList),
+            ),
+            IMButton(
+              text: '加载列表',
+              onTap: () => Navigator.of(context).pushNamed(RouterName.loadingList),
+            ),
+            IMButton(
+              text: '索引列表',
+              onTap: () => Navigator.of(context).pushNamed(RouterName.indexList),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget title(String title) {
+    return Padding(
+      padding: EdgeInsets.all(10),
+      child: Text(
+        title,
+        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
       ),
     );
   }

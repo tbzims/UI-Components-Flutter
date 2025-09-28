@@ -19,6 +19,15 @@ enum IMListType {
 }
 
 class IMRecordList extends StatefulWidget {
+
+  /// 记录列表 - 普通列表
+  /// * [bgColor] - 背景色
+  /// * [listType] - 列表类型
+  /// * [children] - 直接传入的子组件列表
+  /// * [listHeight] - 列表高度
+  /// * [itemCount] - 列表项数量
+  /// * [itemExtent] - 列表项高度
+  /// * [itemBuilder] - 列表项构建器
   const IMRecordList.list({
     super.key,
     this.bgColor,
@@ -38,6 +47,20 @@ class IMRecordList extends StatefulWidget {
         indexList = null,
         indexBarBuilder = null;
 
+  /// 列表类型 - 加载列表
+  /// * [bgColor] - 背景色
+  /// * [listType] - 列表类型
+  /// * [children] - 直接传入的子组件列表
+  /// * [enablePullDown] - 启用刷新
+  /// * [onRefresh] - 刷新方法
+  /// * [enablePullUp] - 启用加载
+  /// * [onLoadMore] - 加载方法
+  /// * [customHeader] - 自定义刷新样式
+  /// * [customFooter] - 自定义加载样式
+  /// * [listHeight] - 列表高度
+  /// * [itemCount] - 列表项数量
+  /// * [itemExtent] - 列表项高度
+  /// * [itemBuilder] - 列表项构建器
   const IMRecordList.loading({
     super.key,
     this.bgColor,
@@ -57,6 +80,14 @@ class IMRecordList extends StatefulWidget {
         indexList = null,
         indexBarBuilder = null;
 
+  /// 列表类型 - 加载列表
+  /// * [bgColor] - 背景色
+  /// * [listType] - 列表类型
+  /// * [listHeight] - 列表高度
+  /// * [itemExtent] - 列表项高度
+  /// * [indexedItems] - 索引列表数据(格式: {'A': [Widget1, Widget2], 'B': [Widget3, Widget4]})
+  /// * [indexList] - 索引列表
+  /// * [indexBarBuilder] - 索引栏构建器
   const IMRecordList.indexed({
     super.key,
     this.bgColor,

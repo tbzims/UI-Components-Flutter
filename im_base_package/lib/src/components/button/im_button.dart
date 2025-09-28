@@ -52,6 +52,50 @@ enum IMVerticalStatus {
 typedef IMButtonCallback = void Function();
 
 class IMButton extends StatefulWidget {
+  /// 按钮
+  /// * [key] - 组件键值
+  /// * [text] - 按钮文字
+  /// * [textSize] - 按钮文字大小，默认16
+  /// * [type] - 按钮样式类型，默认为填充型按钮 [IMButtonType.fill]
+  /// * [status] - 按钮状态，默认为正常状态  [IMButtonStatus.normal]
+  /// * [disabled] - 按钮是否禁用，默认为false
+  /// * [onTap] - 按钮点击回调
+  /// * [width] - 按钮宽度（具体数值）
+  /// * [maxWidth] - 最大宽度(使用百分比必传)
+  /// * [percentWidth] - 按钮百分比宽度 (0.0 - 1.0)
+  /// * [padding] - 按钮内边距，默认各方向8像素
+  /// * [margin] - 按钮外边距
+  /// * [borderWidth] - 按钮边框宽度
+  /// * [style] - 自定义按钮样式
+  /// * [loadingWidget] - 自定义加载图标
+  /// * [icon] - 自定义按钮图标 (支持SVG,PNG等)
+  /// * [layout] - 按钮布局方向，默认横向布局
+  /// * [verticalStatus] - 纵向布局样式
+  /// * [showLoading] - 是否显示加载状态，默认为false
+  /// * [spacing] - 间距，默认8像素
+  const IMButton({
+    super.key,
+    this.text,
+    this.textSize = 16,
+    this.type = IMButtonType.fill,
+    this.status = IMButtonStatus.normal,
+    this.disabled = false,
+    this.onTap,
+    this.width,
+    this.maxWidth,
+    this.percentWidth,
+    this.padding = const EdgeInsets.all(8),
+    this.margin,
+    this.borderWidth,
+    this.style,
+    this.loadingWidget,
+    this.icon,
+    this.layout = IMButtonLayout.horizontal,
+    this.verticalStatus,
+    this.showLoading = false,
+    this.spacing = 8.0,
+  });
+
   /// 按钮样式类型
   final IMButtonType type;
 
@@ -108,29 +152,6 @@ class IMButton extends StatefulWidget {
 
   /// 纵向布局样式
   final IMVerticalStatus? verticalStatus;
-
-  const IMButton({
-    super.key,
-    this.text,
-    this.textSize = 16,
-    this.type = IMButtonType.fill,
-    this.status = IMButtonStatus.normal,
-    this.disabled = false,
-    this.onTap,
-    this.width,
-    this.maxWidth,
-    this.percentWidth,
-    this.padding = const EdgeInsets.all(8),
-    this.margin,
-    this.borderWidth,
-    this.style,
-    this.loadingWidget,
-    this.icon,
-    this.layout = IMButtonLayout.horizontal,
-    this.verticalStatus,
-    this.showLoading = false,
-    this.spacing = 8.0,
-  });
 
   @override
   State<IMButton> createState() => _IMButtonState();
@@ -304,7 +325,9 @@ class _IMButtonState extends State<IMButton> with TickerProviderStateMixin {
                 color: style.getTextColor(_status, buttonType: widget.type) ??
                     style.textColor,
                 fontSize: widget.textSize,
-                fontWeight: IMTheme.of(context).ofFont('buttonText')?.fontWeight ??FontWeight.w500,
+                fontWeight:
+                    IMTheme.of(context).ofFont('buttonText')?.fontWeight ??
+                        FontWeight.w500,
               ),
             ),
           );

@@ -4,6 +4,27 @@ import '../../theme/im_theme.dart';
 import 'im_button.dart';
 
 class IMButtonStyle {
+
+  /// 按钮样式
+  /// * [backgroundColor] - 默认背景颜色
+  /// * [borderColor] - 默认边框颜色
+  /// * [textColor] - 默认文字颜色
+  /// * [backgroundColors] - 不同状态下的背景颜色映射表
+  /// * [borderColors] - 不同状态下的边框颜色映射表
+  /// * [textColors] - 不同状态下的文字颜色映射表
+  /// * [borderWidth] - 边框宽度
+  /// * [borderRadius] - 圆角半径
+  IMButtonStyle({
+    this.backgroundColor,
+    this.borderColor,
+    this.textColor,
+    this.backgroundColors,
+    this.borderColors,
+    this.textColors,
+    this.borderWidth,
+    this.borderRadius,
+  });
+
   /// 背景颜色 (不同状态)
   Map<IMButtonStatus, Color?>? backgroundColors;
 
@@ -28,16 +49,7 @@ class IMButtonStyle {
   /// 默认文字颜色
   Color? textColor;
 
-  IMButtonStyle({
-    this.backgroundColor,
-    this.borderColor,
-    this.textColor,
-    this.backgroundColors,
-    this.borderColors,
-    this.textColors,
-    this.borderWidth,
-    this.borderRadius,
-  });
+
 
   /// 创建填充样式
   static IMButtonStyle fill({

@@ -5,7 +5,7 @@ import '../../theme/im_theme.dart';
 import 'point_bounce_indicator.dart';
 
 /// 加载图标
-enum LoadingIcon {
+enum LoadingStyle {
   /// 圆形 (Android 样式)
   circle,
 
@@ -17,10 +17,21 @@ enum LoadingIcon {
 }
 
 class IMLoading extends StatelessWidget {
+  /// 加载图标
+  /// * [size] - 加载图标大小，默认20
+  /// * [iconType] - 加载图标类型，默认为圆形 [LoadingStyle.circle]
+  /// * [customIcon] - 自定义图标，优先级高于icon参数
+  /// * [iconColor] - 加载图标颜色
+  /// * [refreshWidget] - 失败刷新组件
+  /// * [text] - 显示的文案
+  /// * [textStyle] - 文案样式
+  /// * [paddingWidth] - 文本和图标之间的间距
+  /// * [axis] - 文案和图标相对方向，默认垂直排列 [Axis.vertical]
+  /// * [duration] - 一次刷新的时间，控制动画速度，默认2000毫秒
   const IMLoading({
     super.key,
     this.size = 20,
-    this.icon = LoadingIcon.circle,
+    this.iconType = LoadingStyle.circle,
     this.iconColor,
     this.text,
     this.refreshWidget,
@@ -35,7 +46,7 @@ class IMLoading extends StatelessWidget {
   final double size;
 
   /// 加载图标
-  final LoadingIcon? icon;
+  final LoadingStyle? iconType;
 
   /// 加载图标颜色
   final Color? iconColor;
@@ -71,24 +82,24 @@ class IMLoading extends StatelessWidget {
   Widget _contentWidget(BuildContext context) {
     // 从主题中获取主色调颜色作为默认颜色
     Color color = _getPrimaryColor(context);
-    if (icon == null) {
+    if (iconType == null) {
       return textWidget(context);
     } else {
       Widget? indicator;
       if (customIcon != null) {
         indicator = customIcon!;
       } else {
-        switch (icon) {
+        switch (iconType) {
           // iOS 菊花样式
-          case LoadingIcon.activity:
+          case LoadingStyle.activity:
             indicator = _getCupertinoIndicator(color);
             break;
           // Android 圆形样式
-          case LoadingIcon.circle:
+          case LoadingStyle.circle:
             indicator = _getMaterialIndicator(color);
             break;
           // 点状弹跳加载指示器
-          case LoadingIcon.point:
+          case LoadingStyle.point:
             indicator = PointBounceIndicator(
               color: iconColor ?? color,
               size: size,
@@ -171,8 +182,7 @@ class IMLoading extends StatelessWidget {
 
     return Text(
       text ?? '',
-      style:
-          textStyle ??
+      style: textStyle ??
           TextStyle(fontSize: 14, color: IMTheme.of(context).fontGyColor1),
     );
   }
