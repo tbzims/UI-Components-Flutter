@@ -96,7 +96,7 @@ class ImFooter extends Footer {
   final TextStyle? textStyle;
 
   /// 自定义图标类型
-  final LoadingIcon? icon;
+  final LoadingStyle? icon;
 
   /// 自定义图标颜色
   final Color? iconColor;
@@ -183,7 +183,7 @@ class IMFooterWidget extends StatefulWidget {
   final TextStyle? textStyle;
 
   /// 自定义图标类型
-  final LoadingIcon? icon;
+  final LoadingStyle? icon;
 
   /// 自定义图标颜色
   final Color? iconColor;
@@ -233,7 +233,7 @@ class IMFooterWidgetState extends State<IMFooterWidget>
 
   Widget _buildLoading() {
     return IMLoading(
-      icon: widget.icon ?? LoadingIcon.point,
+      iconType: widget.icon ?? LoadingStyle.point,
       iconColor: widget.iconColor ?? _getDefaultIconColor(),
       axis: Axis.horizontal,
       text: widget.loadingText,

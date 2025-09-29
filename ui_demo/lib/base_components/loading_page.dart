@@ -30,13 +30,13 @@ class LoadingPage extends StatelessWidget {
               runSpacing: 10,
               children: [
                 // Android 样式圆形加载指示器
-                IMLoading(icon: LoadingIcon.circle),
+                IMLoading(iconType: LoadingStyle.circle),
 
                 // iOS 样式菊花加载指示器
-                IMLoading(icon: LoadingIcon.activity, size: 15),
+                IMLoading(iconType: LoadingStyle.activity, size: 15),
 
                 // 点状加载指示器
-                IMLoading(icon: LoadingIcon.point),
+                IMLoading(iconType: LoadingStyle.point),
               ],
             ),
             SizedBox(height: 30),
@@ -50,12 +50,12 @@ class LoadingPage extends StatelessWidget {
               runSpacing: 10,
               children: [
                 IMLoading(
-                  icon: LoadingIcon.circle,
+                  iconType: LoadingStyle.circle,
                   text: localizations.loading,
                   axis: Axis.horizontal,
                 ),
-                IMLoading(icon: LoadingIcon.circle, text: localizations.loading),
-                IMLoading(icon: null, text: localizations.loading),
+                IMLoading(iconType: LoadingStyle.circle, text: localizations.loading),
+                IMLoading(iconType: null, text: localizations.loading),
               ],
             ),
             SizedBox(height: 30),
@@ -64,13 +64,13 @@ class LoadingPage extends StatelessWidget {
               runSpacing: 10,
               children: [
                 IMLoading(
-                  icon: LoadingIcon.activity,
+                  iconType: LoadingStyle.activity,
                   size: 10,
                   text: localizations.loading,
                   axis: Axis.horizontal,
                 ),
-                IMLoading(icon: LoadingIcon.activity, size: 10, text: localizations.loading),
-                IMLoading(icon: null, text: localizations.loading),
+                IMLoading(iconType: LoadingStyle.activity, size: 10, text: localizations.loading),
+                IMLoading(iconType: null, text: localizations.loading),
               ],
             ),
             SizedBox(height: 30),
@@ -79,12 +79,12 @@ class LoadingPage extends StatelessWidget {
               runSpacing: 10,
               children: [
                 IMLoading(
-                  icon: LoadingIcon.point,
+                  iconType: LoadingStyle.point,
                   text: localizations.loading,
                   axis: Axis.horizontal,
                 ),
-                IMLoading(icon: LoadingIcon.point, text: localizations.loading),
-                IMLoading(icon: null, text: localizations.loading),
+                IMLoading(iconType: LoadingStyle.point, text: localizations.loading),
+                IMLoading(iconType: null, text: localizations.loading),
               ],
             ),
             SizedBox(height: 30),

@@ -97,7 +97,7 @@ class ImHeader extends Header {
   final TextStyle? textStyle;
 
   /// 自定义图标类型
-  final LoadingIcon? icon;
+  final LoadingStyle? icon;
 
   /// 自定义图标颜色
   final Color? iconColor;
@@ -180,7 +180,7 @@ class IMHeaderWidget extends StatefulWidget {
   final TextStyle? textStyle;
 
   /// 自定义图标类型
-  final LoadingIcon? icon;
+  final LoadingStyle? icon;
 
   /// 自定义图标颜色
   final Color? iconColor;
@@ -227,7 +227,7 @@ class IMHeaderWidgetState extends State<IMHeaderWidget>
 
   Widget _buildLoading() {
     return IMLoading(
-      icon: widget.icon ?? LoadingIcon.circle,
+      iconType: widget.icon ?? LoadingStyle.circle,
       iconColor: widget.iconColor ?? _getDefaultIconColor(),
       axis: Axis.horizontal,
       text: _getDefaultRefreshingText(),
