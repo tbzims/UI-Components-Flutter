@@ -56,8 +56,8 @@ class ImAvatar extends StatelessWidget {
     super.key,
     required this.imagePath,
     this.bgColor,
-    this.size = 60,
-    this.bgSize = 40,
+    this.size = 40,
+    this.bgSize = 60,
     this.isCircle = true,
     this.radius,
   })  : assert(imagePath != null, 'imagePath can not be null'),
@@ -77,8 +77,8 @@ class ImAvatar extends StatelessWidget {
     super.key,
     required this.iconPath,
     this.bgColor,
-    this.size = 60,
-    this.bgSize = 40,
+    this.size = 40,
+    this.bgSize = 60,
     this.isCircle = true,
     this.radius,
   })  : assert(iconPath != null, 'imagePath can not be null'),
@@ -96,7 +96,7 @@ class ImAvatar extends StatelessWidget {
   const ImAvatar.file({
     super.key,
     required this.imagePath,
-    this.size = 30,
+    this.size = 40,
     this.text,
     this.textStyle = const TextStyle(
       fontSize: 14,
@@ -204,6 +204,7 @@ class ImAvatar extends StatelessWidget {
     return Container(
       width: bgSize,
       height: bgSize,
+      clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
         color: bgColor,
         shape: _getShape(),
@@ -223,6 +224,7 @@ class ImAvatar extends StatelessWidget {
     return Container(
       width: bgSize,
       height: bgSize,
+      clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
         color: bgColor,
         shape: _getShape(),
