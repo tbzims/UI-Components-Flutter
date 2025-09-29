@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../../im_base_package.dart';
 
-enum ImAvatarType {
+enum IMAvatarType {
   /// 文字头像
   text,
 
@@ -21,7 +21,7 @@ enum ImAvatarType {
   file,
 }
 
-class ImAvatar extends StatelessWidget {
+class IMAvatar extends StatelessWidget {
   /// 文字头像
   /// * [text] - 头像文字(只能为单个字符)
   /// * [textStyle] - 头像文字样式
@@ -29,7 +29,7 @@ class ImAvatar extends StatelessWidget {
   /// * [size] - 头像大小
   /// * [isCircle] - 是否为圆形头像(默认为[true])
   /// * [radius] - 圆角值(优先级高于[isCircle])
-  const ImAvatar.text({
+  const IMAvatar.text({
     super.key,
     this.gradient,
     required this.text,
@@ -43,7 +43,7 @@ class ImAvatar extends StatelessWidget {
     this.radius,
   })  : assert(text == null || text.length == 1, 'Text length can only be 1'),
         size = null,
-        type = ImAvatarType.text,
+        type = IMAvatarType.text,
         imagePath = null,
         iconPath = null,
         iconColor = null,
@@ -55,7 +55,7 @@ class ImAvatar extends StatelessWidget {
   /// * [size] - 头像大小
   /// * [isCircle] - 是否为圆形头像(默认为[true])
   /// * [radius] - 圆角值(优先级高于[isCircle])
-  const ImAvatar.image({
+  const IMAvatar.image({
     super.key,
     required this.imagePath,
     this.bgColor,
@@ -64,7 +64,7 @@ class ImAvatar extends StatelessWidget {
     this.isCircle = true,
     this.radius,
   })  : assert(imagePath != null, 'imagePath can not be null'),
-        type = ImAvatarType.image,
+        type = IMAvatarType.image,
         text = null,
         gradient = null,
         iconPath = null,
@@ -77,7 +77,7 @@ class ImAvatar extends StatelessWidget {
   /// * [size] - 头像大小
   /// * [isCircle] - 是否为圆形头像(默认为[true])
   /// * [radius] - 圆角值(优先级高于[isCircle])
-  const ImAvatar.icon({
+  const IMAvatar.icon({
     super.key,
     required this.iconPath,
     this.iconColor,
@@ -87,7 +87,7 @@ class ImAvatar extends StatelessWidget {
     this.isCircle = true,
     this.radius,
   })  : assert(iconPath != null, 'imagePath can not be null'),
-        type = ImAvatarType.image,
+        type = IMAvatarType.icon,
         text = null,
         gradient = null,
         imagePath = null,
@@ -98,7 +98,7 @@ class ImAvatar extends StatelessWidget {
   /// * [size] - 文件图宽度
   /// * [text] - 文件描述
   /// * [textStyle] - 文件描述样式
-  const ImAvatar.file({
+  const IMAvatar.file({
     super.key,
     required this.imagePath,
     this.size = 40,
@@ -108,7 +108,7 @@ class ImAvatar extends StatelessWidget {
       color: Colors.white,
       height: 0,
     ),
-  })  : type = ImAvatarType.file,
+  })  : type = IMAvatarType.file,
         bgSize = null,
         isCircle = false,
         iconPath = null,
@@ -122,13 +122,13 @@ class ImAvatar extends StatelessWidget {
   /// * [size] - 头像大小
   /// * [isCircle] - 是否为圆形头像(默认为[true])
   /// * [radius] - 圆角值(优先级高于[isCircle])
-  const ImAvatar.placeholder({
+  const IMAvatar.placeholder({
     super.key,
     this.bgColor,
     this.size = 40,
     this.isCircle = true,
     this.radius,
-  })  : type = ImAvatarType.placeholder,
+  })  : type = IMAvatarType.placeholder,
         text = null,
         bgSize = null,
         textStyle = null,
@@ -144,7 +144,7 @@ class ImAvatar extends StatelessWidget {
   final Gradient? gradient;
 
   /// 头像类型
-  final ImAvatarType type;
+  final IMAvatarType type;
 
   /// 头像图片
   final String? imagePath;
@@ -176,15 +176,15 @@ class ImAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     switch (type) {
-      case ImAvatarType.text:
+      case IMAvatarType.text:
         return _buildTextAvatar();
-      case ImAvatarType.image:
+      case IMAvatarType.image:
         return _buildImageAvatar();
-      case ImAvatarType.icon:
+      case IMAvatarType.icon:
         return _buildIconAvatar(context);
-      case ImAvatarType.file:
+      case IMAvatarType.file:
         return _buildFileAvatar();
-      case ImAvatarType.placeholder:
+      case IMAvatarType.placeholder:
         return _buildPlaceholderAvatar();
     }
   }
