@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+import '../../../im_base_package.dart';
+
 enum ImAvatarType {
   /// 文字头像
   text,
@@ -44,6 +46,7 @@ class ImAvatar extends StatelessWidget {
         type = ImAvatarType.text,
         imagePath = null,
         iconPath = null,
+        iconColor = null,
         bgColor = null;
 
   /// 图片头像
@@ -65,6 +68,7 @@ class ImAvatar extends StatelessWidget {
         text = null,
         gradient = null,
         iconPath = null,
+        iconColor = null,
         textStyle = null;
 
   /// 图标头像
@@ -76,6 +80,7 @@ class ImAvatar extends StatelessWidget {
   const ImAvatar.icon({
     super.key,
     required this.iconPath,
+    this.iconColor,
     this.bgColor,
     this.size = 40,
     this.bgSize = 60,
@@ -107,6 +112,7 @@ class ImAvatar extends StatelessWidget {
         bgSize = null,
         isCircle = false,
         iconPath = null,
+        iconColor = null,
         bgColor = null,
         radius = null,
         gradient = null;
@@ -128,6 +134,7 @@ class ImAvatar extends StatelessWidget {
         textStyle = null,
         imagePath = null,
         iconPath = null,
+        iconColor = null,
         gradient = null;
 
   /// 头像背景色
@@ -143,7 +150,10 @@ class ImAvatar extends StatelessWidget {
   final String? imagePath;
 
   /// 头像图标
-  final String? iconPath;
+  final IconData? iconPath;
+
+  /// 图标颜色
+  final Color? iconColor;
 
   /// 头像文字
   final String? text;
@@ -171,7 +181,7 @@ class ImAvatar extends StatelessWidget {
       case ImAvatarType.image:
         return _buildImageAvatar();
       case ImAvatarType.icon:
-        return _buildIconAvatar();
+        return _buildIconAvatar(context);
       case ImAvatarType.file:
         return _buildFileAvatar();
       case ImAvatarType.placeholder:
@@ -220,7 +230,7 @@ class ImAvatar extends StatelessWidget {
   }
 
   /// 构建图标头像
-  Widget _buildIconAvatar() {
+  Widget _buildIconAvatar(BuildContext context) {
     return Container(
       width: bgSize,
       height: bgSize,
@@ -230,11 +240,10 @@ class ImAvatar extends StatelessWidget {
         shape: _getShape(),
         borderRadius: _getBorderRadius(),
       ),
-      child: Image.asset(
+      child: Icon(
         iconPath!,
-        width: size,
-        height: size,
-        fit: BoxFit.cover,
+        size: size,
+        color: IMTheme.of(context).brand1,
       ),
     );
   }
