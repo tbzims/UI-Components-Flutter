@@ -14,3 +14,6 @@ export 'src/components/button/im_button_group.dart';
 
 /// 加载样式
 export 'src/components/loading/im_loading.dart';
+
+/// 头像组件
+export 'src/components/avatar/im_avatar.dart';
