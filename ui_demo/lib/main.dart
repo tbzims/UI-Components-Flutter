@@ -183,6 +183,10 @@ class MyHomePage extends StatelessWidget {
               text: '加载组件',
               onTap: () => Navigator.of(context).pushNamed(RouterName.loading),
             ),
+            IMButton(
+              text: '头像组件',
+              onTap: () => Navigator.of(context).pushNamed(RouterName.avatar),
+            ),
             title('记录列表'),
             IMButton(
               text: '基础列表',
