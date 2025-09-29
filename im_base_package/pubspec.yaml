@@ -4,7 +4,7 @@ version: 0.0.1
 homepage: https://github.com/tbzims/UI-Components-Flutter/im_base_package
 
 environment:
-  sdk: ">=3.2.6 <4.0.0"
+  sdk: ">=3.2.0 <4.0.0"
   flutter: ">=3.16.0"
 
 dependencies:

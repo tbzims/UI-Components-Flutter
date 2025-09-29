@@ -1,0 +1,7 @@
+arb-dir: lib/l10n
+template-arb-file: app_en.arb
+output-class: DemoLocalizations
+output-dir: lib/generated/intl
+nullable-getter: false
+use-deferred-loading: false
+untranslated-messages-file: lib/generated/intl/untranslated_messages.txt

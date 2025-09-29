@@ -53,7 +53,6 @@ typedef IMButtonCallback = void Function();
 
 class IMButton extends StatefulWidget {
   /// 按钮
-  /// * [key] - 组件键值
   /// * [text] - 按钮文字
   /// * [textSize] - 按钮文字大小，默认16
   /// * [type] - 按钮样式类型，默认为填充型按钮 [IMButtonType.fill]

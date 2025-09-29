@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:im_base_package/im_base_package.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+import 'generated/intl/app_localizations.dart';
 import 'router/app_router.dart';
 
 void main() {
@@ -51,6 +52,8 @@ class _MyAppState extends State<MyApp> {
       // 多语言
       localizationsDelegates: [
         ...ImUiLocalizations.localizationsDelegates,
+        //TODO 添加自己的多语言
+        DemoLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
@@ -127,7 +130,7 @@ class MyHomePage extends StatelessWidget {
       backgroundColor: IMTheme.of(context).brand6,
       appBar: AppBar(
         title: Text(
-          'UI Components',
+          DemoLocalizations.of(context).appTitle,
           style: TextStyle(color: theme.fontGyColor6),
         ),
         backgroundColor: IMTheme.of(context).brand1,
@@ -194,11 +197,13 @@ class MyHomePage extends StatelessWidget {
             ),
             IMButton(
               text: '加载列表',
-              onTap: () => Navigator.of(context).pushNamed(RouterName.loadingList),
+              onTap: () =>
+                  Navigator.of(context).pushNamed(RouterName.loadingList),
             ),
             IMButton(
               text: '索引列表',
-              onTap: () => Navigator.of(context).pushNamed(RouterName.indexList),
+              onTap: () =>
+                  Navigator.of(context).pushNamed(RouterName.indexList),
             ),
           ],
         ),

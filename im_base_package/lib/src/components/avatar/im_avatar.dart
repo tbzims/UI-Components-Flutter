@@ -86,7 +86,7 @@ class IMAvatar extends StatelessWidget {
     this.bgSize = 60,
     this.isCircle = true,
     this.radius,
-  })  : assert(iconPath != null, 'imagePath can not be null'),
+  })  : assert(iconPath != null, 'iconPath can not be null'),
         type = IMAvatarType.icon,
         text = null,
         gradient = null,
