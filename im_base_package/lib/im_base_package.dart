@@ -17,3 +17,7 @@ export 'src/components/loading/im_loading.dart';
 
 /// 头像组件
 export 'src/components/avatar/im_avatar.dart';
+
+/// 骨架屏
+export 'src/components/skeleton/im_skeleton.dart';
+export 'src/components/skeleton/im_skeleton_rowcol.dart';
