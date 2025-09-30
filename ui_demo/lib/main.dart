@@ -179,16 +179,20 @@ class MyHomePage extends StatelessWidget {
             ),
             title('基础组件'),
             IMButton(
-              text: '按钮组件',
+              text: 'Button 按钮',
               onTap: () => Navigator.of(context).pushNamed(RouterName.button),
             ),
             IMButton(
-              text: '加载组件',
+              text: 'Loading 加载',
               onTap: () => Navigator.of(context).pushNamed(RouterName.loading),
             ),
             IMButton(
-              text: '头像组件',
+              text: 'Avatar 头像 ',
               onTap: () => Navigator.of(context).pushNamed(RouterName.avatar),
+            ),
+            IMButton(
+              text: 'Skeleton 骨架屏',
+              onTap: () => Navigator.of(context).pushNamed(RouterName.skeleton),
             ),
             title('记录列表'),
             IMButton(
